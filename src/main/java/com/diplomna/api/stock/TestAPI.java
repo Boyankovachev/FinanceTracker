@@ -6,6 +6,7 @@ public class TestAPI {
         ParseStock stock = new ParseStock();
         stock.setStockBySymbol("TSLA");
         System.out.println(stock.getSymbol() + " " +stock.getRawCurrentPrice() + " " + stock.isMarketOpen()
-        + " " + stock.getCurrency());
+        + " " + stock.getCurrency() + " " + stock.getRecommendationKey() + " " + stock.getExchangeName()
+        + " " + stock.getName());
     }
 }

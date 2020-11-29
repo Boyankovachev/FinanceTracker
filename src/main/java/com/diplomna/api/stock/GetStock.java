@@ -20,6 +20,8 @@ public class GetStock {
 
     public HttpResponse<JsonNode> getStockBySymbolAsJSON(final String symbol){
         //return HttpResponse<JsonNode> selected by stock symbol
+        //GET stock/get-detail
+        //YahooFinanceAPI (RapidAPI)
         try {
             HttpResponse<JsonNode> response = Unirest.get("https://apidojo-yahoo-finance-v1.p.rapidapi.com/stock/get-detail?symbol=" + symbol)
                     .header(rapidapiKey, rapidapiKeyValue)

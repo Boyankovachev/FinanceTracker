@@ -42,6 +42,18 @@ public class ParseStock {
         }
     }
 
+    public String getName(){
+        if(stock!=null) {
+            JSONObject json_stock = stock.getBody().getObject();
+            return json_stock.getJSONObject("price").getString("longName");
+        }
+        else {
+            // NQMA STOCK NQKUV EXCEPTION I LOGVANE
+            System.out.println("stock == null");
+            return null;
+        }
+    }
+
     public boolean isMarketOpen(){
         if(stock!=null) {
             JSONObject json_stock = stock.getBody().getObject();
@@ -59,6 +71,30 @@ public class ParseStock {
         if(stock!=null) {
             JSONObject json_stock = stock.getBody().getObject();
             return json_stock.getJSONObject("price").getString("currency");
+        }
+        else {
+            // NQMA STOCK NQKUV EXCEPTION I LOGVANE
+            System.out.println("stock == null");
+            return null;
+        }
+    }
+
+    public String getRecommendationKey(){
+        if(stock!=null) {
+            JSONObject json_stock = stock.getBody().getObject();
+            return json_stock.getJSONObject("financialData").getString("recommendationKey");
+        }
+        else {
+            // NQMA STOCK NQKUV EXCEPTION I LOGVANE
+            System.out.println("stock == null");
+            return null;
+        }
+    }
+
+    public String getExchangeName(){
+        if(stock!=null) {
+            JSONObject json_stock = stock.getBody().getObject();
+            return json_stock.getJSONObject("price").getString("exchangeName");
         }
         else {
             // NQMA STOCK NQKUV EXCEPTION I LOGVANE
