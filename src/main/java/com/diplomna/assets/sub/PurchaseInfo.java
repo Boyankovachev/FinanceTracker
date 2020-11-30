@@ -1,8 +1,10 @@
 package com.diplomna.assets.sub;
 
+import com.diplomna.date.DatеManager;
+
 public class PurchaseInfo {
     private double price;
-    private String purchaseDate;
+    private DatеManager purchaseDate;
     private double quantity;
 
     public PurchaseInfo(){}
@@ -10,7 +12,7 @@ public class PurchaseInfo {
         this.price = price;
         this.quantity = quantity;
     }
-    public PurchaseInfo(double price, String purchaseDate, double quantity){
+    public PurchaseInfo(double price, DatеManager purchaseDate, double quantity){
         this.price = price;
         this.purchaseDate = purchaseDate;
         this.quantity = quantity;
@@ -24,7 +26,7 @@ public class PurchaseInfo {
         return quantity;
     }
 
-    public String getPurchaseDate() {
+    public DatеManager getPurchaseDate() {
         return purchaseDate;
     }
 
@@ -32,7 +34,7 @@ public class PurchaseInfo {
         this.price = price;
     }
 
-    public void setPurchaseDate(String purchaseDate) {
+    public void setPurchaseDate(DatеManager purchaseDate) {
         this.purchaseDate = purchaseDate;
     }
 
