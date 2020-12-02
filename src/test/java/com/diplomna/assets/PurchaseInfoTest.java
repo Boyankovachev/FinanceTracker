@@ -10,6 +10,7 @@ public class PurchaseInfoTest {
 
     @Test
     public void testPurchaseInfoList(){
+        // testing PurchaseInfo List getters
         DatеManager date = new DatеManager();
         PurchaseInfo pokupka1 = new PurchaseInfo(144.6,date,15.53);
         PurchaseInfo pokupka2 = new PurchaseInfo(14,date,12.1);

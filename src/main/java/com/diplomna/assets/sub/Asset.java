@@ -5,6 +5,7 @@ public class Asset {
     protected String description;
     protected double currentMarketPrice;
     protected String currency;
+    protected String currencySymbol;
 
     public Asset(){}
     public Asset(String name){
@@ -45,5 +46,12 @@ public class Asset {
 
     public void setCurrency(String currency) {
         this.currency = currency;
+    }
+
+    public String getCurrencySymbol(){
+        return currencySymbol;
+    }
+    public void setCurrencySymbol(String currencySymbol){
+        this.currencySymbol = currencySymbol;
     }
 }

@@ -12,7 +12,9 @@ public class Stock extends StockBasedActiveAsset {
     protected double quantityOwned;
     protected String symbol;
      */
-    public String da_ima_neshto_unikalno_tova_e_akciq = "TESLA";
+    private boolean isMarketOpen;
+    private String exchangeName;
+    private String recommendationKey;
 
     public Stock(){
         super();
@@ -28,5 +30,27 @@ public class Stock extends StockBasedActiveAsset {
     }
     public Stock(String name, double currentMarketPrice, double quantityOwned, String symbol){
         super(name,currentMarketPrice,quantityOwned,symbol);
+    }
+
+    public void setExchangeName(String exchangeName) {
+        this.exchangeName = exchangeName;
+    }
+
+    public void setMarketOpen(boolean marketOpen) {
+        isMarketOpen = marketOpen;
+    }
+
+    public void setRecommendationKey(String recommendationKey) {
+        this.recommendationKey = recommendationKey;
+    }
+
+    public boolean isMarketOpen() {
+        return isMarketOpen;
+    }
+    public String getExchangeName(){
+        return exchangeName;
+    }
+    public String getRecommendationKey(){
+        return recommendationKey;
     }
 }

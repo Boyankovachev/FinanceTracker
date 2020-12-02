@@ -8,12 +8,12 @@ public class ParseStock {
     private HttpResponse<JsonNode> stock;
     public ParseStock() {}
     public ParseStock(String symbol){
-        GetStock stockGetter = new GetStock();
+        GetStockFromAPI stockGetter = new GetStockFromAPI();
         stock = stockGetter.getStockBySymbolAsJSON(symbol);
     }
 
     public void setStockBySymbol(String symbol){
-        GetStock stockGetter = new GetStock();
+        GetStockFromAPI stockGetter = new GetStockFromAPI();
         this.stock = stockGetter.getStockBySymbolAsJSON(symbol);
     }
 
@@ -92,9 +92,34 @@ public class ParseStock {
     }
 
     public String getExchangeName(){
+        //get the name of the stock exchange
         if(stock!=null) {
             JSONObject json_stock = stock.getBody().getObject();
             return json_stock.getJSONObject("price").getString("exchangeName");
+        }
+        else {
+            // NQMA STOCK NQKUV EXCEPTION I LOGVANE
+            System.out.println("stock == null");
+            return null;
+        }
+    }
+
+    public String getCurrencySymbol(){
+        if(stock!=null) {
+            JSONObject json_stock = stock.getBody().getObject();
+            return json_stock.getJSONObject("price").getString("currencySymbol");
+        }
+        else {
+            // NQMA STOCK NQKUV EXCEPTION I LOGVANE
+            System.out.println("stock == null");
+            return null;
+        }
+    }
+
+    public String getDescription(){
+        if(stock!=null) {
+            JSONObject json_stock = stock.getBody().getObject();
+            return json_stock.getJSONObject("summaryProfile").getString("longBusinessSummary");
         }
         else {
             // NQMA STOCK NQKUV EXCEPTION I LOGVANE

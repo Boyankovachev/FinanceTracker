@@ -6,12 +6,12 @@ import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import org.json.JSONObject;
 
-public class GetStock {
+public class GetStockFromAPI {
     final private String rapidapiKey;
     final private String rapidapiHost;
     final private String rapidapiKeyValue;
     final private String rapidapiHostValue;
-    public GetStock(){
+    public GetStockFromAPI(){
         rapidapiKey = "x-rapidapi-key";
         rapidapiHost = "x-rapidapi-host";
         rapidapiKeyValue = "7d138e1390mshe8742377115d21fp1dd201jsnb3b741a37493";

@@ -1,5 +1,7 @@
-package com.diplomna.api.stock;
+package com.diplomna.api;
 
+
+import com.diplomna.api.stock.ParseStock;
 
 public class TestAPI {
     static public void main(String []args){
@@ -7,6 +9,7 @@ public class TestAPI {
         stock.setStockBySymbol("TSLA");
         System.out.println(stock.getSymbol() + " " +stock.getRawCurrentPrice() + " " + stock.isMarketOpen()
         + " " + stock.getCurrency() + " " + stock.getRecommendationKey() + " " + stock.getExchangeName()
-        + " " + stock.getName());
+        + " " + stock.getName() + " " + stock.getCurrencySymbol());
+        System.out.println(stock.getDescription());
     }
 }
