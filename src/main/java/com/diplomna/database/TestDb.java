@@ -6,7 +6,7 @@ import com.diplomna.database.create.InsertTestDataIntoDb;
 public class TestDb {
         public static void main(String []args) {
             InsertTestDataIntoDb test = new InsertTestDataIntoDb("test");
-            //test.insertIntoUsers();
-            test.test_things();
+            test.insertIntoUsers();
+            //test.test_things();
     }
 }

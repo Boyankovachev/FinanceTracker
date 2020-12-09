@@ -24,11 +24,12 @@ public class UserTest {
         TrackSet trackSet = new TrackSet(strings, 5.65);
         List<TrackSet> trackSetList = new ArrayList<>();
         trackSetList.add(trackSet);
-        User user = new User("Ivan","1234","randomemail@gmail.com",new AssetManager(),
+        User user = new User("Ivan","1234","sol","randomemail@gmail.com",new AssetManager(),
                 false, trackSetList);
 
         assertEquals(user.getUserName(), "Ivan");
-        assertEquals(user.getPassword(), "1234");
+        assertEquals(user.getPasswordHash(), "1234");
+        assertEquals(user.getSalt(), "sol");
         assertEquals(user.getEmail(), "randomemail@gmail.com");
         assertEquals(user.getIs2FactorAuthenticationRequired(), false);
         assertEquals(user.getTrackSets().size(), 1);

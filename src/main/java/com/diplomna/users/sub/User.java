@@ -7,17 +7,19 @@ import java.util.List;
 
 public class User {
     private String userName;
-    private String password;
+    private String passwordHash;
+    private String salt;
     private String email;
     private AssetManager assets;
     private boolean is2FactorAuthenticationRequired;
     private List<TrackSet> trackSets;
 
     public User(){}
-    public User(String userName, String password, String email, AssetManager assets,
+    public User(String userName, String passwordHash,String salt ,String email, AssetManager assets,
                 boolean is2FactorAuthenticationRequired, List<TrackSet> trackSets){
         this.userName = userName;
-        this.password = password;
+        this.passwordHash = passwordHash;
+        this.salt = salt;
         this.email = email;
         this.assets = assets;
         this.is2FactorAuthenticationRequired = is2FactorAuthenticationRequired;
@@ -28,8 +30,8 @@ public class User {
         return userName;
     }
 
-    public String getPassword() {
-        return password;
+    public String getPasswordHash() {
+        return passwordHash;
     }
 
     public String getEmail() {
@@ -48,8 +50,8 @@ public class User {
         this.userName = userName;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setPassword(String passwordHash) {
+        this.passwordHash = passwordHash;
     }
 
     public void setEmail(String email) {
@@ -67,6 +69,15 @@ public class User {
     public void setTrackSets(List<TrackSet> trackSets) {
         this.trackSets = trackSets;
     }
+
+    public void setSalt(String salt){
+        this.salt = salt;
+    }
+
+    public String getSalt(){
+        return salt;
+    }
+
 
     public List<TrackSet> getTrackSets() {
         return trackSets;
