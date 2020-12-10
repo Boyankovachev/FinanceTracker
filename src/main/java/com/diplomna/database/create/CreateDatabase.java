@@ -48,7 +48,8 @@ public class CreateDatabase {
                     "    `username` VARCHAR(32) NOT NULL,\n" +
                     "    `password_hash` VARCHAR(45) NOT NULL,\n" +
                     "    `salt` VARCHAR(45) NOT NULL,\n" +
-                    "    `email` VARCHAR(32));\n";
+                    "    `email` VARCHAR(32),\n" +
+                    "    'is_2fa_required' BOOL);";
             DbStatement.execute(sql);
         } catch (SQLException e) {
             e.printStackTrace();

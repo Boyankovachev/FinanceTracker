@@ -13,10 +13,17 @@ public class User {
     private AssetManager assets;
     private boolean is2FactorAuthenticationRequired;
     private List<TrackSet> trackSets;
+    private int userId;
 
     public User(){}
-    public User(String userName, String passwordHash,String salt ,String email, AssetManager assets,
+    public User(String userName, String passwordHash,String salt){
+        this.userName = userName;
+        this.passwordHash = passwordHash;
+        this.salt = salt;
+    }
+    public User(int userId, String userName, String passwordHash,String salt ,String email, AssetManager assets,
                 boolean is2FactorAuthenticationRequired, List<TrackSet> trackSets){
+        this.userId = userId;
         this.userName = userName;
         this.passwordHash = passwordHash;
         this.salt = salt;
@@ -76,6 +83,13 @@ public class User {
 
     public String getSalt(){
         return salt;
+    }
+
+    public int getUserId(){
+        return userId;
+    }
+    public void setUserId(int id){
+        this.userId = id;
     }
 
 
