@@ -7,6 +7,9 @@ public class PurchaseInfo {
     private DatеManager purchaseDate;
     private double quantity;
 
+    // if a purchase is a stock
+    private String stockSymbol = null;
+
     public PurchaseInfo(){}
     public PurchaseInfo(double price, double quantity){
         this.price = price;
@@ -40,5 +43,13 @@ public class PurchaseInfo {
 
     public void setQuantity(double quantity) {
         this.quantity = quantity;
+    }
+
+    public String getStockSymbol() {
+        return stockSymbol;
+    }
+
+    public void setStockSymbol(String stockSymbol) {
+        this.stockSymbol = stockSymbol;
     }
 }

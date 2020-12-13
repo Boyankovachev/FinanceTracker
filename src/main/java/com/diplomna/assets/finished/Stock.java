@@ -11,6 +11,7 @@ public class Stock extends StockBasedActiveAsset {
     protected List<PurchaseInfo>purchaseInfo = new ArrayList<>();
     protected double quantityOwned;
     protected String symbol;
+    protected String currencySymbol;
      */
     private boolean isMarketOpen;
     private String exchangeName;
@@ -30,6 +31,15 @@ public class Stock extends StockBasedActiveAsset {
     }
     public Stock(String name, double currentMarketPrice, double quantityOwned, String symbol){
         super(name,currentMarketPrice,quantityOwned,symbol);
+    }
+
+    public Stock(String symbol, String name, String currency, String currencySymbol, String exchangeName, String description){
+        this.symbol = symbol;
+        this.name = name;
+        this.currency = currency;
+        this.currencySymbol = currencySymbol;
+        this.exchangeName = exchangeName;
+        this.description = description;
     }
 
     public void setExchangeName(String exchangeName) {

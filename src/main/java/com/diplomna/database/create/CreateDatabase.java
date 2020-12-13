@@ -96,6 +96,7 @@ public class CreateDatabase {
                     "    `stock_symbol` VARCHAR(12) NOT NULL,\n" +
                     "    `price` DOUBLE NOT NULL,\n" +
                     "    `quantity` DOUBLE NOT NULL,\n" +
+                    "    `purchase_date` DATE,\n" +
                     "    FOREIGN KEY(`user_id`) REFERENCES `" + databaseName + "`.user(`user_id`),\n" +
                     "    FOREIGN KEY(`stock_symbol`) REFERENCES `" + databaseName + "`.stock(`symbol`));\n";
             DbStatement.execute(sql);

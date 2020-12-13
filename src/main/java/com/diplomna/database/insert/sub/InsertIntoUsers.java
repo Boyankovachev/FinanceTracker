@@ -12,11 +12,11 @@ public class InsertIntoUsers {
         this.databaseName =databaseName;
     }
 
-    public void InsertUser(User user) throws SQLException {
+    public void insertUser(User user) throws SQLException {
         /*
         inserts the new user into the user table
          */
-        int newUserId = insertNotNullValues(user);
+        int newUserId = insertNotNullValues(user); //get the Id of the new user
         user.setUserId(newUserId);
         if(user.getEmail() != null && !user.getEmail().isEmpty()){
             insertEmail(user);

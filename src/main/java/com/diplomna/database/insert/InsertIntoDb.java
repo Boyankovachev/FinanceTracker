@@ -1,5 +1,9 @@
 package com.diplomna.database.insert;
 
+import com.diplomna.assets.finished.Stock;
+import com.diplomna.assets.sub.PurchaseInfo;
+import com.diplomna.database.insert.sub.InsertIntoStock;
+import com.diplomna.database.insert.sub.InsertIntoStockPurchaseInfo;
 import com.diplomna.database.insert.sub.InsertIntoUsers;
 import com.diplomna.users.sub.User;
 
@@ -25,13 +29,29 @@ public class InsertIntoDb {
         }
     }
 
-    public void InsertUser(User user){
+    public void insertUser(User user){
         InsertIntoUsers insert = new InsertIntoUsers(this.con, this.databaseName);
         try {
-            insert.InsertUser(user);
+            insert.insertUser(user);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-            System.out.println(throwables.getMessage());
+        }
+    }
+
+    public void insertStock(Stock stock){
+        InsertIntoStock insertStock = new InsertIntoStock(this.con, this.databaseName);
+        try {
+            insertStock.insertStock(stock);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+    public void insertStockPurchaseInfo(int userId, PurchaseInfo purchaseInfo){
+        InsertIntoStockPurchaseInfo insertIntoStockPurchaseInfo = new InsertIntoStockPurchaseInfo(this.con, this.databaseName);
+        try {
+            insertIntoStockPurchaseInfo.insertStockPurchaseInfo(userId,purchaseInfo);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
         }
     }
 }
