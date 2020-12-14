@@ -1,10 +1,10 @@
 package com.diplomna.database.insert;
 
+import com.diplomna.assets.finished.PassiveResource;
 import com.diplomna.assets.finished.Stock;
 import com.diplomna.assets.sub.PurchaseInfo;
-import com.diplomna.database.insert.sub.InsertIntoStock;
-import com.diplomna.database.insert.sub.InsertIntoStockPurchaseInfo;
-import com.diplomna.database.insert.sub.InsertIntoUsers;
+import com.diplomna.database.insert.sub.*;
+import com.diplomna.users.sub.Notification;
 import com.diplomna.users.sub.User;
 
 import java.sql.Connection;
@@ -50,6 +50,23 @@ public class InsertIntoDb {
         InsertIntoStockPurchaseInfo insertIntoStockPurchaseInfo = new InsertIntoStockPurchaseInfo(this.con, this.databaseName);
         try {
             insertIntoStockPurchaseInfo.insertStockPurchaseInfo(userId,purchaseInfo);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+    public void insertPassiveResource(int userId, PassiveResource passiveResource){
+       InsertIntoPassiveResource insertIntoPassiveResource = new InsertIntoPassiveResource(this.con, this.databaseName);
+        try {
+            insertIntoPassiveResource.insertPassiveResource(userId,passiveResource);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+    public void insertNotification(int userId, Notification notification) {
+        InsertIntoNotification insertIntoNotification = new InsertIntoNotification(this.con, this.databaseName);
+        try {
+            insertIntoNotification.insertNotification(userId,notification);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }

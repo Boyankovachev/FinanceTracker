@@ -27,7 +27,12 @@ public class InsertIntoStockPurchaseInfo {
         statement.setString(2,purchaseInfo.getStockSymbol());
         statement.setDouble(3,purchaseInfo.getPrice());
         statement.setDouble(4,purchaseInfo.getQuantity());
-        statement.setDate(5, new java.sql.Date(purchaseInfo.getPurchaseDate().calendar.getTime().getTime()));
+        if(purchaseInfo.getPurchaseDate() != null) {
+            statement.setDate(5, new java.sql.Date(purchaseInfo.getPurchaseDate().calendar.getTime().getTime()));
+        }
+        else {
+            statement.setDate(5, null);
+        }
         statement.executeUpdate();
     }
 }

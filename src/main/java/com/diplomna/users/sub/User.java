@@ -1,7 +1,6 @@
 package com.diplomna.users.sub;
 
 import com.diplomna.assets.AssetManager;
-import com.diplomna.assets.sub.Asset;
 
 import java.util.List;
 
@@ -12,7 +11,7 @@ public class User {
     private String email;
     private AssetManager assets;
     private boolean is2FactorAuthenticationRequired;
-    private List<TrackSet> trackSets;
+    private List<Notification> notifications;
     private int userId;
 
     public User(){}
@@ -22,7 +21,7 @@ public class User {
         this.salt = salt;
     }
     public User(int userId, String userName, String passwordHash,String salt ,String email, AssetManager assets,
-                boolean is2FactorAuthenticationRequired, List<TrackSet> trackSets){
+                boolean is2FactorAuthenticationRequired, List<Notification> notifications){
         this.userId = userId;
         this.userName = userName;
         this.passwordHash = passwordHash;
@@ -30,7 +29,7 @@ public class User {
         this.email = email;
         this.assets = assets;
         this.is2FactorAuthenticationRequired = is2FactorAuthenticationRequired;
-        this.trackSets = trackSets;
+        this.notifications = notifications;
     }
 
     public String getUserName() {
@@ -73,8 +72,8 @@ public class User {
         this.is2FactorAuthenticationRequired = is2FactorAuthenticationRequired;
     }
 
-    public void setTrackSets(List<TrackSet> trackSets) {
-        this.trackSets = trackSets;
+    public void setNotifications(List<Notification> notifications) {
+        this.notifications = notifications;
     }
 
     public void setSalt(String salt){
@@ -92,8 +91,7 @@ public class User {
         this.userId = id;
     }
 
-
-    public List<TrackSet> getTrackSets() {
-        return trackSets;
+    public List<Notification> getNotifications() {
+        return notifications;
     }
 }

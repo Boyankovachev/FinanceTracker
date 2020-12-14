@@ -9,6 +9,7 @@ public class PassiveResource extends Asset {
     protected String description;
     protected double currentMarketPrice;
     protected String currency;
+    protected String currencySymbol;
      */
     private PurchaseInfo purchaseInfo;
 

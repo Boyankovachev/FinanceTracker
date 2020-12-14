@@ -1,7 +1,6 @@
 package com.diplomna.users;
 
 import com.diplomna.assets.AssetManager;
-import com.diplomna.users.sub.TrackSet;
 import com.diplomna.users.sub.User;
 import org.junit.jupiter.api.Test;
 
@@ -21,11 +20,8 @@ public class UserTest {
         strings.add(string1);
         strings.add(string2);
         strings.add(string3);
-        TrackSet trackSet = new TrackSet(strings, 5.65);
-        List<TrackSet> trackSetList = new ArrayList<>();
-        trackSetList.add(trackSet);
         User user = new User(154,"Ivan","1234","sol","randomemail@gmail.com",new AssetManager(),
-                false, trackSetList);
+                false, new ArrayList<>());
 
         assertEquals(user.getUserId(), 154);
         assertEquals(user.getUserName(), "Ivan");
@@ -33,9 +29,7 @@ public class UserTest {
         assertEquals(user.getSalt(), "sol");
         assertEquals(user.getEmail(), "randomemail@gmail.com");
         assertEquals(user.getIs2FactorAuthenticationRequired(), false);
-        assertEquals(user.getTrackSets().size(), 1);
-        assertEquals(user.getTrackSets().get(0).getNames().size(), 3);
-        assertEquals(user.getTrackSets().get(0).getNames().get(1), "vtori");
+        assertEquals(user.getNotifications().size(), 1);
     }
 
 }

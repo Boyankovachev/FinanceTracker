@@ -49,7 +49,7 @@ public class CreateDatabase {
                     "    `password_hash` VARCHAR(45) NOT NULL,\n" +
                     "    `salt` VARCHAR(45) NOT NULL,\n" +
                     "    `email` VARCHAR(32),\n" +
-                    "    'is_2fa_required' BOOL);";
+                    "    `is_2fa_required` BOOL);";
             DbStatement.execute(sql);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -78,9 +78,10 @@ public class CreateDatabase {
             String sql = "CREATE TABLE IF NOT EXISTS `"+databaseName+"`.`notification`(\n" +
                     "    `user_id` INT NOT NULL,\n" +
                     "    `asset_type` ENUM(\"stock\", \"passive_resource\", \"global\") NOT NULL,\n" +
-                    "    `asset_id` INT,\n" +
                     "    `notification_price` DOUBLE NOT NULL,\n" +
-                    "    `notification_name` VARCHAR(32),\n" +
+                    "    `notification_name` VARCHAR(32) NOT NULL,\n" +
+                    "    `stock_symbol` VARCHAR(12),\n" +
+                    "    `passive_asset_name` VARCHAR(12),\n" +
                     "    FOREIGN KEY (`user_id`) REFERENCES `" + databaseName + "`.user(`user_id`));\n";
             DbStatement.execute(sql);
         } catch (SQLException e) {
@@ -112,7 +113,7 @@ public class CreateDatabase {
                     "    `user_id` INT NOT NULL,\n" +
                     "    `name` VARCHAR(32) NOT NULL,\n" +
                     "    `purchase_price` DOUBLE NOT NULL,\n" +
-                    "    `purchase_date` DOUBLE,\n" +
+                    "    `purchase_date` DATE,\n" +
                     "    `current_price` DOUBLE,\n" +
                     "    `description` TEXT,\n" +
                     "    `currency` VARCHAR(32),\n" +
