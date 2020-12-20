@@ -46,7 +46,7 @@ public class CreateDatabase {
                     "CREATE TABLE IF NOT EXISTS `"+databaseName+"`.`user`(\n" +
                     "    `user_id` INT NOT NULL AUTO_INCREMENT UNIQUE PRIMARY KEY,\n" +
                     "    `username` VARCHAR(32) NOT NULL,\n" +
-                    "    `password_hash` VARCHAR(45) NOT NULL,\n" +
+                    "    `password_hash` VARCHAR(64) NOT NULL,\n" +
                     "    `salt` VARCHAR(45) NOT NULL,\n" +
                     "    `email` VARCHAR(32),\n" +
                     "    `is_2fa_required` BOOL);";
