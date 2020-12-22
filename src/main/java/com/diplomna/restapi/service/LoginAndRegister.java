@@ -72,4 +72,12 @@ public class LoginAndRegister {
         }
         return "Successful login!";
     }
-}
+
+    public User getUserByName(String name){
+        //retuns the first user found with matching name
+        // (for future) - fix when 2 identical names
+        ReadFromDb readFromDb = new ReadFromDb("test");
+        UserManager userManager = readFromDb.readUsers();
+        return userManager.getUserByName(name);
+    }
+ }

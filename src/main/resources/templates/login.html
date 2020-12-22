@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -11,8 +11,10 @@
         <button type="submit">Login</button>
     </form>
     <form action = "/register" method="get">
-    <button type="submit">Create new account</button>
+        <br>
+        <button type="submit">Create new account</button>
     </form>
+    <p th:text="${message}"></p>
 </body>
 </html>
 
