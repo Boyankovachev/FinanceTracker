@@ -7,6 +7,7 @@ import com.diplomna.date.DatеManager;
 public class ActiveAsset extends Asset {
     protected List<PurchaseInfo>purchaseInfo = new ArrayList<>();
     protected double quantityOwned;
+    protected double averagePurchasePrice;
 
     public ActiveAsset(){
         super();
@@ -27,6 +28,35 @@ public class ActiveAsset extends Asset {
     }
     public double getQuantityOwned(){
         return quantityOwned;
+    }
+
+    public void calculateQuantityOwned(){
+        if(!areTherePurchases()){
+            quantityOwned = 0;
+        }
+        else {
+            quantityOwned = 0;
+            for(PurchaseInfo purchaseInfo: purchaseInfo){
+                quantityOwned = quantityOwned + purchaseInfo.getQuantity();
+            }
+        }
+    }
+
+    public void calculateAveragePurchasePrice(){
+        if(!areTherePurchases()){
+            averagePurchasePrice = 0;
+        }
+        else if(purchaseInfo.size() == 1){
+            averagePurchasePrice = purchaseInfo.get(0).getPrice();
+        }
+        else {
+            double temp = 0;
+            for(int i=0; i<purchaseInfo.size(); i++){
+                temp = temp + (purchaseInfo.get(i).getQuantity() * purchaseInfo.get(i).getPrice());
+            }
+            averagePurchasePrice = temp / quantityOwned;
+
+        }
     }
 
     public List<PurchaseInfo> getAllPurchases(){
@@ -97,5 +127,13 @@ public class ActiveAsset extends Asset {
 
     public boolean areTherePurchases(){
         return !purchaseInfo.isEmpty();
+    }
+
+    public double getAveragePurchasePrice() {
+        return averagePurchasePrice;
+    }
+
+    public void setAveragePurchasePrice(double averagePurchasePrice) {
+        this.averagePurchasePrice = averagePurchasePrice;
     }
 }

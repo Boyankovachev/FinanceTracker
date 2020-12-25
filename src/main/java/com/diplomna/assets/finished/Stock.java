@@ -12,6 +12,7 @@ public class Stock extends StockBasedActiveAsset {
     protected double quantityOwned;
     protected String symbol;
     protected String currencySymbol;
+    protected double averagePurchasePrice;
      */
     private boolean isMarketOpen;
     private String exchangeName;

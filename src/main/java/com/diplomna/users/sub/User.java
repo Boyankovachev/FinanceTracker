@@ -15,7 +15,7 @@ public class User {
     private String passwordHash;
     private String salt;
     private String email;
-    private AssetManager assets;
+    private AssetManager assets = new AssetManager();
     private boolean is2FactorAuthenticationRequired;
     private List<Notification> notifications;
     private int userId;

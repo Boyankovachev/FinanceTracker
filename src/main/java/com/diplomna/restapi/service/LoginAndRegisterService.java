@@ -10,9 +10,9 @@ import java.util.Arrays;
 import java.util.List;
 
 @Service
-public class LoginAndRegister {
+public class LoginAndRegisterService {
 
-    public LoginAndRegister(){}
+    public LoginAndRegisterService(){}
 
     public String createUser(String inputString){
         String[] temp = inputString.split("&");
@@ -80,4 +80,4 @@ public class LoginAndRegister {
         UserManager userManager = readFromDb.readUsers();
         return userManager.getUserByName(name);
     }
- }
+}

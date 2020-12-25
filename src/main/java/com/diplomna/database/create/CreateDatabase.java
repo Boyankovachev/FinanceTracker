@@ -73,6 +73,7 @@ public class CreateDatabase {
     }
     public void createNotificationTable(){
         //works
+        // 24.12.2020 - vij zapiskite
         try {
             Statement DbStatement = con.createStatement();
             String sql = "CREATE TABLE IF NOT EXISTS `"+databaseName+"`.`notification`(\n" +

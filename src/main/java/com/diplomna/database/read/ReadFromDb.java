@@ -1,5 +1,8 @@
 package com.diplomna.database.read;
 
+import com.diplomna.assets.finished.Stock;
+import com.diplomna.database.read.sub.ReadStock;
+import com.diplomna.database.read.sub.ReadStockPurchases;
 import com.diplomna.database.read.sub.ReadUsers;
 import com.diplomna.users.UserManager;
 import com.diplomna.users.sub.User;
@@ -48,4 +51,25 @@ public class ReadFromDb {
         }
         return null;
     }
+
+    public List<Stock> readStockPurchasesByUserId(int userId){
+        ReadStockPurchases readStockPurchases = new ReadStockPurchases(con, databaseName);
+        try {
+            return readStockPurchases.readStockPurchasesByUserId(userId);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return null;
+    }
+
+    public Stock readStockBySymbol(String symbol){
+        ReadStock readStock = new ReadStock(con, databaseName);
+        try {
+            return readStock.readStockBySymbol(symbol);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return null;
+    }
+
 }
