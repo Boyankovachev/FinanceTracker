@@ -6,6 +6,7 @@ import java.util.List;
 
 public class Notification {
     AssetType assetType;
+    private boolean assetTypeSettings;
     private double notificationPrice;
     private String notificationName;
     private String stockSymbol;
@@ -45,6 +46,12 @@ public class Notification {
         this.passiveAssetName = passiveAssetName;
     }
 
+    public void setAssetTypeSettings(boolean assetTypeSettings) {
+        this.assetTypeSettings = assetTypeSettings;
+    }
+    public boolean getAssetTypeSettings() {
+        return assetTypeSettings;
+    }
 }
 
 /*

@@ -1,6 +1,8 @@
 package com.diplomna.database.read;
 
+import com.diplomna.assets.finished.PassiveResource;
 import com.diplomna.assets.finished.Stock;
+import com.diplomna.database.read.sub.ReadPassiveResources;
 import com.diplomna.database.read.sub.ReadStock;
 import com.diplomna.database.read.sub.ReadStockPurchases;
 import com.diplomna.database.read.sub.ReadUsers;
@@ -66,6 +68,16 @@ public class ReadFromDb {
         ReadStock readStock = new ReadStock(con, databaseName);
         try {
             return readStock.readStockBySymbol(symbol);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return null;
+    }
+
+    public List<PassiveResource> readPassiveResourcesByUserId(int userId){
+        ReadPassiveResources readPassiveResources = new ReadPassiveResources(con, databaseName);
+        try {
+            return readPassiveResources.readPassiveResourceByUserId(userId);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }

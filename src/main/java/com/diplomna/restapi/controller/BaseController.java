@@ -20,7 +20,8 @@ public class BaseController {
     @RequestMapping(value = "/user", method = RequestMethod.GET)
     public String getUserHomepage(@ModelAttribute("user") User user, Model model){
         model.addAttribute("user", user);
-        baseService.getStocksByUserId(1);
+        //baseService.getStocksByUserId(1);
+        baseService.getPassiveResourcesByUserId(2);
         return "user-homepage";
     }
 }

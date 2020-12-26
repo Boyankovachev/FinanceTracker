@@ -8,7 +8,7 @@ import java.util.List;
 public class AssetManager {
     private List<Stock> stocks = new ArrayList<>();;
     private List<PassiveResource> passiveResources;
-    private List<IndexFund> indexFunds;
+    private List<Index> indexFunds;
     private List<Commodities> commodities;
     private List<Crypto> cryptoCurrencies;
 

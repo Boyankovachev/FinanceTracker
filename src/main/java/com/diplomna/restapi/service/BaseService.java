@@ -1,6 +1,7 @@
 package com.diplomna.restapi.service;
 
 import com.diplomna.api.stock.ParseStock;
+import com.diplomna.assets.finished.PassiveResource;
 import com.diplomna.assets.finished.Stock;
 import com.diplomna.database.read.ReadFromDb;
 import org.springframework.stereotype.Service;
@@ -83,5 +84,20 @@ public class BaseService {
          */
 
         return stockBase;
+    }
+
+    public List<PassiveResource> getPassiveResourcesByUserId(int userId){
+        ReadFromDb readFromDb = new ReadFromDb("test");
+        List<PassiveResource> passiveResources = readFromDb.readPassiveResourcesByUserId(userId);
+        for (PassiveResource passiveResource: passiveResources){
+            System.out.print(passiveResource.getName() + " ");
+            System.out.print(passiveResource.getPurchaseInfo().getPrice() + " ");
+            System.out.print(passiveResource.getPurchaseInfo().getPurchaseDate().getDateSql() + " ");
+            System.out.print(passiveResource.getCurrentMarketPrice() + " ");
+            System.out.print(passiveResource.getDescription() + " ");
+            System.out.print(passiveResource.getCurrency() + " ");
+            System.out.print(passiveResource.getCurrencySymbol() + " ");
+        }
+        return passiveResources;
     }
 }

@@ -1,7 +1,6 @@
 package com.diplomna.database.insert;
 
-import com.diplomna.assets.finished.PassiveResource;
-import com.diplomna.assets.finished.Stock;
+import com.diplomna.assets.finished.*;
 import com.diplomna.assets.sub.PurchaseInfo;
 import com.diplomna.database.insert.sub.*;
 import com.diplomna.users.sub.Notification;
@@ -67,6 +66,54 @@ public class InsertIntoDb {
         InsertIntoNotification insertIntoNotification = new InsertIntoNotification(this.con, this.databaseName);
         try {
             insertIntoNotification.insertNotification(userId,notification);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+    public void insertIndex(Index index) {
+        InsertIntoIndex insertIntoIndex = new InsertIntoIndex(this.con, this.databaseName);
+        try {
+            insertIntoIndex.insertIndex(index);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+    public void insertIndexPurchaseInfo(int userId, PurchaseInfo purchaseInfo){
+        InsertIntoIndexPurchaseInfo insertIntoIndexPurchaseInfo = new InsertIntoIndexPurchaseInfo(this.con, this.databaseName);
+        try {
+            insertIntoIndexPurchaseInfo.insertIndexPurchaseInfo(userId, purchaseInfo);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+    public void insertCommodity(Commodities commodities) {
+        InsertIntoCommodity insertIntoCommodity = new InsertIntoCommodity(this.con, this.databaseName);
+        try {
+            insertIntoCommodity.insertCommodity(commodities);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+    public void insertCommodityPurchaseInfo(int userId, PurchaseInfo purchaseInfo){
+        InsertIntoCommodityPurchaseInfo insertIntoCommodityPurchaseInfo = new InsertIntoCommodityPurchaseInfo(this.con, this.databaseName);
+        try {
+            insertIntoCommodityPurchaseInfo.insertCommodityPurchaseInfo(userId, purchaseInfo);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+    public void insertCrypto(Crypto crypto){
+        InsertIntoCrypto insertIntoCrypto = new InsertIntoCrypto(this.con, this.databaseName);
+        try {
+            insertIntoCrypto.insertCrypto(crypto);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+    public void insertCryptoPurchaseInfo(int userId, PurchaseInfo purchaseInfo){
+        InsertIntoCryptoPurchaseInfo insertIntoCryptoPurchaseInfo = new InsertIntoCryptoPurchaseInfo(this.con, this.databaseName);
+        try {
+            insertIntoCryptoPurchaseInfo.insertCryptoPurchaseInfo(userId, purchaseInfo);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }

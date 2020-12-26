@@ -1,6 +1,8 @@
 package com.diplomna.database;
 
 import com.diplomna.assets.finished.Stock;
+import com.diplomna.database.create.CreateDatabase;
+import com.diplomna.database.create.InsertTestDataIntoDb;
 import com.diplomna.database.read.ReadFromDb;
 
 public class TestDb {

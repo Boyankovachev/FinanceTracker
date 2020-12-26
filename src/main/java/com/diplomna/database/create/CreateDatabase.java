@@ -25,6 +25,12 @@ public class CreateDatabase {
         createNotificationTable();
         createStockPurchaseInfoTable();
         createPassiveResourceInfoTable();
+        createIndexTable();
+        createIndexPurchaseInfoTable();
+        createCryptoTable();
+        createCryptoPurchaseInfoTable();
+        createCommodityTable();
+        createCommodityPurchaseInfoTable();
     }
 
     public void createDb(){
@@ -79,6 +85,7 @@ public class CreateDatabase {
             String sql = "CREATE TABLE IF NOT EXISTS `"+databaseName+"`.`notification`(\n" +
                     "    `user_id` INT NOT NULL,\n" +
                     "    `asset_type` ENUM(\"stock\", \"passive_resource\", \"global\") NOT NULL,\n" +
+                    "    `asset_type_settings` BOOL NOT NULL,\n" +
                     "    `notification_price` DOUBLE NOT NULL,\n" +
                     "    `notification_name` VARCHAR(32) NOT NULL,\n" +
                     "    `stock_symbol` VARCHAR(12),\n" +
@@ -120,6 +127,97 @@ public class CreateDatabase {
                     "    `currency` VARCHAR(32),\n" +
                     "    `currency_symbol` VARCHAR(12),\n" +
                     "    FOREIGN KEY(`user_id`) REFERENCES `" + databaseName + "`.user(`user_Id`));\n";
+            DbStatement.execute(sql);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    public void createIndexTable(){
+        try {
+            Statement DbStatement = con.createStatement();
+            String sql = "CREATE TABLE IF NOT EXISTS `"+databaseName+"`.`index`(\n" +
+                    "    `symbol` VARCHAR(12) NOT NULL PRIMARY KEY,\n" +
+                    "    `index_name` VARCHAR(32) NOT NULL,\n" +
+                    "    `currency` VARCHAR(32) NOT NULL,\n" +
+                    "    `currency_symbol` VARCHAR(12) NOT NULL,\n" +
+                    "    `exchange_name` VARCHAR(32),\n" +
+                    "    `description` TEXT);\n";
+            DbStatement.execute(sql);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    public void createIndexPurchaseInfoTable(){
+        try {
+            Statement DbStatement = con.createStatement();
+            String sql = "CREATE TABLE IF NOT EXISTS `" + databaseName + "`.`index_purchase_info`(\n" +
+                    "    `user_id` INT NOT NULL,\n" +
+                    "    `index_symbol` VARCHAR(12) NOT NULL,\n" +
+                    "    `price` DOUBLE NOT NULL,\n" +
+                    "    `quantity` DOUBLE NOT NULL,\n" +
+                    "    `purchase_date` DATE,\n" +
+                    "    FOREIGN KEY(`user_id`) REFERENCES `" + databaseName + "`.user(`user_id`),\n" +
+                    "    FOREIGN KEY(`index_symbol`) REFERENCES `" + databaseName + "`.index(`symbol`));\n";
+            DbStatement.execute(sql);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    public void createCryptoTable(){
+        try {
+            Statement DbStatement = con.createStatement();
+            String sql = "CREATE TABLE IF NOT EXISTS `"+databaseName+"`.`crypto`(\n" +
+                    "    `symbol` VARCHAR(12) NOT NULL PRIMARY KEY,\n" +
+                    "    `crypto_name` VARCHAR(32) NOT NULL,\n" +
+                    "    `currency` VARCHAR(32) NOT NULL,\n" +
+                    "    `currency_symbol` VARCHAR(12) NOT NULL,\n" +
+                    "    `description` TEXT);\n";
+            DbStatement.execute(sql);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    public void createCryptoPurchaseInfoTable(){
+        try {
+            Statement DbStatement = con.createStatement();
+            String sql = "CREATE TABLE IF NOT EXISTS `" + databaseName + "`.`crypto_purchase_info`(\n" +
+                    "    `user_id` INT NOT NULL,\n" +
+                    "    `crypto_symbol` VARCHAR(12) NOT NULL,\n" +
+                    "    `price` DOUBLE NOT NULL,\n" +
+                    "    `quantity` DOUBLE NOT NULL,\n" +
+                    "    `purchase_date` DATE,\n" +
+                    "    FOREIGN KEY(`user_id`) REFERENCES `" + databaseName + "`.user(`user_id`),\n" +
+                    "    FOREIGN KEY(`crypto_symbol`) REFERENCES `" + databaseName + "`.crypto(`symbol`));\n";
+            DbStatement.execute(sql);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    public void createCommodityTable(){
+        try {
+            Statement DbStatement = con.createStatement();
+            String sql = "CREATE TABLE IF NOT EXISTS `"+databaseName+"`.`commodity`(\n" +
+                    "    `commodity_name` VARCHAR(64) NOT NULL PRIMARY KEY,\n" +
+                    "    `currency` VARCHAR(32) NOT NULL,\n" +
+                    "    `currency_symbol` VARCHAR(12) NOT NULL,\n" +
+                    "    `exchange_name` VARCHAR(32),\n" +
+                    "    `description` TEXT);\n";
+            DbStatement.execute(sql);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    public void createCommodityPurchaseInfoTable(){
+        try {
+            Statement DbStatement = con.createStatement();
+            String sql = "CREATE TABLE IF NOT EXISTS `" + databaseName + "`.`commodity_purchase_info`(\n" +
+                    "    `user_id` INT NOT NULL,\n" +
+                    "    `commodity_name` VARCHAR(64) NOT NULL,\n" +
+                    "    `price` DOUBLE NOT NULL,\n" +
+                    "    `quantity` DOUBLE NOT NULL,\n" +
+                    "    `purchase_date` DATE,\n" +
+                    "    FOREIGN KEY(`user_id`) REFERENCES `" + databaseName + "`.user(`user_id`),\n" +
+                    "    FOREIGN KEY(`commodity_name`) REFERENCES `" + databaseName + "`.commodity(`commodity_name`));\n";
             DbStatement.execute(sql);
         } catch (SQLException e) {
             e.printStackTrace();

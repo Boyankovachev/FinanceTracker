@@ -11,8 +11,9 @@ public class Crypto extends StockBasedActiveAsset {
     protected List<PurchaseInfo>purchaseInfo = new ArrayList<>();
     protected double quantityOwned;
     protected String symbol;
+    protected String currencySymbol;
+    protected double averagePurchasePrice;
     */
-    public String da_ima_neshto_unikalno_tova_e_crypto = "Bitcoin";
 
     public Crypto(){
         super();

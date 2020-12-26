@@ -7,7 +7,7 @@ public class PurchaseInfo {
     private DatеManager purchaseDate;
     private double quantity;
 
-    // if a purchase is a stock
+    // if a purchase has a symbol
     private String stockSymbol = null;
 
     public PurchaseInfo(){}
