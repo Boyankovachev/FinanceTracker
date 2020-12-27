@@ -1,13 +1,10 @@
 package com.diplomna.database.read;
 
-import com.diplomna.assets.finished.PassiveResource;
-import com.diplomna.assets.finished.Stock;
-import com.diplomna.database.read.sub.ReadPassiveResources;
-import com.diplomna.database.read.sub.ReadStock;
-import com.diplomna.database.read.sub.ReadStockPurchases;
-import com.diplomna.database.read.sub.ReadUsers;
+import com.diplomna.assets.finished.*;
+import com.diplomna.database.read.sub.*;
 import com.diplomna.users.UserManager;
 import com.diplomna.users.sub.User;
+import org.w3c.dom.ls.LSException;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -78,6 +75,66 @@ public class ReadFromDb {
         ReadPassiveResources readPassiveResources = new ReadPassiveResources(con, databaseName);
         try {
             return readPassiveResources.readPassiveResourceByUserId(userId);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return null;
+    }
+
+    public Index readIndexBySymbol(String symbol){
+        ReadIndex readIndex = new ReadIndex(con, databaseName);
+        try {
+            return readIndex.readIndexBySymbol(symbol);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return null;
+    }
+
+    public List<Index> readIndexPurchasesByUserId(int userId){
+        ReadIndexPurchases readIndexPurchases = new ReadIndexPurchases(con, databaseName);
+        try {
+            return readIndexPurchases.readIndexPurchasesByUserId(userId);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return null;
+    }
+
+    public Crypto readCryptoBySymbol(String symbol){
+        ReadCrypto readCrypto = new ReadCrypto(con, databaseName);
+        try {
+            return readCrypto.readCryptoBySymbol(symbol);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return null;
+    }
+
+    public List<Crypto> readCryptoPurchaseByUserId(int userId){
+        ReadCryptoPurchases readCryptoPurchases = new ReadCryptoPurchases(con, databaseName);
+        try {
+            return readCryptoPurchases.readCryptoPurchasesByUserId(userId);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return null;
+    }
+
+    public Commodities readCommodityByCommodityName(String commodityName){
+        ReadCommodity readCommodity = new ReadCommodity(con, databaseName);
+        try {
+            return readCommodity.readCommodityByName(commodityName);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return null;
+    }
+
+    public List<Commodities> readCommodityPurchaseInfoByUserId(int userId){
+        ReadCommodityPurchases readCommodityPurchases = new ReadCommodityPurchases(con, databaseName);
+        try {
+            return readCommodityPurchases.readCommodityPurchasesByUserId(userId);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
