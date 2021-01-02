@@ -58,7 +58,8 @@ public class ParseStock {
         if(stock!=null) {
             JSONObject json_stock = stock.getBody().getObject();
             String status = json_stock.getJSONObject("price").getString("marketState");
-            return status.equals("OPEN");
+            //return status.equals("OPEN");
+            return status.equals("REGULAR");
         }
         else {
             // NQMA STOCK NQKUV EXCEPTION I LOGVANE

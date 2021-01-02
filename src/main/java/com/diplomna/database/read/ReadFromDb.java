@@ -3,6 +3,7 @@ package com.diplomna.database.read;
 import com.diplomna.assets.finished.*;
 import com.diplomna.database.read.sub.*;
 import com.diplomna.users.UserManager;
+import com.diplomna.users.sub.Notification;
 import com.diplomna.users.sub.User;
 import org.w3c.dom.ls.LSException;
 
@@ -135,6 +136,16 @@ public class ReadFromDb {
         ReadCommodityPurchases readCommodityPurchases = new ReadCommodityPurchases(con, databaseName);
         try {
             return readCommodityPurchases.readCommodityPurchasesByUserId(userId);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return null;
+    }
+
+    public List<Notification> readNotificationsByUserId(int userId){
+        ReadNotifications readNotifications = new ReadNotifications(con, databaseName);
+        try {
+            return readNotifications.readNotificationsByUserId(userId);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }

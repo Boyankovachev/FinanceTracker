@@ -1,8 +1,11 @@
 package com.diplomna.restapi.service;
 
 import com.diplomna.api.stock.ParseStock;
+import com.diplomna.assets.AssetManager;
 import com.diplomna.assets.finished.*;
 import com.diplomna.database.read.ReadFromDb;
+import com.diplomna.users.sub.Notification;
+import com.diplomna.users.sub.User;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -13,7 +16,25 @@ public class BaseService {
 
     public BaseService(){}
 
-    public List<Stock> getStocksByUserId(int userId){
+    public User setupUser(User user){
+        AssetManager assetManager = new AssetManager();
+        assetManager.addStocks(getStocksByUserId(user.getUserId()));
+        assetManager.addPassiveResources(getPassiveResourcesByUserId(user.getUserId()));
+        assetManager.addIndexList(getIndexByUserId(user.getUserId()));
+        assetManager.addCryptoList(getCryptoByUserId(user.getUserId()));
+        assetManager.addCommodities(getCommodityByUserId(user.getUserId()));
+        user.setAssets(assetManager);
+        
+        user.setNotifications(getNotificationsByUserId(user.getUserId()));
+        return user;
+    }
+
+    private List<Notification> getNotificationsByUserId(int userId){
+        ReadFromDb readFromDb = new ReadFromDb("test");
+        return readFromDb.readNotificationsByUserId(userId);
+    }
+
+    private List<Stock> getStocksByUserId(int userId){
         ReadFromDb readFromDb = new ReadFromDb("test");
         List<Stock> stockPurchases = readFromDb.readStockPurchasesByUserId(userId);
         List<Stock> stockBase = new ArrayList<>();
@@ -28,22 +49,7 @@ public class BaseService {
             // read stocks
             stockBase.add(readFromDb.readStockBySymbol(symbol));
         }
-        /*
-        for(Stock stock: stockPurchases){
-            System.out.print(stock.getSymbol() + " ");
-            System.out.print(stock.getFirstPurchase().getPrice() + " ");
-            System.out.print(stock.getFirstPurchase().getQuantity() + " ");
-            System.out.println(stock.getFirstPurchase().getPurchaseDate().getDateSql() + " ");
-        }
-        System.out.println();
-        for(Stock stock: stockBase){
-            System.out.print(stock.getSymbol()  + " ");
-            System.out.print(stock.getCurrencySymbol()  + " ");
-            System.out.print(stock.getDescription()  + " ");
-            System.out.println(stock.getName());
-        }
 
-         */
         ParseStock parseStock = new ParseStock();
         int i,j;
         for(i=0; i<stockBase.size(); i++){
@@ -59,48 +65,17 @@ public class BaseService {
             stockBase.get(i).setMarketOpen(parseStock.isMarketOpen());
             stockBase.get(i).setRecommendationKey(parseStock.getRecommendationKey());
         }
-        /*
-        //testing if works
-        for(Stock stock: stockBase){
-            System.out.print(stock.getSymbol() + " ");
-            System.out.print(stock.getName() + " ");
-            System.out.print(stock.getCurrency() + " ");
-            System.out.print(stock.getCurrencySymbol() + " ");
-            System.out.print(stock.getExchangeName() + " ");
-            System.out.println(stock.getDescription() + " ");
-            System.out.println("Total quantity owned: " + stock.getQuantityOwned() + " Avarage Purchase Price: " + stock.getAveragePurchasePrice());
-            System.out.println("current price: " + stock.getCurrentMarketPrice() + " | is market open: " + stock.isMarketOpen() + " | recomendation key: " + stock.getRecommendationKey());
-            for(i=0; i<stock.getAllPurchases().size(); i++){
-                //System.out.print(stock.getFirstPurchase().getPrice() + " ");
-                //System.out.print(stock.getFirstPurchase().getQuantity() + " ");
-                //System.out.println(stock.getFirstPurchase().getPurchaseDate().getDateSql() + " ");
-                System.out.print(stock.getAllPurchases().get(i).getPrice() + " ");
-                System.out.print(stock.getAllPurchases().get(i).getQuantity() + " ");
-                System.out.println(stock.getAllPurchases().get(i).getPurchaseDate().getDateSql() + " ");
-            }
-            System.out.println("\n");
-        }
-         */
 
         return stockBase;
     }
 
-    public List<PassiveResource> getPassiveResourcesByUserId(int userId){
+    private List<PassiveResource> getPassiveResourcesByUserId(int userId){
         ReadFromDb readFromDb = new ReadFromDb("test");
         List<PassiveResource> passiveResources = readFromDb.readPassiveResourcesByUserId(userId);
-        for (PassiveResource passiveResource: passiveResources){
-            System.out.print(passiveResource.getName() + " ");
-            System.out.print(passiveResource.getPurchaseInfo().getPrice() + " ");
-            System.out.print(passiveResource.getPurchaseInfo().getPurchaseDate().getDateSql() + " ");
-            System.out.print(passiveResource.getCurrentMarketPrice() + " ");
-            System.out.print(passiveResource.getDescription() + " ");
-            System.out.print(passiveResource.getCurrency() + " ");
-            System.out.print(passiveResource.getCurrencySymbol() + " ");
-        }
         return passiveResources;
     }
 
-    public List<Index> getIndexByUserId(int userId){
+    private List<Index> getIndexByUserId(int userId){
 
         ReadFromDb readFromDb = new ReadFromDb("test");
         List<Index> indexPurchases = readFromDb.readIndexPurchasesByUserId(userId);
@@ -150,7 +125,7 @@ public class BaseService {
         return indexBase;
     }
 
-    public List<Crypto> getCryptoByUserId(int userId){
+    private List<Crypto> getCryptoByUserId(int userId){
         ReadFromDb readFromDb = new ReadFromDb("test");
         List<Crypto> cryptoPurchases = readFromDb.readCryptoPurchaseByUserId(userId);
         List<Crypto> cryptoBase = new ArrayList<>();
@@ -199,7 +174,7 @@ public class BaseService {
         return cryptoBase;
     }
 
-    public List<Commodities> getCommodityByUserId(int userId){
+    private List<Commodities> getCommodityByUserId(int userId){
         ReadFromDb readFromDb = new ReadFromDb("test");
         List<Commodities> commodityPurchases = readFromDb.readCommodityPurchaseInfoByUserId(userId);
         List<Commodities> commodityBase = new ArrayList<>();
@@ -248,4 +223,5 @@ public class BaseService {
 
         return commodityBase;
     }
+
 }

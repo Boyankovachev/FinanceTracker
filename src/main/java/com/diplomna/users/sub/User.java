@@ -93,6 +93,9 @@ public class User {
     public void setNotifications(List<Notification> notifications) {
         this.notifications = notifications;
     }
+    public void addNotification(Notification notification){
+        this.notifications.add(notification);
+    }
 
     public void setSalt(String salt){
         this.salt = salt;

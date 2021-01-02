@@ -5,7 +5,101 @@
     <title>Title</title>
 </head>
 <body>
+
     <p th:text="${user.userName}"></p>
     <p th:text="${user.email}"></p>
+    <form action = "/notification" method="get">
+        <button type="submit">Notifications</button>
+    </form>
+    <form action = "/settings" method="get">
+        <button type="submit">Settings</button>
+    </form>
+
+    <table>
+        <tr>
+            <th>Stock Name</th>
+            <th>Symbol</th>
+            <th>Price</th>
+            <th>Quantity Owned</th>
+            <th>Avg. Purchase Price</th>
+            <th>Currency</th>
+            <th>Exchange</th>
+            <th>Is Open</th>
+        </tr>
+        <tr th:each="stock: ${stock}">
+            <td th:text="${stock.name}"></td>
+            <td th:text="${stock.symbol}"></td>
+            <td th:text="${stock.currentMarketPrice}"></td>
+            <td th:text="${stock.quantityOwned}"></td>
+            <td th:text="${stock.averagePurchasePrice}"></td>
+            <td th:text="${stock.currencySymbol}"></td>
+            <td th:text="${stock.exchangeName}"></td>
+            <td th:text="${stock.isMarketOpen}"></td>
+        </tr>
+
+        <tr>
+            <th>Passive Resource Name</th>
+            <th>Current Price</th>
+            <th>Purchase Price</th>
+            <th>Currency</th>
+        </tr>
+        <tr th:each="passive_resource: ${passive_resource}">
+            <td th:text="${passive_resource.name}"></td>
+            <td th:text="${passive_resource.currentMarketPrice}"></td>
+            <td th:text="${passive_resource.purchaseInfo.price}"></td>
+            <td th:text="${passive_resource.currencySymbol}"></td>
+        </tr>
+
+        <tr>
+            <th>Index Name</th>
+            <th>Symbol</th>
+            <th>Price</th>
+            <th>Quantity Owned</th>
+            <th>Avg. Purchase Price</th>
+            <th>Currency</th>
+            <th>Exchange</th>
+        </tr>
+        <tr th:each="index: ${index}">
+            <td th:text="${index.name}"></td>
+            <td th:text="${index.symbol}"></td>
+            <td th:text="${index.currentMarketPrice}"></td>
+            <td th:text="${index.quantityOwned}"></td>
+            <td th:text="${index.averagePurchasePrice}"></td>
+            <td th:text="${index.currencySymbol}"></td>
+            <td th:text="${index.exchangeName}"></td>
+        </tr>
+
+        <tr>
+            <th>Crypto Name</th>
+            <th>Symbol</th>
+            <th>Price</th>
+            <th>Quantity Owned</th>
+            <th>Avg. Purchase Price</th>
+            <th>Currency</th>
+        </tr>
+        <tr th:each="crypto: ${crypto}">
+            <td th:text="${crypto.name}"></td>
+            <td th:text="${crypto.symbol}"></td>
+            <td th:text="${crypto.currentMarketPrice}"></td>
+            <td th:text="${crypto.quantityOwned}"></td>
+            <td th:text="${crypto.averagePurchasePrice}"></td>
+            <td th:text="${crypto.currencySymbol}"></td>
+        </tr>
+
+        <tr>
+            <th>Commodity</th>
+            <th>Price</th>
+            <th>Quantity Owned</th>
+            <th>Avg. Purchase Price</th>
+            <th>Currency</th>
+        </tr>
+        <tr th:each="commodity: ${commodity}">
+            <td th:text="${commodity.name}"></td>
+            <td th:text="${commodity.currentMarketPrice}"></td>
+            <td th:text="${commodity.quantityOwned}"></td>
+            <td th:text="${commodity.averagePurchasePrice}"></td>
+            <td th:text="${commodity.currencySymbol}"></td>
+        </tr>
+    </table>
 </body>
 </html>

@@ -5,12 +5,11 @@ import com.diplomna.assets.sub.Asset;
 import java.util.List;
 
 public class Notification {
-    AssetType assetType;
-    private boolean assetTypeSettings;
+    private AssetType assetType;
+    private boolean assetTypeSettings; // true - all  false - only 1
+    private String notificationTarget;
     private double notificationPrice;
     private String notificationName;
-    private String stockSymbol;
-    private String passiveAssetName;
     public Notification(){}
     public Notification(AssetType assetType, double notificationPrice, String notificationName){
         this.assetType = assetType;
@@ -22,28 +21,24 @@ public class Notification {
         return notificationPrice;
     }
 
+    public void setNotificationPrice(Double price){
+        this.notificationPrice = price;
+    }
+
     public String getNotificationName(){
         return notificationName;
+    }
+
+    public void setNotificationName(String name){
+        this.notificationName = name;
     }
 
     public AssetType getAssetType(){
         return assetType;
     }
 
-    public void setStockSymbol(String stockSymbol) {
-        this.stockSymbol = stockSymbol;
-    }
-
-    public String getStockSymbol() {
-        return stockSymbol;
-    }
-
-    public String getPassiveAssetName() {
-        return passiveAssetName;
-    }
-
-    public void setPassiveAssetName(String passiveAssetName) {
-        this.passiveAssetName = passiveAssetName;
+    public void setAssetType(AssetType assetType){
+        this.assetType = assetType;
     }
 
     public void setAssetTypeSettings(boolean assetTypeSettings) {
@@ -52,15 +47,22 @@ public class Notification {
     public boolean getAssetTypeSettings() {
         return assetTypeSettings;
     }
+    public void setNotificationTarget(String notificationTarget){
+        this.notificationTarget = notificationTarget;
+    }
+    public String getNotificationTarget(){
+        return notificationTarget;
+    }
+
 }
 
 /*
             String sql = "CREATE TABLE IF NOT EXISTS `"+databaseName+"`.`notification`(\n" +
                     "    `user_id` INT NOT NULL,\n" +
-                    "    `asset_type` ENUM(\"stock\", \"passive_resource\", \"global\") NOT NULL,\n" +
+                    "    `asset_type` ENUM(\"stock\", \"passive_resource\", \"index\", \"crypto\", \"commodity\", \"global\") NOT NULL,\n" +
+                    "    `asset_type_settings` BOOL,\n" +
+                    "    `notification_target` VARCHAR(12),\n" +
                     "    `notification_price` DOUBLE NOT NULL,\n" +
                     "    `notification_name` VARCHAR(32) NOT NULL,\n" +
-                    "    `stock_symbol` VARCHAR(12),\n" +
-                    "    `passive_asset_name` VARCHAR(12),\n" +
                     "    FOREIGN KEY (`user_id`) REFERENCES `" + databaseName + "`.user(`user_id`));\n";
  */

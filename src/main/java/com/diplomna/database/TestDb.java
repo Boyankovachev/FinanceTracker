@@ -40,5 +40,8 @@ public class TestDb {
         System.out.println(stock.getName());
 
          */
+
+        //ReadFromDb readFromDb = new ReadFromDb("test");
+        //readFromDb.readNotificationsByUserId(5);
     }
 }

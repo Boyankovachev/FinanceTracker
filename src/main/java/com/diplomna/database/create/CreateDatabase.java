@@ -84,12 +84,11 @@ public class CreateDatabase {
             Statement DbStatement = con.createStatement();
             String sql = "CREATE TABLE IF NOT EXISTS `"+databaseName+"`.`notification`(\n" +
                     "    `user_id` INT NOT NULL,\n" +
-                    "    `asset_type` ENUM(\"stock\", \"passive_resource\", \"global\") NOT NULL,\n" +
-                    "    `asset_type_settings` BOOL NOT NULL,\n" +
+                    "    `asset_type` ENUM(\"stock\", \"passive_resource\", \"index\", \"crypto\", \"commodity\", \"global\") NOT NULL,\n" +
+                    "    `asset_type_settings` BOOL,\n" +
+                    "    `notification_target` VARCHAR(12),\n" +
                     "    `notification_price` DOUBLE NOT NULL,\n" +
                     "    `notification_name` VARCHAR(32) NOT NULL,\n" +
-                    "    `stock_symbol` VARCHAR(12),\n" +
-                    "    `passive_asset_name` VARCHAR(12),\n" +
                     "    FOREIGN KEY (`user_id`) REFERENCES `" + databaseName + "`.user(`user_id`));\n";
             DbStatement.execute(sql);
         } catch (SQLException e) {

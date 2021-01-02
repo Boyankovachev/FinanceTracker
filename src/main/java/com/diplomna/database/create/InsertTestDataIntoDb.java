@@ -287,12 +287,5 @@ public class InsertTestDataIntoDb {
         insert.insertIndexPurchaseInfo(2, ALLPURCHASEINFO);
 
 
-        /////////////////////////////////////////////////////////////
-        /////////////////////////////////////////////////////////////
-        // NOTIFICATIONS
-        Notification notification = new Notification(AssetType.stock, 750, "tesla price prediction alert");
-        notification.setStockSymbol("TSLA");
-        notification.setAssetTypeSettings(true);
-        insert.insertNotification(1,notification);
     }
 }
