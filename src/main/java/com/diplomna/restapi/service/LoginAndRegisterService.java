@@ -55,11 +55,8 @@ public class LoginAndRegisterService {
 
     public String verifyLogin(String inputString){
         String[] temp = inputString.split("&");
-        //System.out.println(inputString);
         String inputUsername = temp[0].substring(9);
         String inputPassword = temp[1].substring(9);
-        //System.out.println(inputUsername);
-        //System.out.println(inputPassword);
         ReadFromDb readFromDb = new ReadFromDb("test");
         UserManager userManager = readFromDb.readUsers();
         if(!userManager.isUsernamePresent(inputUsername)){

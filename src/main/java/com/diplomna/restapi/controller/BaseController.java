@@ -27,6 +27,9 @@ public class BaseController {
 
     @RequestMapping(value = "/user", method = RequestMethod.GET)
     public String getUserHomepage(@ModelAttribute("user") User user, Model model){
+        if(user.getUserName() == null){
+            return "redirect:/";
+        }
         this.user = baseService.setupUser(user);
         model.addAttribute("stock", user.getAssets().getAllStocks());
         model.addAttribute("passive_resource", user.getAssets().getAllPassiveResources());
@@ -59,4 +62,18 @@ public class BaseController {
             return "settings";
         }
     }
+
+    @RequestMapping(value = "/asset", method = RequestMethod.POST)
+    public RedirectView assets(@RequestParam("asset_type") String assetType, @RequestParam("asset_name") String assetName, RedirectAttributes attributes){
+        attributes.addFlashAttribute("assetName", assetName);
+        attributes.addFlashAttribute("assetType", assetType);
+        return new RedirectView("asset");
+    }
+    @RequestMapping(value = "/asset", method = RequestMethod.GET)
+    public String assets(@ModelAttribute("assetName") String assetName, @ModelAttribute("assetType") String assetType, Model model){
+        model.addAttribute("assetName", assetName);
+        model.addAttribute("assetType", assetType);
+        return "assets/test";
+    }
+
 }

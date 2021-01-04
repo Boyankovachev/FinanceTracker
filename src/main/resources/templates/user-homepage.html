@@ -3,9 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link th:href = "@{/css/user-homepage.css}" rel="stylesheet">
+    <script type="application/javascript" th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js}"></script>
+    <script type="application/javascript" th:src = "@{/js/user-homepage.js}"></script>
 </head>
 <body>
-
+    <h1> USER HOMEPAGE</h1>
     <p th:text="${user.userName}"></p>
     <p th:text="${user.email}"></p>
     <form action = "/notification" method="get">
@@ -27,7 +30,11 @@
             <th>Is Open</th>
         </tr>
         <tr th:each="stock: ${stock}">
-            <td th:text="${stock.name}"></td>
+            <td>
+                <form action="/asset" method="get">
+                    <button class="open-asset" asset-type="stock" th:asset-name="${stock.name}" th:text="${stock.name}"></button>
+                </form>
+            </td>
             <td th:text="${stock.symbol}"></td>
             <td th:text="${stock.currentMarketPrice}"></td>
             <td th:text="${stock.quantityOwned}"></td>
@@ -35,6 +42,7 @@
             <td th:text="${stock.currencySymbol}"></td>
             <td th:text="${stock.exchangeName}"></td>
             <td th:text="${stock.isMarketOpen}"></td>
+            <td></td>
         </tr>
 
         <tr>
@@ -44,7 +52,11 @@
             <th>Currency</th>
         </tr>
         <tr th:each="passive_resource: ${passive_resource}">
-            <td th:text="${passive_resource.name}"></td>
+            <td>
+                <form action="/asset" method="get">
+                    <button class="open-asset" asset-type="passive-resource" th:asset-name="${passive_resource.name}" th:text="${passive_resource.name}"></button>
+                </form>
+            </td>
             <td th:text="${passive_resource.currentMarketPrice}"></td>
             <td th:text="${passive_resource.purchaseInfo.price}"></td>
             <td th:text="${passive_resource.currencySymbol}"></td>
@@ -60,7 +72,11 @@
             <th>Exchange</th>
         </tr>
         <tr th:each="index: ${index}">
-            <td th:text="${index.name}"></td>
+            <td>
+                <form action="/asset" method="get">
+                    <button class="open-asset" asset-type="index" th:asset-name="${index.name}" th:text="${index.name}"></button>
+                </form>
+            </td>
             <td th:text="${index.symbol}"></td>
             <td th:text="${index.currentMarketPrice}"></td>
             <td th:text="${index.quantityOwned}"></td>
@@ -78,7 +94,11 @@
             <th>Currency</th>
         </tr>
         <tr th:each="crypto: ${crypto}">
-            <td th:text="${crypto.name}"></td>
+            <td>
+                <form action="/asset" method="get">
+                    <button class="open-asset" asset-type="crypto" th:asset-name="${crypto.name}" th:text="${crypto.name}"></button>
+                </form>
+            </td>
             <td th:text="${crypto.symbol}"></td>
             <td th:text="${crypto.currentMarketPrice}"></td>
             <td th:text="${crypto.quantityOwned}"></td>
@@ -94,7 +114,11 @@
             <th>Currency</th>
         </tr>
         <tr th:each="commodity: ${commodity}">
-            <td th:text="${commodity.name}"></td>
+            <td>
+                <form action="/asset" method="get">
+                    <button class="open-asset" asset-type="commodity" th:asset-name="${commodity.name}" th:text="${commodity.name}"></button>
+                </form>
+            </td>
             <td th:text="${commodity.currentMarketPrice}"></td>
             <td th:text="${commodity.quantityOwned}"></td>
             <td th:text="${commodity.averagePurchasePrice}"></td>
