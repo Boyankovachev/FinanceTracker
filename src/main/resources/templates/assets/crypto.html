@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h1>Crypto</h1>
+    <p th:text="${crypto.name}"></p>
+    <p th:text="${crypto.symbol}"></p>
+    <p th:text="${crypto.description}"></p>
+    <p th:text="${crypto.currentMarketPrice}"></p>
+    <p th:text="${crypto.averagePurchasePrice}"></p>
+    <p th:text="${crypto.quantityOwned}"></p>
+    <p th:text="${crypto.currency}"></p>
+    <p th:text="${crypto.currencySymbol}"></p>
+
+    <h2> Purchases</h2>
+    <table>
+        <tr>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Date</th>
+        </tr>
+        <tr th:each="purchase: ${purchase}">
+            <td th:text="${purchase.price}"></td>
+            <td th:text="${purchase.quantity}"></td>
+            <td th:text="${purchase.purchaseDate.myFormatDateString}"></td>
+            <td></td>
+        </tr>
+    </table>
+</body>
+</html>

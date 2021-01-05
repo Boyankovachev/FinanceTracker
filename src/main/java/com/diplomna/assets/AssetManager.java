@@ -63,4 +63,46 @@ public class AssetManager {
     public void addCryptoList(List<Crypto> newCrypto){
         cryptoCurrencies.addAll(newCrypto);
     }
+
+    public Stock getStockByName(String stockName){
+        for(Stock stock: stocks){
+            if(stock.getName().equals(stockName)){
+                return stock;
+            }
+        }
+        return null;
+    }
+
+    public PassiveResource getPassiveResourceByName(String name){
+        for(PassiveResource passiveResource: passiveResources){
+            if(passiveResource.getName().equals(name)){
+                return passiveResource;
+            }
+        }
+        return null;
+    }
+    public Index getIndexByName(String name){
+        for(Index index: indexFunds){
+            if(index.getName().equals(name)){
+                return index;
+            }
+        }
+        return null;
+    }
+    public Crypto getCryptoByName(String name){
+        for(Crypto crypto: cryptoCurrencies){
+            if(crypto.getName().equals(name)){
+                return crypto;
+            }
+        }
+        return null;
+    }
+    public Commodities getCommodityByName(String name){
+        for(Commodities commodity: commodities){
+            if(commodity.getName().equals(name)){
+                return commodity;
+            }
+        }
+        return null;
+    }
 }

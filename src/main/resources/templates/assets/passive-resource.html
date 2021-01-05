@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+    <body>
+    <h1>Passive Resource</h1>
+    <p th:text="${passive_resource.name}"></p>
+    <p th:text="${passive_resource.description}"></p>
+    <p th:text="${passive_resource.purchaseInfo.price}"></p>
+    <p th:text="${passive_resource.currentMarketPrice}"></p>
+    <p th:text="${passive_resource.currency}"></p>
+    <p th:text="${passive_resource.currencySymbol}"></p>
+    <p th:text="${passive_resource.purchaseInfo.purchaseDate.myFormatDateString}"></p>
+
+</body>
+</html>

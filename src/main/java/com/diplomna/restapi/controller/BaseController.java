@@ -1,7 +1,7 @@
 package com.diplomna.restapi.controller;
 
 import com.diplomna.assets.AssetManager;
-import com.diplomna.assets.finished.Index;
+import com.diplomna.assets.finished.*;
 import com.diplomna.restapi.service.BaseService;
 import com.diplomna.users.sub.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,9 +71,84 @@ public class BaseController {
     }
     @RequestMapping(value = "/asset", method = RequestMethod.GET)
     public String assets(@ModelAttribute("assetName") String assetName, @ModelAttribute("assetType") String assetType, Model model){
-        model.addAttribute("assetName", assetName);
-        model.addAttribute("assetType", assetType);
-        return "assets/test";
+        if(user == null){
+            return "redirect:/";
+        }
+        else {
+            try {
+                // Sleep to avoid post from javascript and get from html getting de-synchronised
+                Thread.sleep(30);
+            }
+            catch(InterruptedException ex) {
+                Thread.currentThread().interrupt();
+            }
+            switch (assetType) {
+                case "stock":
+                    if(user.getAssets().getStockByName(assetName) == null){
+                        //exception i logvane
+                        return "";
+                    }
+                    else{
+                        Stock stock = user.getAssets().getStockByName(assetName);
+                        model.addAttribute("stock", stock);
+                        model.addAttribute("purchase", stock.getAllPurchases());
+                        return "assets/stock";
+                    }
+                case "passive-resource":
+                    if(user.getAssets().getPassiveResourceByName(assetName) == null){
+                        //exception i logvane
+                        return "";
+                    }
+                    else{
+                        PassiveResource passiveResource = user.getAssets().getPassiveResourceByName(assetName);
+                        model.addAttribute("passive_resource", passiveResource);
+                        return "assets/passive-resource";
+                    }
+                case "index":
+                    if(user.getAssets().getIndexByName(assetName) == null){
+                        //exception i logvane
+                        return "";
+                    }
+                    else{
+                        Index index = user.getAssets().getIndexByName(assetName);
+                        model.addAttribute("index", index);
+                        model.addAttribute("purchase", index.getAllPurchases());
+                        return "assets/index";
+                    }
+                case "crypto":
+                    if(user.getAssets().getCryptoByName(assetName) == null){
+                        //exception i logvane
+                        return "";
+                    }
+                    else{
+                        Crypto crypto = user.getAssets().getCryptoByName(assetName);
+                        model.addAttribute("crypto", crypto);
+                        model.addAttribute("purchase", crypto.getAllPurchases());
+                        return "assets/crypto";
+                    }
+                case "commodity":
+                    if(user.getAssets().getCommodityByName(assetName) == null){
+                        //exception i logvane
+                        return "";
+                    }
+                    else{
+                        Commodities commodity = user.getAssets().getCommodityByName(assetName);
+                        model.addAttribute("commodity", commodity);
+                        model.addAttribute("purchase", commodity.getAllPurchases());
+                        return "assets/commodity";
+                    }
+                default:
+                    //tuka exception i logvane (ne trqbva da vliza tuka)
+                    // tva e za da izbegna shibanata greska
+                    model.addAttribute("stock", user.getAssets().getAllStocks());
+                    model.addAttribute("passive_resource", user.getAssets().getAllPassiveResources());
+                    model.addAttribute("index", user.getAssets().getAllIndex());
+                    model.addAttribute("crypto", user.getAssets().getCrypto());
+                    model.addAttribute("commodity", user.getAssets().getCommodities());
+                    model.addAttribute("user", user);
+                    return "user-homepage";
+            }
+        }
     }
 
 }

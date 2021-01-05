@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h1>Stock</h1>
+    <p th:text="${stock.name}"></p>
+    <p th:text="${stock.symbol}"></p>
+    <p th:text="${stock.description}"></p>
+    <p th:text="${stock.currentMarketPrice}"></p>
+    <p th:text="${stock.averagePurchasePrice}"></p>
+    <p th:text="${stock.quantityOwned}"></p>
+    <p th:text="${stock.currency}"></p>
+    <p th:text="${stock.currencySymbol}"></p>
+    <p th:text="${stock.exchangeName}"></p>
+    <p th:text="${stock.isMarketOpen}"></p>
+    <p th:text="${stock.recommendationKey}"></p>
+
+    <h2> Purchases</h2>
+    <table>
+        <tr>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Date</th>
+        </tr>
+        <tr th:each="purchase: ${purchase}">
+            <td th:text="${purchase.price}"></td>
+            <td th:text="${purchase.quantity}"></td>
+            <td th:text="${purchase.purchaseDate.myFormatDateString}"></td>
+            <td></td>
+        </tr>
+    </table>
+
+</body>
+</html>

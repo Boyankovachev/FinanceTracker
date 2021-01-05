@@ -11,12 +11,14 @@ public class DatеManager {
     public SimpleDateFormat myDateFormatWithTime;
     public SimpleDateFormat sqlDateFormat;
     public Calendar calendar;
+    private String myFormatDateString;
 
     public DatеManager(){
         myDateFormat = new SimpleDateFormat("dd.MM.yyyy");
         myDateFormatWithTime = new SimpleDateFormat("dd.MM.yyyy HH:mm");
         sqlDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         calendar = new GregorianCalendar();
+        myFormatDateString = myDateFormat.format(calendar.getTime());
     }
     public DatеManager(String time){
         myDateFormat = new SimpleDateFormat("dd.MM.yyyy");
@@ -26,6 +28,7 @@ public class DatеManager {
         try {
             if(time != null){
                 calendar.setTime(sqlDateFormat.parse(time));
+                myFormatDateString = myDateFormat.format(calendar.getTime());
             }
             else {
                 calendar = null;
@@ -52,6 +55,10 @@ public class DatеManager {
             return null;
         }
         return sqlDateFormat.format(calendar.getTime());
+    }
+
+    public String getMyFormatDateString() {
+        return myFormatDateString;
     }
 }
 /*
