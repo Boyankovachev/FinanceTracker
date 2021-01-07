@@ -3,11 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script type="application/javascript" th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js}"></script>
+    <script type="application/javascript" th:src = "@{/js/assets/asset.js}"></script>
 </head>
 <body>
     <h1>Index</h1>
-    <p th:text="${index.name}"></p>
-    <p th:text="${index.symbol}"></p>
+    <p id="asset-name" th:text="${index.name}"></p>
+    <p id="asset-symbol" th:text="${index.symbol}"></p>
     <p th:text="${index.description}"></p>
     <p th:text="${index.currentMarketPrice}"></p>
     <p th:text="${index.averagePurchasePrice}"></p>
@@ -18,7 +20,7 @@
     <p th:text="${index.isMarketOpen}"></p>
 
     <h2> Purchases</h2>
-    <table>
+    <table id="purchase-table">
         <tr>
             <th>Price</th>
             <th>Quantity</th>
@@ -31,5 +33,12 @@
             <td></td>
         </tr>
     </table>
+
+    <p>Add new purchase</p>
+    <input type="number" placeholder="Enter Quantity" id="quantity"><br>
+    <input type="number" placeholder="Enter Price" id="price"><br>
+    <input type="text" placeholder="Enter Date" id="date"><br>
+    <button id="confirm" asset-type="index">Confirm</button>
+    <div id="error-message"></div>
 </body>
 </html>

@@ -2,15 +2,25 @@ package com.diplomna.restapi.controller;
 
 import com.diplomna.assets.AssetManager;
 import com.diplomna.assets.finished.*;
+import com.diplomna.assets.sub.PurchaseInfo;
+import com.diplomna.database.insert.InsertIntoDb;
+import com.diplomna.date.DatеManager;
 import com.diplomna.restapi.service.BaseService;
 import com.diplomna.users.sub.User;
+import org.apache.http.protocol.HTTP;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
+import java.text.ParseException;
+import java.util.HashMap;
 import java.util.List;
 
 @Controller
@@ -151,4 +161,93 @@ public class BaseController {
         }
     }
 
+    @RequestMapping(value = "/add-purchase", method = RequestMethod.POST)
+    public @ResponseBody
+    ResponseEntity<Object> addPurchase(
+            @RequestParam("quantity") double quantity, @RequestParam("price") double price,
+            @RequestParam(value = "date", required = false) String date, @RequestParam("asset_type") String assetType,
+            @RequestParam("asset_name") String assetName, @RequestParam(value = "asset_symbol", required = false) String assetSymbol){
+
+        HashMap<String, String> map = new HashMap<>();
+        HttpStatus httpStatus = HttpStatus.OK;
+
+        PurchaseInfo purchaseInfo = new PurchaseInfo(price, quantity);
+        if(date != null && !date.equals("")){
+            try {
+                DatеManager datеManager = new DatеManager();
+                datеManager.setDateFromString(date);
+                purchaseInfo.setPurchaseDate(datеManager);
+                map.put("date", datеManager.getDateAsString());
+            } catch (ParseException e) {
+                //return "Wrong date format. Please use day.month.year!";
+                map.put("success", "Wrong date format. Please use day.month.year!");
+            }
+        }
+        map.put("price", String.valueOf(price));
+        map.put("quantity", String.valueOf(quantity));
+
+        InsertIntoDb insertIntoDb = new InsertIntoDb("test");
+
+        switch (assetType){
+            case "stock":
+                if(assetSymbol != null && !assetSymbol.equals("")) {
+                    purchaseInfo.setStockSymbol(assetSymbol);
+                    insertIntoDb.insertStockPurchaseInfo(user.getUserId(), purchaseInfo);
+                    map.put("success", "success");
+
+                    //add new purchase to RAM
+                    this.user.getAssets().addPurchaseToResource(assetType, assetSymbol, purchaseInfo);
+                }
+                else {
+                    //return "An error has occurred! Purchase not registered.";
+                    map.put("success", "An error has occurred! Purchase not registered.");
+                    httpStatus = HttpStatus.EXPECTATION_FAILED;
+                }
+                break;
+            case "index":
+                if(assetSymbol != null && !assetSymbol.equals("")) {
+                    purchaseInfo.setStockSymbol(assetSymbol);
+                    insertIntoDb.insertIndexPurchaseInfo(user.getUserId(), purchaseInfo);
+                    map.put("success", "success");
+
+                    //add new purchase to RAM
+                    this.user.getAssets().addPurchaseToResource(assetType, assetSymbol, purchaseInfo);
+                }
+                else {
+                    map.put("success", "An error has occurred! Purchase not registered.");
+                    httpStatus = HttpStatus.EXPECTATION_FAILED;
+                }
+                break;
+            case "crypto":
+                if(assetSymbol != null && !assetSymbol.equals("")) {
+                    purchaseInfo.setStockSymbol(assetSymbol);
+                    insertIntoDb.insertCryptoPurchaseInfo(user.getUserId(), purchaseInfo);
+                    map.put("success", "success");
+
+                    //add new purchase to RAM
+                    this.user.getAssets().addPurchaseToResource(assetType, assetSymbol, purchaseInfo);
+                }
+                else {
+                    map.put("success", "An error has occurred! Purchase not registered.");
+                    httpStatus = HttpStatus.EXPECTATION_FAILED;
+                }
+                break;
+            case "commodity":
+                //commodities have no symbol and are referenced by name
+                purchaseInfo.setStockSymbol(assetName);
+                insertIntoDb.insertCommodityPurchaseInfo(user.getUserId(), purchaseInfo);
+                map.put("success", "success");
+
+                //add new purchase to RAM
+                this.user.getAssets().addPurchaseToResource(assetType, assetName, purchaseInfo);
+                
+                break;
+            default:
+                //tuka exception i logvane (ne trqbva da vliza tuka)
+                map.put("success", "An error has occurred! Purchase not registered.");
+                break;
+        }
+
+        return new ResponseEntity<Object>(map, httpStatus);
+    }
 }

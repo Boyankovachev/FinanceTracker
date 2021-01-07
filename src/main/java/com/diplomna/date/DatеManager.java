@@ -60,6 +60,10 @@ public class DatеManager {
     public String getMyFormatDateString() {
         return myFormatDateString;
     }
+
+    public void setDateFromString(String date) throws ParseException {
+        calendar.setTime(myDateFormat.parse(date));
+    }
 }
 /*
  Calendar cal = Calendar.getInstance();

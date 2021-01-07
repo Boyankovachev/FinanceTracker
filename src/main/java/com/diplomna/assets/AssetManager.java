@@ -1,6 +1,9 @@
 package com.diplomna.assets;
 
 import com.diplomna.assets.finished.*;
+import com.diplomna.assets.sub.PurchaseInfo;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -104,5 +107,43 @@ public class AssetManager {
             }
         }
         return null;
+    }
+
+    public void addPurchaseToResource(String resourceType, String resourceIdentifier, PurchaseInfo purchaseInfo){
+        int i;
+        switch (resourceType){
+            case "stock":
+                for(i=0; i<stocks.size(); i++){ //find the resource
+                    if(stocks.get(i).getSymbol().equals(resourceIdentifier)){
+                        break;
+                    }
+                }
+                stocks.get(i).addPurchase(purchaseInfo);
+                break;
+            case "index":
+                for(i=0; i<indexFunds.size(); i++){ //find the resource
+                    if(indexFunds.get(i).getSymbol().equals(resourceIdentifier)){
+                        break;
+                    }
+                }
+                indexFunds.get(i).addPurchase(purchaseInfo);
+                break;
+            case "crypto":
+                for(i=0; i<cryptoCurrencies.size(); i++){ //find the resource
+                    if(cryptoCurrencies.get(i).getSymbol().equals(resourceIdentifier)){
+                        break;
+                    }
+                }
+                cryptoCurrencies.get(i).addPurchase(purchaseInfo);
+                break;
+            case "commodity":
+                for(i=0; i<commodities.size(); i++){ //find the resource
+                    if(commodities.get(i).getName().equals(resourceIdentifier)){
+                        break;
+                    }
+                }
+                commodities.get(i).addPurchase(purchaseInfo);
+                break;
+        }
     }
 }
