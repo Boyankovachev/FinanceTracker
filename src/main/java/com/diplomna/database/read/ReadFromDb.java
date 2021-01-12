@@ -1,6 +1,7 @@
 package com.diplomna.database.read;
 
 import com.diplomna.assets.finished.*;
+import com.diplomna.assets.sub.ActiveAsset;
 import com.diplomna.database.read.sub.*;
 import com.diplomna.users.UserManager;
 import com.diplomna.users.sub.Notification;
@@ -147,6 +148,29 @@ public class ReadFromDb {
         try {
             return readNotifications.readNotificationsByUserId(userId);
         } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return null;
+    }
+
+    public List<String> readPresentAsset(String assetType){
+        try {
+            switch (assetType) {
+                case "stock":
+                    ReadStock readStock = new ReadStock(con, databaseName);
+                    return readStock.readAllStocksSymbols();
+                case "index":
+                    ReadIndex readIndex = new ReadIndex(con, databaseName);
+                    return readIndex.readAllIndexSymbols();
+                case "crypto":
+                    ReadCrypto readCrypto = new ReadCrypto(con, databaseName);
+                    return readCrypto.readAllCryptoSymbols();
+                case "commodity":
+                    ReadCommodity readCommodity = new ReadCommodity(con, databaseName);
+                    return readCommodity.readAllCommodityNames();
+            }
+        }
+        catch (SQLException throwables){
             throwables.printStackTrace();
         }
         return null;

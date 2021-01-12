@@ -18,21 +18,16 @@ public class GetStockFromAPI {
         rapidapiHostValue = "apidojo-yahoo-finance-v1.p.rapidapi.com";
     }
 
-    public HttpResponse<JsonNode> getStockBySymbolAsJSON(final String symbol){
+    public HttpResponse<JsonNode> getStockBySymbolAsJSON(final String symbol) throws UnirestException {
         //return HttpResponse<JsonNode> selected by stock symbol
         //GET stock/get-detail
         //YahooFinanceAPI (RapidAPI)
-        try {
-            HttpResponse<JsonNode> response = Unirest.get("https://apidojo-yahoo-finance-v1.p.rapidapi.com/stock/get-detail?symbol=" + symbol)
-                    .header(rapidapiKey, rapidapiKeyValue)
-                    .header(rapidapiHost, rapidapiHostValue)
-                    .asJson();
-            return response;
-        } catch (UnirestException e) {
-            // log errors here
-            e.printStackTrace();
-        }
-        return null;
+        HttpResponse<JsonNode> response = Unirest.get("https://apidojo-yahoo-finance-v1.p.rapidapi.com/stock/get-detail?symbol=" + symbol)
+                .header(rapidapiKey, rapidapiKeyValue)
+                .header(rapidapiHost, rapidapiHostValue)
+                .asJson();
+        return response;
+
     }
 }
 

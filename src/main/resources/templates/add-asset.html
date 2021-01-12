@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="application/javascript" th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js}"></script>
+    <script type="application/javascript" th:src = "@{/js/add-asset.js}"></script>
+</head>
+<body>
+    <h1>Add New Asset</h1>
+    <form>
+        <select onChange=onChange(this.value)>
+            <option value="stock">Stock</option>
+            <option value="passive-resource">Passive-resource</option>
+            <option value="index">Index</option>
+            <option value="crypto">Crypto</option>
+            <option value="commodity">Commodity</option>
+        </select>
+    </form>
+    <div id="add"></div>
+
+    <div id="purchase"></div>
+
+    <div id="response"></div>
+
+    <template id="stock">
+        <p>Enter Stock Ticker</p>
+        <input type="text" placeholder="Ticker" class="value" required><br>
+        <button class="add-button" asset-type="stock">Add Stock</button>
+    </template>
+    <template id="index">
+        <p>Enter Index Ticker</p>
+        <input type="text" placeholder="Ticker" class="value" required><br>
+        <button class="add-button" asset-type="index">Add Index</button>
+    </template>
+    <template id="crypto">
+        <p>Enter Crypto Ticker</p>
+        <input type="text" placeholder="Ticker" class="value" required><br>
+        <button class="add-button" asset-type="crypto">Add Crypto</button>
+    </template>
+    <template id="commodity">
+        <p>Enter Commodity Name</p>
+        <input type="text" placeholder="Name" class="value" required><br>
+        <button class="add-button" asset-type="commodity">Add Commodity</button>
+    </template>
+    <template id="passive-resource">
+        <p>Enter Passive Purchase Name</p>
+        <input type="text" placeholder="Name" class="value" required><br>
+        <p>Enter Purchase Price</p>
+        <input type="text" placeholder="Price" id="passive-price" required><br>
+        <p>Enter Purchase Date</p>
+        <input type="text" placeholder="Date format - 4.25.2020" id="passive-date"><br>
+        <p>Enter Purchase Description</p>
+        <input type="text" placeholder="Description" id="description"><br>
+        <p>Enter Purchase Currency</p>
+        <input type="text" placeholder="Currency" id="currency"><br>
+        <p>Enter Purchase Currency Symbol</p>
+        <input type="text" placeholder="Currency Symbol" id="currency-symbol"><br>
+        <button class="add-button" asset-type="passive-resource">Add Passive Purchase</button>
+    </template>
+
+    <template id="purchase-info">
+        <p>Add Initial Purchase</p>
+        <input type="number" placeholder="Enter Quantity" id="quantity"><br>
+        <input type="number" placeholder="Enter Price" id="price"><br>
+        <input type="text" placeholder="Enter Date" id="date"><br>
+        <div id="error-message"></div>
+    </template>
+</body>
+</html>

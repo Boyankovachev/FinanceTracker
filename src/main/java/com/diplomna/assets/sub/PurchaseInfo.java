@@ -30,6 +30,9 @@ public class PurchaseInfo {
     }
 
     public DatеManager getPurchaseDate() {
+        if(purchaseDate==null){
+            return null;
+        }
         return purchaseDate;
     }
 

@@ -7,9 +7,12 @@ import com.diplomna.database.insert.InsertIntoDb;
 import com.diplomna.date.DatеManager;
 import com.diplomna.restapi.service.BaseService;
 import com.diplomna.users.sub.User;
+import com.mashape.unirest.http.JsonNode;
+import com.mysql.cj.xdevapi.JsonArray;
 import org.apache.http.protocol.HTTP;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.json.JSONString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -250,4 +253,30 @@ public class BaseController {
 
         return new ResponseEntity<Object>(map, httpStatus);
     }
+
+    @RequestMapping(value = "/add-asset", method = RequestMethod.GET)
+    public String addAsset(){
+        if(user == null){
+            return "redirect:/";
+        }
+        return "add-asset";
+    }
+
+    @RequestMapping(value = "/add-active-asset", method = RequestMethod.POST)
+    public @ResponseBody ResponseEntity<Object> addActiveAsset(@RequestBody String jsonString){
+        JSONObject jsonObject = new JSONObject(jsonString);
+        String response = baseService.addAsset(jsonObject, user);
+        HashMap<String, String> responseMap = new HashMap<>();
+        responseMap.put("response", response);
+        return new ResponseEntity<Object>(responseMap, HttpStatus.OK);
+    }
+    @RequestMapping(value = "/add-passive-asset", method = RequestMethod.POST)
+    public @ResponseBody ResponseEntity<Object> addPassiveAsset(@RequestBody String jsonString){
+        JSONObject jsonObject = new JSONObject(jsonString);
+        String response = baseService.addPassiveAsset(jsonObject, user);
+        HashMap<String, String> responseMap = new HashMap<>();
+        responseMap.put("response", response);
+        return new ResponseEntity<Object>(responseMap, HttpStatus.OK);
+    }
+
 }

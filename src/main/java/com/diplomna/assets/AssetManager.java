@@ -67,6 +67,8 @@ public class AssetManager {
         cryptoCurrencies.addAll(newCrypto);
     }
 
+
+
     public Stock getStockByName(String stockName){
         for(Stock stock: stocks){
             if(stock.getName().equals(stockName)){
@@ -75,7 +77,6 @@ public class AssetManager {
         }
         return null;
     }
-
     public PassiveResource getPassiveResourceByName(String name){
         for(PassiveResource passiveResource: passiveResources){
             if(passiveResource.getName().equals(name)){
@@ -145,5 +146,53 @@ public class AssetManager {
                 commodities.get(i).addPurchase(purchaseInfo);
                 break;
         }
+    }
+
+    public boolean isAssetInList(String assetType, String asset){
+        int i;
+        boolean isPresent = false;
+        switch (assetType){
+            case "stock":
+                for(i=0; i<stocks.size(); i++){ //find the resource
+                    if(stocks.get(i).getSymbol().equals(asset)){
+                        isPresent = true;
+                        break;
+                    }
+                }
+                break;
+            case "index":
+                for(i=0; i<indexFunds.size(); i++){ //find the resource
+                    if(indexFunds.get(i).getSymbol().equals(asset)){
+                        isPresent = true;
+                        break;
+                    }
+                }
+                break;
+            case "crypto":
+                for(i=0; i<cryptoCurrencies.size(); i++){ //find the resource
+                    if(cryptoCurrencies.get(i).getSymbol().equals(asset)){
+                        isPresent = true;
+                        break;
+                    }
+                }
+                break;
+            case "commodity":
+                for(i=0; i<commodities.size(); i++){ //find the resource
+                    if(commodities.get(i).getName().equals(asset)){
+                        isPresent = true;
+                        break;
+                    }
+                }
+                break;
+            case "passive-resource":
+                for(i=0; i<passiveResources.size(); i++){ //find the resource
+                    if(passiveResources.get(i).getName().equals(asset)){
+                        isPresent = true;
+                        break;
+                    }
+                }
+                break;
+        }
+        return isPresent;
     }
 }

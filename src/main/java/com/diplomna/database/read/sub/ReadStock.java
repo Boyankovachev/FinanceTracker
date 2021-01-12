@@ -1,11 +1,14 @@
 package com.diplomna.database.read.sub;
 
 import com.diplomna.assets.finished.Stock;
+import com.diplomna.assets.sub.ActiveAsset;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ReadStock {
     private Connection connection = null;
@@ -31,5 +34,16 @@ public class ReadStock {
             stock.setDescription(resultSet.getString(6));
         }
         return stock;
+    }
+
+    public List<String> readAllStocksSymbols() throws SQLException {
+        String sql = "SELECT `symbol` FROM `" + databaseName +"`.stock";
+        PreparedStatement statement = connection.prepareStatement(sql);
+        ResultSet resultSet = statement.executeQuery();
+        List<String> stocks = new ArrayList<>();
+        while (resultSet.next()) {
+            stocks.add(resultSet.getString(1));
+        }
+        return stocks;
     }
 }

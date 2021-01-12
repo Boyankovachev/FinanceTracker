@@ -7,6 +7,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ReadCrypto {
     private Connection connection = null;
@@ -32,7 +34,21 @@ public class ReadCrypto {
         }
         return crypto;
     }
+
+    public List<String> readAllCryptoSymbols() throws SQLException {
+        String sql = "SELECT `symbol` FROM `" + databaseName +"`.crypto";
+        PreparedStatement statement = connection.prepareStatement(sql);
+        ResultSet resultSet = statement.executeQuery();
+        List<String> cryptos = new ArrayList<>();
+        while (resultSet.next()) {
+            cryptos.add(resultSet.getString(1));
+        }
+        return cryptos;
+    }
 }
+
+
+
 /*
             String sql = "CREATE TABLE IF NOT EXISTS `"+databaseName+"`.`crypto`(\n" +
                     "    `symbol` VARCHAR(12) NOT NULL PRIMARY KEY,\n" +

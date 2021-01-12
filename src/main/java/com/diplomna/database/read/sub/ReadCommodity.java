@@ -7,6 +7,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ReadCommodity {
     private Connection connection = null;
@@ -29,6 +31,17 @@ public class ReadCommodity {
             commodity.setCurrencySymbol(resultSet.getString(3));
             commodity.setExchangeName(resultSet.getString(4));
             commodity.setDescription(resultSet.getString(5));
+        }
+        return commodity;
+    }
+
+    public List<String> readAllCommodityNames() throws SQLException {
+        String sql = "SELECT `commodity_name` FROM `" + databaseName +"`.commodity";
+        PreparedStatement statement = connection.prepareStatement(sql);
+        ResultSet resultSet = statement.executeQuery();
+        List<String> commodity = new ArrayList<>();
+        while (resultSet.next()) {
+            commodity.add(resultSet.getString(1));
         }
         return commodity;
     }

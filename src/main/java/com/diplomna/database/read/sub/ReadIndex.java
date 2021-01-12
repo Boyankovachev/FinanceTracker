@@ -7,6 +7,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ReadIndex {
     private Connection connection = null;
@@ -32,5 +34,16 @@ public class ReadIndex {
             index.setDescription(resultSet.getString(6));
         }
         return index;
+    }
+
+    public List<String> readAllIndexSymbols() throws SQLException {
+        String sql = "SELECT `symbol` FROM `" + databaseName +"`.index\n";
+        PreparedStatement statement = connection.prepareStatement(sql);
+        ResultSet resultSet = statement.executeQuery();
+        List<String> indexes = new ArrayList<>();
+        while (resultSet.next()) {
+            indexes.add(resultSet.getString(1));
+        }
+        return indexes;
     }
 }

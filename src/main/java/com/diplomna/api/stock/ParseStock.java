@@ -2,17 +2,18 @@ package com.diplomna.api.stock;
 
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.JsonNode;
+import com.mashape.unirest.http.exceptions.UnirestException;
 import org.json.JSONObject;
 
 public class ParseStock {
     private HttpResponse<JsonNode> stock;
     public ParseStock() {}
-    public ParseStock(String symbol){
+    public ParseStock(String symbol) throws UnirestException {
         GetStockFromAPI stockGetter = new GetStockFromAPI();
         stock = stockGetter.getStockBySymbolAsJSON(symbol);
     }
 
-    public void setStockBySymbol(String symbol){
+    public void setStockBySymbol(String symbol) throws UnirestException {
         GetStockFromAPI stockGetter = new GetStockFromAPI();
         this.stock = stockGetter.getStockBySymbolAsJSON(symbol);
     }

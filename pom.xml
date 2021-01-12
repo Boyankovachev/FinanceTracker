@@ -62,6 +62,12 @@
 			<version>20.0</version>
 		</dependency>
 
+		<!-- for html template rendering (not using it now) -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-mustache</artifactId>
+		</dependency>
+
 	</dependencies>
 
 	<build>
