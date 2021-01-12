@@ -65,6 +65,7 @@ public class BaseController {
         }
     }
 
+
     @RequestMapping(value = "/settings", method = RequestMethod.GET)
     public String settings(Model model){
         if(user == null){
@@ -75,6 +76,32 @@ public class BaseController {
             return "settings";
         }
     }
+    @RequestMapping(value = "/change-2fa", method = RequestMethod.POST)
+    public @ResponseBody ResponseEntity<Object> change2FA(@RequestBody String value){
+        HashMap<String, String> responseMap = new HashMap<>();
+        String response = baseService.change2FA(value, user);
+        responseMap.put("response", String.valueOf(user.getIs2FactorAuthenticationRequired()));
+        responseMap.put("success", response);
+        return new ResponseEntity<Object>(responseMap, HttpStatus.OK);
+    }
+    @RequestMapping(value = "/change-username", method = RequestMethod.POST)
+    public @ResponseBody ResponseEntity<Object> changeUsername(@RequestBody String value){
+        HashMap<String, String> responseMap = new HashMap<>();
+        String response = baseService.changeUsername(value, user);
+        responseMap.put("response", user.getUserName());
+        responseMap.put("success", response);
+        return new ResponseEntity<Object>(responseMap, HttpStatus.OK);
+    }
+    @RequestMapping(value = "/change-email", method = RequestMethod.POST)
+    public @ResponseBody ResponseEntity<Object> changeEmail(@RequestBody String value){
+        HashMap<String, String> responseMap = new HashMap<>();
+        String response = baseService.changeEmail(value, user);
+        responseMap.put("response", user.getEmail());
+        responseMap.put("success", response);
+        return new ResponseEntity<Object>(responseMap, HttpStatus.OK);
+    }
+
+
 
     @RequestMapping(value = "/asset", method = RequestMethod.POST)
     public RedirectView assets(@RequestParam("asset_type") String assetType, @RequestParam("asset_name") String assetName, RedirectAttributes attributes){
@@ -166,19 +193,16 @@ public class BaseController {
 
     @RequestMapping(value = "/add-purchase", method = RequestMethod.POST)
     public @ResponseBody
-    ResponseEntity<Object> addPurchase(
-            @RequestParam("quantity") double quantity, @RequestParam("price") double price,
-            @RequestParam(value = "date", required = false) String date, @RequestParam("asset_type") String assetType,
-            @RequestParam("asset_name") String assetName, @RequestParam(value = "asset_symbol", required = false) String assetSymbol){
-
+    ResponseEntity<Object> addPurchase(@RequestBody String jsonString){
+        JSONObject jsonObject = new JSONObject(jsonString);
         HashMap<String, String> map = new HashMap<>();
         HttpStatus httpStatus = HttpStatus.OK;
 
-        PurchaseInfo purchaseInfo = new PurchaseInfo(price, quantity);
-        if(date != null && !date.equals("")){
+        PurchaseInfo purchaseInfo = new PurchaseInfo(jsonObject.getDouble("price"), jsonObject.getDouble("quantity"));
+        if(jsonObject.getString("date") != null && !jsonObject.getString("date").equals("")){
             try {
                 DatеManager datеManager = new DatеManager();
-                datеManager.setDateFromString(date);
+                datеManager.setDateFromString(jsonObject.getString("date"));
                 purchaseInfo.setPurchaseDate(datеManager);
                 map.put("date", datеManager.getDateAsString());
             } catch (ParseException e) {
@@ -186,20 +210,20 @@ public class BaseController {
                 map.put("success", "Wrong date format. Please use day.month.year!");
             }
         }
-        map.put("price", String.valueOf(price));
-        map.put("quantity", String.valueOf(quantity));
+        map.put("price", String.valueOf(jsonObject.getDouble("price")));
+        map.put("quantity", String.valueOf(jsonObject.getDouble("quantity")));
 
         InsertIntoDb insertIntoDb = new InsertIntoDb("test");
 
-        switch (assetType){
+        switch (jsonObject.getString("assetType")){
             case "stock":
-                if(assetSymbol != null && !assetSymbol.equals("")) {
-                    purchaseInfo.setStockSymbol(assetSymbol);
+                if(jsonObject.getString("assetSymbol") != null && !jsonObject.getString("assetSymbol").equals("")) {
+                    purchaseInfo.setStockSymbol(jsonObject.getString("assetSymbol"));
                     insertIntoDb.insertStockPurchaseInfo(user.getUserId(), purchaseInfo);
                     map.put("success", "success");
 
                     //add new purchase to RAM
-                    this.user.getAssets().addPurchaseToResource(assetType, assetSymbol, purchaseInfo);
+                    this.user.getAssets().addPurchaseToResource(jsonObject.getString("assetType"), jsonObject.getString("assetSymbol"), purchaseInfo);
                 }
                 else {
                     //return "An error has occurred! Purchase not registered.";
@@ -208,13 +232,13 @@ public class BaseController {
                 }
                 break;
             case "index":
-                if(assetSymbol != null && !assetSymbol.equals("")) {
-                    purchaseInfo.setStockSymbol(assetSymbol);
+                if(jsonObject.getString("assetSymbol") != null && !jsonObject.getString("assetSymbol").equals("")) {
+                    purchaseInfo.setStockSymbol(jsonObject.getString("assetSymbol"));
                     insertIntoDb.insertIndexPurchaseInfo(user.getUserId(), purchaseInfo);
                     map.put("success", "success");
 
                     //add new purchase to RAM
-                    this.user.getAssets().addPurchaseToResource(assetType, assetSymbol, purchaseInfo);
+                    this.user.getAssets().addPurchaseToResource(jsonObject.getString("assetType"), jsonObject.getString("assetSymbol"), purchaseInfo);
                 }
                 else {
                     map.put("success", "An error has occurred! Purchase not registered.");
@@ -222,13 +246,13 @@ public class BaseController {
                 }
                 break;
             case "crypto":
-                if(assetSymbol != null && !assetSymbol.equals("")) {
-                    purchaseInfo.setStockSymbol(assetSymbol);
+                if(jsonObject.getString("assetSymbol") != null && !jsonObject.getString("assetSymbol").equals("")) {
+                    purchaseInfo.setStockSymbol(jsonObject.getString("assetSymbol"));
                     insertIntoDb.insertCryptoPurchaseInfo(user.getUserId(), purchaseInfo);
                     map.put("success", "success");
 
                     //add new purchase to RAM
-                    this.user.getAssets().addPurchaseToResource(assetType, assetSymbol, purchaseInfo);
+                    this.user.getAssets().addPurchaseToResource(jsonObject.getString("assetType"), jsonObject.getString("assetSymbol"), purchaseInfo);
                 }
                 else {
                     map.put("success", "An error has occurred! Purchase not registered.");
@@ -237,12 +261,12 @@ public class BaseController {
                 break;
             case "commodity":
                 //commodities have no symbol and are referenced by name
-                purchaseInfo.setStockSymbol(assetName);
+                purchaseInfo.setStockSymbol(jsonObject.getString("assetName"));
                 insertIntoDb.insertCommodityPurchaseInfo(user.getUserId(), purchaseInfo);
                 map.put("success", "success");
 
                 //add new purchase to RAM
-                this.user.getAssets().addPurchaseToResource(assetType, assetName, purchaseInfo);
+                this.user.getAssets().addPurchaseToResource(jsonObject.getString("assetType"), jsonObject.getString("assetName"), purchaseInfo);
                 
                 break;
             default:
@@ -261,7 +285,6 @@ public class BaseController {
         }
         return "add-asset";
     }
-
     @RequestMapping(value = "/add-active-asset", method = RequestMethod.POST)
     public @ResponseBody ResponseEntity<Object> addActiveAsset(@RequestBody String jsonString){
         JSONObject jsonObject = new JSONObject(jsonString);

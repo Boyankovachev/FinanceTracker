@@ -11,6 +11,7 @@
     <h1> USER HOMEPAGE</h1>
     <p th:text="${user.userName}"></p>
     <p th:text="${user.email}"></p>
+    <p th:text="${user.is2FactorAuthenticationRequired}"></p>
     <form action = "/notification" method="get">
         <button type="submit">Notifications</button>
     </form>

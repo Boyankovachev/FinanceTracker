@@ -19,10 +19,10 @@ public class InsertIntoUsers {
         int newUserId = insertNotNullValues(user); //get the Id of the new user
         user.setUserId(newUserId);
         if(user.getEmail() != null && !user.getEmail().isEmpty()){
-            insertEmail(user);
+            updateEmail(user);
         }
         if(user.getIs2FactorAuthenticationRequired()){
-            insertIs2faRequired(user);
+            updateIs2faRequired(user);
         }
     }
     private int insertNotNullValues(User user) throws SQLException {
@@ -47,7 +47,7 @@ public class InsertIntoUsers {
         resultSet.last();
         return resultSet.getInt(1);
     }
-    private void insertEmail(User user) throws SQLException {
+    public void updateEmail(User user) throws SQLException {
         String sql =
                 "UPDATE `" + databaseName + "`.user\n" + """
                 SET email = ?
@@ -59,7 +59,7 @@ public class InsertIntoUsers {
         statement.setInt(3,user.getUserId());
         statement.executeUpdate();
     }
-    private void insertIs2faRequired(User user) throws SQLException {
+    public void updateIs2faRequired(User user) throws SQLException {
         String sql =
                 "UPDATE `" + databaseName + "`.user\n" + """
                 SET is_2fa_required = ?
@@ -69,6 +69,18 @@ public class InsertIntoUsers {
         statement.setBoolean(1,user.getIs2FactorAuthenticationRequired());
         statement.setString(2,user.getUserName());
         statement.setInt(3,user.getUserId());
+        statement.executeUpdate();
+    }
+
+    public void updateUsername(User user) throws SQLException {
+        String sql =
+                "UPDATE `" + databaseName + "`.user\n" + """
+                SET username = ?
+                WHERE user_id = ?;
+                """;
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setString(1,user.getUserName());
+        statement.setInt(2,user.getUserId());
         statement.executeUpdate();
     }
 }

@@ -12,9 +12,9 @@ $(function (){
             quantity: $quantity.val(),
             price: $price.val(),
             date: $date.val(),
-            asset_type: $asset_type,
-            asset_name: unEntity($asset_name.html()),
-            asset_symbol: unEntity($asset_symbol.html())
+            assetType: $asset_type,
+            assetName: unEntity($asset_name.html()),
+            assetSymbol: unEntity($asset_symbol.html())
         };
 
         var $purchase_table = $('#purchase-table');
@@ -23,7 +23,9 @@ $(function (){
         $.ajax({
             type: 'POST',
             url: '/add-purchase',
-            data: input,
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            data: JSON.stringify(input),
             success:function(response){
                 if(response.success.localeCompare('success') == 0){
                     $purchase_table.append('<tr><td>' + response.price + '</td>' +

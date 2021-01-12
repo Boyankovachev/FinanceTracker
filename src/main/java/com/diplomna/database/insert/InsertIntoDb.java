@@ -118,4 +118,30 @@ public class InsertIntoDb {
             throwables.printStackTrace();
         }
     }
+
+    public void update2FA(User user){
+        InsertIntoUsers insert = new InsertIntoUsers(this.con, this.databaseName);
+        try {
+            insert.updateIs2faRequired(user);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+    public void updateEmail(User user){
+        InsertIntoUsers insert = new InsertIntoUsers(this.con, this.databaseName);
+        try {
+            insert.updateEmail(user);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+    public void updateUsername(User user){
+        InsertIntoUsers insert = new InsertIntoUsers(this.con, this.databaseName);
+        try {
+            insert.updateUsername(user);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
 }

@@ -3,9 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script type="application/javascript" th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js}"></script>
+    <script type="application/javascript" th:src = "@{/js/settings.js}"></script>
 </head>
 <body>
-<p th:text="${user.userName}"></p>
-<p th:text="${user.email}"></p>
+    <div id="user-details">
+        <p>Name: <span th:text="${user.userName}" id="username"></span></p>
+        <p>Email: <span th:text="${user.email}" id="email"></span></p>
+        <p>Is 2FA required: <span th:text="${user.is2FactorAuthenticationRequired}" id="2fa"></span></p>
+    </div>
+    <div id="change-details">
+        <div>
+            <input type="radio" name="2fa" value="off">off
+            <input type="radio" name="2fa" value="on">on
+            <button id="change2FA">Select</button>
+        </div>
+        <br>
+        <div>
+            <input type="text" id="change-username" placeholder="change username">
+            <button id="change-username-button">Confirm</button>
+        </div>
+        <br>
+        <div>
+            <input type="email" id="change-email" placeholder="change email">
+            <button id="change-email-button">Confirm</button>
+        </div>
+    </div>
+    <div id="error-message">
+
+    </div>
 </body>
 </html>

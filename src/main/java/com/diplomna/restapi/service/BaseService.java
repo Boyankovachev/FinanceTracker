@@ -437,4 +437,44 @@ public class BaseService {
         return "success";
     }
 
+    public String change2FA(String input, User user){
+        input = input.replace("=","");
+
+        if(input.equals("on") && user.getIs2FactorAuthenticationRequired() ||
+                input.equals("off") && !user.getIs2FactorAuthenticationRequired()){
+            return "fail";
+        }
+        if(input.equals("on")){
+            user.setIs2FactorAuthenticationRequired(true);
+        }
+        else if(input.equals("off")){
+            user.setIs2FactorAuthenticationRequired(false);
+        }
+        else {
+            return "fail";
+        }
+        InsertIntoDb insert = new InsertIntoDb("test");
+        insert.update2FA(user);
+        return "success";
+    }
+
+    public String changeUsername(String newUsername, User user){
+        newUsername = newUsername.replace("=","");
+        if(newUsername.length() < 4 || newUsername.length() > 32){
+                return "Invalid username";
+        }
+        user.setUserName(newUsername);
+        InsertIntoDb insert = new InsertIntoDb("test");
+        insert.updateUsername(user);
+        return "success";
+    }
+    public String changeEmail(String newEmail, User user){
+        newEmail = newEmail.replace("=","");
+        newEmail = newEmail.replace("%40", "@");
+        user.setEmail(newEmail);
+        InsertIntoDb insert = new InsertIntoDb("test");
+        insert.updateEmail(user);
+        return "success";
+    }
+
 }
