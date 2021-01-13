@@ -476,5 +476,29 @@ public class BaseService {
         insert.updateEmail(user);
         return "success";
     }
+    public String changePassword(JSONObject jsonObject, User user){
+        //check if current password is entered correctly
+        //check validity of new password
+        //check if passwords match
+        //generate salt and hash for new password
+        //add new salt and hash to db
+        //add new password to ram
+        //return values
+        if(!user.checkPassword(jsonObject.getString("currentPassword"))){
+            return "Incorrect current password!";
+        }
+        if(!jsonObject.getString("newPassword").equals(jsonObject.getString("newPasswordRepeat"))){
+            return "Passwords don't match";
+        }
+        if(jsonObject.getString("newPassword").length() < 4){
+            return "New password must be at least 4 characters long!";
+        }
+        List<String> newCredentials = user.generateSaltAndHash(jsonObject.getString("newPassword"));
+        user.setPassword(newCredentials.get(0));
+        user.setSalt(newCredentials.get(1));
+        InsertIntoDb insert = new InsertIntoDb("test");
+        insert.updatePassword(user);
+        return "success";
+    }
 
 }

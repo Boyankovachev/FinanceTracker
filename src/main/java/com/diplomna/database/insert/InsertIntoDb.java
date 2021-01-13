@@ -143,5 +143,12 @@ public class InsertIntoDb {
             throwables.printStackTrace();
         }
     }
-
+    public void updatePassword(User user){
+        InsertIntoUsers insert = new InsertIntoUsers(this.con, this.databaseName);
+        try {
+            insert.updatePassword(user);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
 }

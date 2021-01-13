@@ -83,4 +83,17 @@ public class InsertIntoUsers {
         statement.setInt(2,user.getUserId());
         statement.executeUpdate();
     }
+
+    public void updatePassword(User user) throws SQLException {
+        String sql =
+                "UPDATE `" + databaseName + "`.user\n" + """
+                SET password_hash = ?, salt = ?
+                WHERE user_id = ?;
+                """;
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setString(1,user.getPasswordHash());
+        statement.setString(2,user.getSalt());
+        statement.setInt(3,user.getUserId());
+        statement.executeUpdate();
+    }
 }

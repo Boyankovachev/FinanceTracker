@@ -100,6 +100,14 @@ public class BaseController {
         responseMap.put("success", response);
         return new ResponseEntity<Object>(responseMap, HttpStatus.OK);
     }
+    @RequestMapping(value = "/change-password", method = RequestMethod.POST)
+    public @ResponseBody ResponseEntity<Object> changePassword(@RequestBody String jsonString){
+        JSONObject jsonObject = new JSONObject(jsonString);
+        String response = baseService.changePassword(jsonObject, user);
+        HashMap<String, String> responseMap = new HashMap<>();
+        responseMap.put("response", response);
+        return new ResponseEntity<Object>(responseMap, HttpStatus.OK);
+    }
 
 
 
