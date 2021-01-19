@@ -3,16 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script type="application/javascript" th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js}"></script>
+    <script type="application/javascript" th:src = "@{/js/assets/asset.js}"></script>
 </head>
-    <body>
-    <h1>Passive Resource</h1>
-    <p th:text="${passive_resource.name}"></p>
-    <p th:text="${passive_resource.description}"></p>
-    <p th:text="${passive_resource.purchaseInfo.price}"></p>
-    <p th:text="${passive_resource.currentMarketPrice}"></p>
-    <p th:text="${passive_resource.currency}"></p>
-    <p th:text="${passive_resource.currencySymbol}"></p>
-    <p th:text="${passive_resource.purchaseInfo.purchaseDate.myFormatDateString}"></p>
+<body>
 
+    <div id="header"></div>
+
+    <div id="passive-resource-info">
+        <h1>Passive Resource</h1>
+        <p th:text="${passive_resource.name}"></p>
+        <p th:text="${passive_resource.description}"></p>
+        <p th:text="${passive_resource.purchaseInfo.price}"></p>
+        <p th:text="${passive_resource.currentMarketPrice}"></p>
+        <p th:text="${passive_resource.currency}"></p>
+        <p th:text="${passive_resource.currencySymbol}"></p>
+        <p th:text="${passive_resource.purchaseInfo.purchaseDate.myFormatDateString}"></p>
+    </div>
+    <div id="edit-passive-resource">
+        <h2>Edit Passive Resource</h2>
+    </div>
 </body>
 </html>

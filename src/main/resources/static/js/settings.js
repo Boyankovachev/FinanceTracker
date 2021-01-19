@@ -1,5 +1,7 @@
 $(function (){
 
+    $("#header").load("/header");
+
     $("#change2FA").on("click", function(){
         var value = $('input[name="2fa"]:checked').val();
         $.ajax({

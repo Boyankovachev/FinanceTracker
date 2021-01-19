@@ -1,4 +1,7 @@
 $(function (){
+
+    $("#header").load("/header");
+
     $(".open-asset").on("click", function(){
         var data = {
             asset_type: $(this).attr('asset-type'),

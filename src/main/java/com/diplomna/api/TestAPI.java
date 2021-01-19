@@ -1,11 +1,13 @@
 package com.diplomna.api;
 
 
+import com.diplomna.api.alphavantage.AlphaVantageAPI;
 import com.diplomna.api.stock.ParseStock;
 import com.mashape.unirest.http.exceptions.UnirestException;
 
 public class TestAPI {
     static public void main(String []args){
+        /*
         ParseStock stock = new ParseStock();
         try {
             stock.setStockBySymbol("TSLA");
@@ -17,6 +19,15 @@ public class TestAPI {
         + " " + stock.getCurrency() + " " + stock.getRecommendationKey() + " " + stock.getExchangeName()
         + " " + stock.getName() + " " + stock.getCurrencySymbol());
         System.out.println(stock.getDescription());
+
+         */
+        AlphaVantageAPI alphaVantageAPI = new AlphaVantageAPI();
+        try {
+            alphaVantageAPI.setInitialIndex("SPY");
+            alphaVantageAPI.print();
+        } catch (UnirestException e) {
+            e.printStackTrace();
+        }
 
     }
 }

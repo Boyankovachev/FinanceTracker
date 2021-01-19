@@ -3,17 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script type="application/javascript" th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js}"></script>
+    <script type="application/javascript" th:src = "@{/js/notification.js}"></script>
 </head>
 <body>
-<table>
-    <tr>
-        <th>Name</th>
-        <th>Price</th>
-    </tr>
-    <tr th:each="notification: ${notification}">
-        <td th:text="${notification.notificationName}"></td>
-        <td th:text="${notification.notificationPrice}"></td>
-    </tr>
-</table>
+    <div id="header"></div>
+
+    <h1>Notifications</h1>
+
+    <table id="notification-table">
+        <tr>
+            <th>Name</th>
+            <th>Price</th>
+        </tr>
+        <tr th:each="notification: ${notification}">
+            <td th:text="${notification.notificationName}"></td>
+            <td th:text="${notification.notificationPrice}"></td>
+        </tr>
+    </table>
+    <br><br>
+    <div id="add-notification-div">
+        <select id="select-notification">
+            <option th:each="global : ${global}" th:value="${global.assetType}" th:text="${global.notificationName}" notification-type="global"></option>
+            <option th:each="stock : ${stock}" th:value="${stock.symbol}" th:text="${stock.symbol}" notification-type="stock"></option>
+            <option th:each="crypto : ${crypto}" th:value="${crypto.symbol}" th:text="${crypto.symbol}" notification-type="crypto"></option>
+            <option th:each="index : ${index}" th:value="${index.symbol}" th:text="${index.symbol}" notification-type="index"></option>
+            <option th:each="commodity : ${commodity}" th:value="${commodity.name}" th:text="${commodity.name}" notification-type="commodity"></option>
+        </select><br>
+        <input type="number" placeholder="Enter Price Target" id="price"><br><br>
+        <input type="text" placeholder="Enter notification name" id="name"><br>
+        <button id="add">Add</button>
+    </div>
+    <div id="error-message">
+    </div>
 </body>
 </html>

@@ -8,19 +8,14 @@
     <script type="application/javascript" th:src = "@{/js/user-homepage.js}"></script>
 </head>
 <body>
+
+    <div id="header"></div>
+
     <h1> USER HOMEPAGE</h1>
+
     <p th:text="${user.userName}"></p>
     <p th:text="${user.email}"></p>
     <p th:text="${user.is2FactorAuthenticationRequired}"></p>
-    <form action = "/notification" method="get">
-        <button type="submit">Notifications</button>
-    </form>
-    <form action = "/settings" method="get">
-        <button type="submit">Settings</button>
-    </form>
-    <form action = "/add-asset" method="get">
-        <button type="submit">Add New Asset</button>
-    </form>
 
     <table>
         <tr>

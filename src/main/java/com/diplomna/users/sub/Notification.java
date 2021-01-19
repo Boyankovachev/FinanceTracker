@@ -11,6 +11,10 @@ public class Notification {
     private double notificationPrice;
     private String notificationName;
     public Notification(){}
+    public Notification(AssetType assetType, String notificationName){
+        this.assetType = assetType;
+        this.notificationName = notificationName;
+    }
     public Notification(AssetType assetType, double notificationPrice, String notificationName){
         this.assetType = assetType;
         this.notificationPrice = notificationPrice;
@@ -54,15 +58,25 @@ public class Notification {
         return notificationTarget;
     }
 
-}
+    public void printNotification(){
+        /*
+        for testing purposes
+         */
+        System.out.println("Asset type: " + assetType.toString());
+        System.out.println("Asset type settings: " + assetTypeSettings);
+        System.out.println("Notification Target: " + notificationTarget);
+        System.out.println("Notification name: " + notificationName);
+        System.out.println("Notification price: " + notificationPrice);
+    }
 
-/*
-            String sql = "CREATE TABLE IF NOT EXISTS `"+databaseName+"`.`notification`(\n" +
-                    "    `user_id` INT NOT NULL,\n" +
-                    "    `asset_type` ENUM(\"stock\", \"passive_resource\", \"index\", \"crypto\", \"commodity\", \"global\") NOT NULL,\n" +
-                    "    `asset_type_settings` BOOL,\n" +
-                    "    `notification_target` VARCHAR(12),\n" +
-                    "    `notification_price` DOUBLE NOT NULL,\n" +
-                    "    `notification_name` VARCHAR(32) NOT NULL,\n" +
-                    "    FOREIGN KEY (`user_id`) REFERENCES `" + databaseName + "`.user(`user_id`));\n";
- */
+    public boolean isNotificationSimilar(Notification newNotification){
+        /*
+        checks if a new notification created by the user is similar
+         */
+        if(newNotification.getNotificationName().equals(this.notificationName)){
+            return true;
+        }
+        return false;
+    }
+
+}

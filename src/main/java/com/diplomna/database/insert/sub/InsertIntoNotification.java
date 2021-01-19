@@ -19,7 +19,7 @@ public class InsertIntoNotification {
         String sql =
                 "INSERT INTO `" + databaseName + """
                     `.notification()
-                    VALUES(?,?,?,?,?,?,?);""";
+                    VALUES(?,?,?,?,?,?);""";
         PreparedStatement statement = connection.prepareStatement(sql);
         statement.setInt(1,userId);
         statement.setString(2, notification.getAssetType().toString());

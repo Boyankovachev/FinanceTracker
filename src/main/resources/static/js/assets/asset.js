@@ -1,4 +1,7 @@
 $(function (){
+
+    $("#header").load("/header");
+
     $("#confirm").on("click", function(){
         //on click to add purchase to any asset-type (except passive resource)
         var $quantity = $('#quantity');

@@ -1,4 +1,7 @@
 $(function (){
+
+    $("#header").load("/header");
+
     //to add stock template as default
     var $addDiv = $('#add');
     var template = $('#stock').html();

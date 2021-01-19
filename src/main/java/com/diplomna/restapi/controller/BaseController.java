@@ -40,16 +40,18 @@ public class BaseController {
 
     @RequestMapping(value = "/user", method = RequestMethod.GET)
     public String getUserHomepage(@ModelAttribute("user") User user, Model model){
-        if(user.getUserName() == null){
+        if(user.getUserName() == null && this.user == null){
             return "redirect:/";
         }
-        this.user = baseService.setupUser(user);
-        model.addAttribute("stock", user.getAssets().getAllStocks());
-        model.addAttribute("passive_resource", user.getAssets().getAllPassiveResources());
-        model.addAttribute("index", user.getAssets().getAllIndex());
-        model.addAttribute("crypto", user.getAssets().getCrypto());
-        model.addAttribute("commodity", user.getAssets().getCommodities());
-        model.addAttribute("user", user);
+        else if(user.getUserName() != null && this.user == null){
+            this.user = baseService.setupUser(user);
+        }
+        model.addAttribute("stock", this.user.getAssets().getAllStocks());
+        model.addAttribute("passive_resource", this.user.getAssets().getAllPassiveResources());
+        model.addAttribute("index", this.user.getAssets().getAllIndex());
+        model.addAttribute("crypto", this.user.getAssets().getCrypto());
+        model.addAttribute("commodity", this.user.getAssets().getCommodities());
+        model.addAttribute("user", this.user);
         return "user-homepage";
         //return "test";
     }
@@ -61,8 +63,23 @@ public class BaseController {
         }
         else {
             model.addAttribute("notification", user.getNotifications());
+            model.addAttribute("stock", user.getAssets().getAllStocks());
+            model.addAttribute("index", user.getAssets().getAllIndex());
+            model.addAttribute("crypto", user.getAssets().getCrypto());
+            model.addAttribute("commodity", user.getAssets().getCommodities());
+            model.addAttribute("global",  baseService.getGlobalNotifications(user));
             return "notification";
         }
+    }
+    @RequestMapping(value = "/add-notification", method = RequestMethod.POST)
+    public @ResponseBody ResponseEntity<Object> addNotification(@RequestBody String jsonString){
+        JSONObject jsonObject = new JSONObject(jsonString);
+        String success = baseService.addNotification(jsonObject, user);
+        HashMap<String, String> responseMap = new HashMap<>();
+        responseMap.put("success", success);
+        responseMap.put("price", String.valueOf(jsonObject.getDouble("priceTarget")));
+        responseMap.put("name", jsonObject.getString("name"));
+        return new ResponseEntity<Object>(responseMap, HttpStatus.OK);
     }
 
 
@@ -308,6 +325,17 @@ public class BaseController {
         HashMap<String, String> responseMap = new HashMap<>();
         responseMap.put("response", response);
         return new ResponseEntity<Object>(responseMap, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/log-out", method = RequestMethod.GET)
+    public String logOut(){
+        this.user = null;
+        return "redirect:/";
+    }
+
+    @RequestMapping(value = "/header", method = RequestMethod.GET)
+    public String getHeader(){
+        return "parts/header";
     }
 
 }

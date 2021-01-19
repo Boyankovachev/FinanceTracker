@@ -1,16 +1,22 @@
 package com.diplomna.restapi.service;
 
+import com.diplomna.api.alphavantage.AlphaVantageAPI;
 import com.diplomna.api.stock.ParseStock;
 import com.diplomna.assets.AssetManager;
 import com.diplomna.assets.finished.*;
+import com.diplomna.assets.sub.Asset;
 import com.diplomna.assets.sub.PurchaseInfo;
 import com.diplomna.database.insert.InsertIntoDb;
 import com.diplomna.database.read.ReadFromDb;
 import com.diplomna.date.DatеManager;
+import com.diplomna.users.sub.AssetType;
 import com.diplomna.users.sub.Notification;
 import com.diplomna.users.sub.User;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.databind.jsontype.impl.AsExistingPropertyTypeSerializer;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import com.mysql.cj.CacheAdapter;
+import com.sun.source.tree.LabeledStatementTree;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.stereotype.Service;
@@ -18,6 +24,7 @@ import org.springframework.stereotype.Service;
 import javax.xml.crypto.Data;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -114,7 +121,18 @@ public class BaseService {
             }
             indexBase.get(i).calculateQuantityOwned();
             indexBase.get(i).calculateAveragePurchasePrice();
-            // GET REST OF DATA FROM API !!!!!
+
+            AlphaVantageAPI alphaVantageAPI = new AlphaVantageAPI();
+            try {
+                alphaVantageAPI.setIndex(indexBase.get(i).getSymbol());
+                indexBase.get(i).setCurrentMarketPrice((Double.parseDouble(alphaVantageAPI.getIndexPrice())));
+
+                //information below not provided by available API
+                indexBase.get(i).setMarketOpen(true);
+            } catch (UnirestException e) {
+                e.printStackTrace();
+                //LOG ERROR - INDEX SYMBOL NOT FOUND BY API
+            }
         }
 
         /*  TESTING IF WORKS
@@ -161,6 +179,15 @@ public class BaseService {
             }
             cryptoBase.get(i).calculateQuantityOwned();
             cryptoBase.get(i).calculateAveragePurchasePrice();
+
+            AlphaVantageAPI alphaVantageAPI = new AlphaVantageAPI();
+            try {
+                alphaVantageAPI.setCrypto(cryptoBase.get(i).getSymbol());
+                cryptoBase.get(i).setCurrentMarketPrice(Double.parseDouble(alphaVantageAPI.getCrypto().get("price")));
+            } catch (UnirestException e) {
+                e.printStackTrace();
+                //LOG ERROR - CRYPTO NOT FOUND BY API
+            }
         }
 
         /*
@@ -328,6 +355,7 @@ public class BaseService {
         Index index = new Index();
         Crypto crypto = new Crypto();
         Commodities commodity = new Commodities();
+        AlphaVantageAPI alphaVantageAPI = new AlphaVantageAPI();
         switch (jsonObject.getString("assetType")){
             case "stock":
                 try {
@@ -347,14 +375,19 @@ public class BaseService {
                 }
                 break;
             case "index":
-                /*
-                Get information from API and turn into object
-                if not found return to user
-                 */
                 index.setSymbol(jsonObject.getString("symbol"));
-                index.setName(jsonObject.getString("symbol") + " ime ot api");
+                try {
+                    alphaVantageAPI.setInitialIndex(jsonObject.getString("symbol"));
+                    HashMap<String, String> info = alphaVantageAPI.getInitialIndex();
+                    index.setCurrency(info.get("currency"));
+                    index.setName(info.get("name"));
+                } catch (UnirestException e) {
+                    //log
+                    return "Index matchers not found!";
+                }
+                //information below not provided by available API
                 index.setDescription("description from api");
-                index.setCurrency("Dollar");
+                index.setExchangeName("exchange from api");
                 index.setCurrencySymbol("$");
                 break;
             case "crypto":
@@ -363,10 +396,17 @@ public class BaseService {
                 if not found return to user
                  */
                 crypto.setSymbol(jsonObject.getString("symbol"));
-                crypto.setName(jsonObject.getString("symbol") + " ime ot api");
+                try {
+                    alphaVantageAPI.setCrypto(jsonObject.getString("symbol"));
+                    HashMap<String, String> info = alphaVantageAPI.getCrypto();
+                    crypto.setName(info.get("name"));
+                    crypto.setCurrency(info.get("currency"));
+                    crypto.setCurrencySymbol(info.get("currencySymbol"));
+                } catch (UnirestException e) {
+                    e.printStackTrace();
+                }
+                //information below not provided by available API
                 crypto.setDescription("description from api");
-                crypto.setCurrency("Dollar");
-                crypto.setCurrencySymbol("$");
                 break;
             case "commodity":
                 /*
@@ -501,4 +541,49 @@ public class BaseService {
         return "success";
     }
 
+    public List<Notification> getGlobalNotifications(User user){
+        /*
+        Return list of global notification's if user has resources of that asset type
+         */
+        List<Notification> list = new ArrayList<>();
+        list.add(new Notification(AssetType.global, "Global notification"));
+        if(!user.getAssets().getAllStocks().isEmpty())list.add(new Notification(AssetType.stock, "All stocks"));
+        if(!user.getAssets().getAllIndex().isEmpty())list.add(new Notification(AssetType.index, "All index funds"));
+        if(!user.getAssets().getCrypto().isEmpty())list.add(new Notification(AssetType.crypto, "All crypto currencies"));
+        if(!user.getAssets().getCommodities().isEmpty())list.add(new Notification(AssetType.commodity, "All commodities"));
+        return list;
+    }
+    public String addNotification(JSONObject jsonObject, User user){
+        Notification newNotification = new Notification();
+
+        if(jsonObject.getString("name").equals("") || jsonObject.getString("priceTarget").equals("")){
+            return "Invalid notification";
+        }
+
+        if(jsonObject.getString("notificationType").equals("global")){
+            AssetType assetType = AssetType.valueOf(jsonObject.getString("notificationAsset"));
+            newNotification.setAssetType(assetType);
+            if(!assetType.toString().equals("global")){
+                newNotification.setAssetTypeSettings(true);
+            }
+        }
+        else{
+            AssetType assetType = AssetType.valueOf(jsonObject.getString("notificationType"));
+            newNotification.setAssetType(assetType);
+            newNotification.setAssetTypeSettings(false);
+            newNotification.setNotificationTarget(jsonObject.getString("notificationAsset"));
+        }
+        newNotification.setNotificationName(jsonObject.getString("name"));
+        newNotification.setNotificationPrice(jsonObject.getDouble("priceTarget"));
+
+        for(Notification notification: user.getNotifications()){
+            if(newNotification.isNotificationSimilar(notification)){
+                return "Notification duplicate!";
+            }
+        }
+        user.addNotification(newNotification);
+        InsertIntoDb insert = new InsertIntoDb("test");
+        insert.insertNotification(user.getUserId(), newNotification);
+        return "success";
+    }
 }
