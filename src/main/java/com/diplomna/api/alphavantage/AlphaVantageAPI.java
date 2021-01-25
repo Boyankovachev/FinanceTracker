@@ -43,14 +43,6 @@ public class AlphaVantageAPI {
                 .asJson();
     }
 
-    /*
-    public void print(){
-        //System.out.println(response.getBody().getObject().getJSONObject("Global Quote").get("05. price"));
-        //System.out.println(response.getBody().getObject().getJSONObject("Realtime Currency Exchange Rate").get("5. Exchange Rate"));
-        System.out.println(response.getBody().getObject().getJSONArray("bestMatches").getJSONObject(0).getString("2. name"));
-    }
-     */
-
     public HashMap<String, String> getInitialIndex(){
         HashMap<String, String> info = new HashMap<>();
         info.put("name", response.getBody().getObject().getJSONArray("bestMatches").getJSONObject(0).getString("2. name"));
@@ -59,6 +51,11 @@ public class AlphaVantageAPI {
     }
 
     public String getIndexPrice(){
+        //System.out.println(response.getBody().getObject().toString());
+        if(!response.getBody().getObject().getJSONObject("Global Quote").has("05. price")){
+            //LOG EXCEPTION - INDEX NOT FOUND
+            return "0";
+        }
         return response.getBody().getObject().getJSONObject("Global Quote").getString("05. price");
     }
 

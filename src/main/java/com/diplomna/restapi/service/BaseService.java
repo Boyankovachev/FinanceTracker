@@ -19,6 +19,8 @@ import com.mysql.cj.CacheAdapter;
 import com.sun.source.tree.LabeledStatementTree;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.xml.crypto.Data;
@@ -30,7 +32,10 @@ import java.util.List;
 @Service
 public class BaseService {
 
-    public BaseService(){}
+    private final Logger logger;
+    public BaseService(){
+        this.logger = LoggerFactory.getLogger(BaseService.class);
+    }
 
     public User setupUser(User user){
         AssetManager assetManager = new AssetManager();
@@ -78,13 +83,14 @@ public class BaseService {
             stockBase.get(i).calculateAveragePurchasePrice();
             try {
                 parseStock.setStockBySymbol(stockBase.get(i).getSymbol());  // getting current data from API
+                stockBase.get(i).setCurrentMarketPrice(parseStock.getRawCurrentPrice());
+                stockBase.get(i).setMarketOpen(parseStock.isMarketOpen());
+                stockBase.get(i).setRecommendationKey(parseStock.getRecommendationKey());
             } catch (UnirestException e) {
-                //log error
+                String errorMessage = "YahooFinanceAPI fail for symbol " + stockBase.get(i).getSymbol();
+                logger.error(errorMessage);
                 e.printStackTrace();
             }
-            stockBase.get(i).setCurrentMarketPrice(parseStock.getRawCurrentPrice());
-            stockBase.get(i).setMarketOpen(parseStock.isMarketOpen());
-            stockBase.get(i).setRecommendationKey(parseStock.getRecommendationKey());
         }
 
         return stockBase;
@@ -130,30 +136,12 @@ public class BaseService {
                 //information below not provided by available API
                 indexBase.get(i).setMarketOpen(true);
             } catch (UnirestException e) {
+                String errorMessage = "AlphaVantageAPI fail for symbol " + indexBase.get(i).getSymbol();
+                logger.error(errorMessage);
                 e.printStackTrace();
-                //LOG ERROR - INDEX SYMBOL NOT FOUND BY API
             }
         }
 
-        /*  TESTING IF WORKS
-                for(Index index: indexList){
-            System.out.print(index.getSymbol() + " ");
-            System.out.print(index.getName() + " ");
-            System.out.print(index.getCurrency() + " ");
-            System.out.print(index.getCurrencySymbol() + " ");
-            System.out.println(index.getDescription() + " ");
-            System.out.println("Total quantity owned: " + index.getQuantityOwned() + " Avarage Purchase Price: " + index.getAveragePurchasePrice());
-            for(int i=0; i<index.getAllPurchases().size(); i++){
-                //System.out.print(stock.getFirstPurchase().getPrice() + " ");
-                //System.out.print(stock.getFirstPurchase().getQuantity() + " ");
-                //System.out.println(stock.getFirstPurchase().getPurchaseDate().getDateSql() + " ");
-                System.out.print(index.getAllPurchases().get(i).getPrice() + " ");
-                System.out.print(index.getAllPurchases().get(i).getQuantity() + " ");
-                System.out.println(index.getAllPurchases().get(i).getPurchaseDate().getDateSql() + " ");
-            }
-            System.out.println("\n");
-        }
-         */
         return indexBase;
     }
 
@@ -185,33 +173,12 @@ public class BaseService {
                 alphaVantageAPI.setCrypto(cryptoBase.get(i).getSymbol());
                 cryptoBase.get(i).setCurrentMarketPrice(Double.parseDouble(alphaVantageAPI.getCrypto().get("price")));
             } catch (UnirestException e) {
+                String errorMessage = "AlphaVantageAPI fail for crypto " + cryptoBase.get(i).getSymbol();
+                logger.error(errorMessage);
                 e.printStackTrace();
                 //LOG ERROR - CRYPTO NOT FOUND BY API
             }
         }
-
-        /*
-        //Testing if works
-        for(Crypto crypto: cryptoBase) {
-            System.out.print(crypto.getSymbol() + " ");
-            System.out.print(crypto.getName() + " ");
-            System.out.print(crypto.getCurrency() + " ");
-            System.out.print(crypto.getCurrencySymbol() + " ");
-            System.out.println(crypto.getDescription() + " ");
-            System.out.println("Total quantity owned: " + crypto.getQuantityOwned() + " Avarage Purchase Price: " + crypto.getAveragePurchasePrice());
-            for (i = 0; i < crypto.getAllPurchases().size(); i++) {
-                //System.out.print(stock.getFirstPurchase().getPrice() + " ");
-                //System.out.print(stock.getFirstPurchase().getQuantity() + " ");
-                //System.out.println(stock.getFirstPurchase().getPurchaseDate().getDateSql() + " ");
-                System.out.print(crypto.getAllPurchases().get(i).getPrice() + " ");
-                System.out.print(crypto.getAllPurchases().get(i).getQuantity() + " ");
-                System.out.println(crypto.getAllPurchases().get(i).getPurchaseDate().getDateSql() + " ");
-            }
-            System.out.println("\n");
-        }
-
-         */
-
         return cryptoBase;
     }
 
@@ -239,28 +206,6 @@ public class BaseService {
             commodityBase.get(i).calculateQuantityOwned();
             commodityBase.get(i).calculateAveragePurchasePrice();
         }
-
-        /*
-        //Testing if works
-        for(Commodities commodity: commodityBase) {
-            System.out.print(commodity.getName() + " ");
-            System.out.print(commodity.getCurrency() + " ");
-            System.out.print(commodity.getCurrencySymbol() + " ");
-            System.out.print(commodity.getExchangeName() + " ");
-            System.out.println(commodity.getDescription() + " ");
-            System.out.println("Total quantity owned: " + commodity.getQuantityOwned() + " Avarage Purchase Price: " + commodity.getAveragePurchasePrice());
-            for (i = 0; i < commodity.getAllPurchases().size(); i++) {
-                //System.out.print(stock.getFirstPurchase().getPrice() + " ");
-                //System.out.print(stock.getFirstPurchase().getQuantity() + " ");
-                //System.out.println(stock.getFirstPurchase().getPurchaseDate().getDateSql() + " ");
-                System.out.print(commodity.getAllPurchases().get(i).getPrice() + " ");
-                System.out.print(commodity.getAllPurchases().get(i).getQuantity() + " ");
-                System.out.println(commodity.getAllPurchases().get(i).getPurchaseDate().getDateSql() + " ");
-            }
-            System.out.println("\n");
-        }
-         */
-
 
         return commodityBase;
     }
@@ -370,7 +315,8 @@ public class BaseService {
                     stock.setExchangeName(parseStock.getExchangeName());
                     stock.setRecommendationKey(parseStock.getRecommendationKey());
                 } catch (UnirestException e) {
-                    //log
+                    String errorMessage = "YahooFinanceAPI fail for symbol " + jsonObject.getString("symbol");
+                    logger.error(errorMessage);
                     return "Such a stock doesn't exist";
                 }
                 break;
@@ -382,7 +328,8 @@ public class BaseService {
                     index.setCurrency(info.get("currency"));
                     index.setName(info.get("name"));
                 } catch (UnirestException e) {
-                    //log
+                    String errorMessage = "AlphaVantageAPI fail for index " + jsonObject.getString("symbol");
+                    logger.error(errorMessage);
                     return "Index matchers not found!";
                 }
                 //information below not provided by available API
@@ -403,6 +350,8 @@ public class BaseService {
                     crypto.setCurrency(info.get("currency"));
                     crypto.setCurrencySymbol(info.get("currencySymbol"));
                 } catch (UnirestException e) {
+                    String errorMessage = "AlphaVantageAPI fail for crypto " + jsonObject.getString("symbol");
+                    logger.error(errorMessage);
                     e.printStackTrace();
                 }
                 //information below not provided by available API
@@ -413,6 +362,7 @@ public class BaseService {
                 Get information from API and turn into object
                 if not found return to user
                  */
+                // Free suitable API not found
                 commodity.setName(jsonObject.getString("symbol"));
                 commodity.setDescription("description from api");
                 commodity.setCurrency("Dollar");
@@ -478,7 +428,7 @@ public class BaseService {
     }
 
     public String change2FA(String input, User user){
-        input = input.replace("=","");
+        input = input.replace("=","");  // response is with on= or off=   '=' not needed
 
         if(input.equals("on") && user.getIs2FactorAuthenticationRequired() ||
                 input.equals("off") && !user.getIs2FactorAuthenticationRequired()){
@@ -538,12 +488,14 @@ public class BaseService {
         user.setSalt(newCredentials.get(1));
         InsertIntoDb insert = new InsertIntoDb("test");
         insert.updatePassword(user);
+        logger.info("user " + user.getUserName() + " changed his password");
         return "success";
     }
 
     public List<Notification> getGlobalNotifications(User user){
         /*
         Return list of global notification's if user has resources of that asset type
+        (method used for drop down notification menu on notifications html page)
          */
         List<Notification> list = new ArrayList<>();
         list.add(new Notification(AssetType.global, "Global notification"));

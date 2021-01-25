@@ -4,13 +4,19 @@ import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import org.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ParseStock {
     private HttpResponse<JsonNode> stock;
-    public ParseStock() {}
+    private final Logger logger;
+    public ParseStock() {
+        logger= LoggerFactory.getLogger(ParseStock.class);
+    }
     public ParseStock(String symbol) throws UnirestException {
         GetStockFromAPI stockGetter = new GetStockFromAPI();
         stock = stockGetter.getStockBySymbolAsJSON(symbol);
+        logger= LoggerFactory.getLogger(ParseStock.class);
     }
 
     public void setStockBySymbol(String symbol) throws UnirestException {
@@ -25,8 +31,8 @@ public class ParseStock {
             return json_stock.getDouble("raw");
         }
         else {
-            // NQMA STOCK NQKUV EXCEPTION I LOGVANE
-            System.out.println("stock == null");
+            logFail();
+            //EXCEPTION;
             return 0;
         }
     }
@@ -37,8 +43,8 @@ public class ParseStock {
             return json_stock.getString("symbol");
         }
         else {
-            // NQMA STOCK NQKUV EXCEPTION I LOGVANE
-            System.out.println("stock == null");
+            logFail();
+            //EXCEPTION;
             return null;
         }
     }
@@ -49,8 +55,8 @@ public class ParseStock {
             return json_stock.getJSONObject("price").getString("longName");
         }
         else {
-            // NQMA STOCK NQKUV EXCEPTION I LOGVANE
-            System.out.println("stock == null");
+            logFail();
+            //EXCEPTION;
             return null;
         }
     }
@@ -63,8 +69,8 @@ public class ParseStock {
             return status.equals("REGULAR");
         }
         else {
-            // NQMA STOCK NQKUV EXCEPTION I LOGVANE
-            System.out.println("stock == null");
+            logFail();
+            //EXCEPTION;
             return false;
         }
     }
@@ -75,8 +81,8 @@ public class ParseStock {
             return json_stock.getJSONObject("price").getString("currency");
         }
         else {
-            // NQMA STOCK NQKUV EXCEPTION I LOGVANE
-            System.out.println("stock == null");
+            logFail();
+            //EXCEPTION;
             return null;
         }
     }
@@ -87,8 +93,8 @@ public class ParseStock {
             return json_stock.getJSONObject("financialData").getString("recommendationKey");
         }
         else {
-            // NQMA STOCK NQKUV EXCEPTION I LOGVANE
-            System.out.println("stock == null");
+            logFail();
+            //EXCEPTION;
             return null;
         }
     }
@@ -100,8 +106,8 @@ public class ParseStock {
             return json_stock.getJSONObject("price").getString("exchangeName");
         }
         else {
-            // NQMA STOCK NQKUV EXCEPTION I LOGVANE
-            System.out.println("stock == null");
+            logFail();
+            //EXCEPTION;
             return null;
         }
     }
@@ -112,8 +118,8 @@ public class ParseStock {
             return json_stock.getJSONObject("price").getString("currencySymbol");
         }
         else {
-            // NQMA STOCK NQKUV EXCEPTION I LOGVANE
-            System.out.println("stock == null");
+            logFail();
+            //EXCEPTION;
             return null;
         }
     }
@@ -124,9 +130,13 @@ public class ParseStock {
             return json_stock.getJSONObject("summaryProfile").getString("longBusinessSummary");
         }
         else {
-            // NQMA STOCK NQKUV EXCEPTION I LOGVANE
-            System.out.println("stock == null");
+            logFail();
+            //EXCEPTION;
             return null;
         }
+    }
+
+    private void logFail(){
+        logger.warn("YahooFinanceAPI failed to load data, stock not initialized");
     }
 }

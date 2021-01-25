@@ -4,6 +4,8 @@ import com.diplomna.database.insert.InsertIntoDb;
 import com.diplomna.database.read.ReadFromDb;
 import com.diplomna.users.UserManager;
 import com.diplomna.users.sub.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
@@ -12,7 +14,10 @@ import java.util.List;
 @Service
 public class LoginAndRegisterService {
 
-    public LoginAndRegisterService(){}
+    private final Logger logger;
+    public LoginAndRegisterService(){
+        this.logger = LoggerFactory.getLogger(BaseService.class);
+    }
 
     public String createUser(String inputString){
         String[] temp = inputString.split("&");
@@ -44,6 +49,7 @@ public class LoginAndRegisterService {
         }
         InsertIntoDb insert = new InsertIntoDb("test");
         insert.insertUser(user);
+        logger.info("Created account with username " + user.getUserName());
         return "Account created successfully!";
     }
 

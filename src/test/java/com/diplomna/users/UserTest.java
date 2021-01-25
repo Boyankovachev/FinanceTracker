@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class UserTest {
 
@@ -29,7 +30,16 @@ public class UserTest {
         assertEquals(user.getSalt(), "sol");
         assertEquals(user.getEmail(), "randomemail@gmail.com");
         assertEquals(user.getIs2FactorAuthenticationRequired(), false);
-        assertEquals(user.getNotifications().size(), 1);
+        assertEquals(user.getNotifications().size(), 0);
+    }
+
+    @Test
+    public void testPasswords(){
+        User user = new User();
+        List<String> data = user.generateSaltAndHash("parolata1234");
+        user.setPassword(data.get(0));
+        user.setSalt(data.get(1));
+        assertTrue(user.checkPassword("parolata1234"));
     }
 
 }

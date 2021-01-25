@@ -21,6 +21,7 @@ public class TestAPI {
         System.out.println(stock.getDescription());
 
          */
+        /*
         AlphaVantageAPI alphaVantageAPI = new AlphaVantageAPI();
         try {
             alphaVantageAPI.setInitialIndex("SPY");
@@ -29,5 +30,6 @@ public class TestAPI {
             e.printStackTrace();
         }
 
+         */
     }
 }

@@ -78,5 +78,4 @@ public class LoginAndRegisterController {
         return "home";
     }
 
-
 }
