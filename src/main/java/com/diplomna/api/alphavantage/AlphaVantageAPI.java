@@ -4,6 +4,7 @@ import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
+import org.json.JSONException;
 
 import java.util.HashMap;
 
@@ -59,7 +60,7 @@ public class AlphaVantageAPI {
         return response.getBody().getObject().getJSONObject("Global Quote").getString("05. price");
     }
 
-    public HashMap<String, String> getCrypto(){
+    public HashMap<String, String> getCrypto() throws JSONException {
         HashMap<String, String> info = new HashMap<>();
         info.put("name", response.getBody().getObject().getJSONObject("Realtime Currency Exchange Rate").getString("2. From_Currency Name"));
         info.put("currency", response.getBody().getObject().getJSONObject("Realtime Currency Exchange Rate").getString("4. To_Currency Name"));

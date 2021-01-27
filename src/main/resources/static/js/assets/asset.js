@@ -41,6 +41,39 @@ $(function (){
             }
         });
     });
+
+    $("#change-current-price").on("click", function(){
+        //on click to change current price of passive asset
+        var $price = $('#price');
+        var $name = $('#name');
+        var $priceText = $('#price-text');
+
+        //alert("new price: " + $price.val() + "\nname: " + $name.html() + "\nold price: " + $priceText.html());
+
+        var price = $price.val();
+        var input = {
+            price: price,
+            name: $name.html()
+        };
+
+        $.ajax({
+            type: 'PUT',
+            url: '/edit-passive-resource',
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            data: JSON.stringify(input),
+            success:function(response){
+                if(response.success.localeCompare('success') == 0){
+                    $priceText.html(price);
+                }
+                else{
+                    $error_message.empty();
+                    $error_message.append('<p>' + response.success+ '</p>');
+                }
+            }
+        });
+    });
+
 });
 
 function unEntity(str){

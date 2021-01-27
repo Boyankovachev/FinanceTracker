@@ -36,4 +36,16 @@ public class InsertIntoPassiveResource {
         statement.setString(8,passiveResource.getCurrencySymbol());
         statement.executeUpdate();
     }
+
+    public void updatePassiveResourceCurrentPrice(int userId, double newPrice, String name) throws SQLException {
+        //update passive_resource SET current_price = "69" WHERE user_id = 5 AND name = 'qwrthg';
+        String sql = "UPDATE " + databaseName + ".`passive_resource` " +
+                "SET current_price = ? " +
+                "WHERE user_id = ? AND name = ?";
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setDouble(1, newPrice);
+        statement.setInt(2, userId);
+        statement.setString(3, name);
+        statement.executeUpdate();
+    }
 }

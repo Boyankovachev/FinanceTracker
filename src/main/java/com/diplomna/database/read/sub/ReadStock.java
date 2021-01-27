@@ -24,7 +24,14 @@ public class ReadStock {
         PreparedStatement statement = connection.prepareStatement(sql);
         statement.setString(1,symbol);
         ResultSet resultSet = statement.executeQuery();
+
         Stock stock = new Stock();
+
+        if(!resultSet.next()){
+            return null;
+        }
+        resultSet.beforeFirst();
+
         while (resultSet.next()) {
             stock.setSymbol(symbol); //  ==  stock.setSymbol(resultSet.getString(1));
             stock.setName(resultSet.getString(2));

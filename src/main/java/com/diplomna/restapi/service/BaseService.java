@@ -6,9 +6,11 @@ import com.diplomna.assets.AssetManager;
 import com.diplomna.assets.finished.*;
 import com.diplomna.assets.sub.Asset;
 import com.diplomna.assets.sub.PurchaseInfo;
+import com.diplomna.database.delete.DeleteFromDb;
 import com.diplomna.database.insert.InsertIntoDb;
 import com.diplomna.database.read.ReadFromDb;
 import com.diplomna.date.DatеManager;
+import com.diplomna.exceptions.AssetNotFoundException;
 import com.diplomna.users.sub.AssetType;
 import com.diplomna.users.sub.Notification;
 import com.diplomna.users.sub.User;
@@ -24,9 +26,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.xml.crypto.Data;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.IdentityHashMap;
 import java.util.List;
 
 @Service
@@ -86,6 +90,7 @@ public class BaseService {
                 stockBase.get(i).setCurrentMarketPrice(parseStock.getRawCurrentPrice());
                 stockBase.get(i).setMarketOpen(parseStock.isMarketOpen());
                 stockBase.get(i).setRecommendationKey(parseStock.getRecommendationKey());
+                stockBase.get(i).calculatePercentChange();
             } catch (UnirestException e) {
                 String errorMessage = "YahooFinanceAPI fail for symbol " + stockBase.get(i).getSymbol();
                 logger.error(errorMessage);
@@ -99,6 +104,9 @@ public class BaseService {
     private List<PassiveResource> getPassiveResourcesByUserId(int userId){
         ReadFromDb readFromDb = new ReadFromDb("test");
         List<PassiveResource> passiveResources = readFromDb.readPassiveResourcesByUserId(userId);
+        for(int i=0; i<passiveResources.size(); i++){
+            passiveResources.get(i).calculatePercentChange();
+        }
         return passiveResources;
     }
 
@@ -135,6 +143,9 @@ public class BaseService {
 
                 //information below not provided by available API
                 indexBase.get(i).setMarketOpen(true);
+
+
+                indexBase.get(i).calculatePercentChange();
             } catch (UnirestException e) {
                 String errorMessage = "AlphaVantageAPI fail for symbol " + indexBase.get(i).getSymbol();
                 logger.error(errorMessage);
@@ -172,7 +183,9 @@ public class BaseService {
             try {
                 alphaVantageAPI.setCrypto(cryptoBase.get(i).getSymbol());
                 cryptoBase.get(i).setCurrentMarketPrice(Double.parseDouble(alphaVantageAPI.getCrypto().get("price")));
-            } catch (UnirestException e) {
+
+                cryptoBase.get(i).calculatePercentChange();
+            } catch (UnirestException|JSONException e) {
                 String errorMessage = "AlphaVantageAPI fail for crypto " + cryptoBase.get(i).getSymbol();
                 logger.error(errorMessage);
                 e.printStackTrace();
@@ -205,6 +218,11 @@ public class BaseService {
             }
             commodityBase.get(i).calculateQuantityOwned();
             commodityBase.get(i).calculateAveragePurchasePrice();
+
+            //simulate data from API
+            commodityBase.get(i).setCurrentMarketPrice(123456); //!!!
+
+            commodityBase.get(i).calculatePercentChange();
         }
 
         return commodityBase;
@@ -363,10 +381,12 @@ public class BaseService {
                 if not found return to user
                  */
                 // Free suitable API not found
+                // Simulate data from API
                 commodity.setName(jsonObject.getString("symbol"));
                 commodity.setDescription("description from api");
                 commodity.setCurrency("Dollar");
                 commodity.setCurrencySymbol("$");
+                commodity.setExchangeName("exchange from API");
                 break;
         }
 
@@ -404,22 +424,38 @@ public class BaseService {
         switch (jsonObject.getString("assetType")){
             case "stock":
                 user.getAssets().addStock(stock);
-                insert.insertStock(stock);
+                //check if already in DB, if yes - don't add. Do for all asset types!
+                Stock tempStock = readFromDb.readStockBySymbol(stock.getSymbol());
+                if(tempStock == null) {
+                    insert.insertStock(stock);
+                }
                 insert.insertStockPurchaseInfo(user.getUserId(), purchaseInfo);
                 break;
             case "index":
                 user.getAssets().addIndex(index);
-                insert.insertIndex(index);
+                //check if already in DB, if yes - don't add. Do for all asset types!
+                Index tempIndex = readFromDb.readIndexBySymbol(index.getSymbol());
+                if (tempIndex == null){
+                    insert.insertIndex(index);
+                }
                 insert.insertIndexPurchaseInfo(user.getUserId(), purchaseInfo);
                 break;
             case "crypto":
                 user.getAssets().addCrypto(crypto);
-                insert.insertCrypto(crypto);
+                //check if already in DB, if yes - don't add. Do for all asset types!
+                Crypto tempCrypto = readFromDb.readCryptoBySymbol(crypto.getSymbol());
+                if (tempCrypto == null){
+                    insert.insertCrypto(crypto);
+                }
                 insert.insertCryptoPurchaseInfo(user.getUserId(), purchaseInfo);
                 break;
             case "commodity":
                 user.getAssets().addCommodity(commodity);
-                insert.insertCommodity(commodity);
+                //check if already in DB, if yes - don't add. Do for all asset types!
+                Commodities tempCommodity = readFromDb.readCommodityByCommodityName(commodity.getName());
+                if (tempCommodity == null){
+                    insert.insertCommodity(commodity);
+                }
                 insert.insertCommodityPurchaseInfo(user.getUserId(), purchaseInfo);
                 break;
         }
@@ -536,6 +572,54 @@ public class BaseService {
         user.addNotification(newNotification);
         InsertIntoDb insert = new InsertIntoDb("test");
         insert.insertNotification(user.getUserId(), newNotification);
+        return "success";
+    }
+
+
+    public String removeAsset(JSONObject jsonObject, User user){
+        DeleteFromDb deleteFromDb = new DeleteFromDb("test");
+        try {
+            user.getAssets().removeAsset(jsonObject.getString("assetType"), jsonObject.getString("assetName"));
+        } catch (AssetNotFoundException e) {
+            e.printStackTrace();
+            logger.error(jsonObject.getString("assetType") + ": "
+                    + jsonObject.getString("assetName") +
+                    " not found for user with id" + String.valueOf(user.getUserId()));
+            return "Unexpected error occurred! Couldn't remove asset! 1";
+        }
+        switch (jsonObject.getString("assetType")){
+            case "stock":
+                deleteFromDb.deleteAllStockPurchases(user.getUserId(), jsonObject.getString("assetName"));
+                break;
+            case "index":
+                deleteFromDb.deleteIndexPurchases(user.getUserId(), jsonObject.getString("assetName"));
+                break;
+            case "crypto":
+                deleteFromDb.deleteCryptoPurchases(user.getUserId(), jsonObject.getString("assetName"));
+                break;
+            case "commodity":
+                deleteFromDb.deleteCommodityPurchases(user.getUserId(), jsonObject.getString("assetName"));
+                break;
+            case "passive-resource":
+                deleteFromDb.deletePassiveResource(user.getUserId(), jsonObject.getString("assetName"));
+                break;
+            default:
+                return "Unexpected error occurred! Couldn't remove asset!";
+        }
+        return "success";
+    }
+
+    public String changePassiveResourcePrice(JSONObject jsonObject, User user) {
+        if( user.getAssets().getPassiveResourceByName(jsonObject.getString("name")) == null){
+            return "Failed to locate passive resource";
+        }
+        user.getAssets().getPassiveResourceByName(jsonObject.getString("name")).setCurrentMarketPrice(jsonObject.getDouble("price"));
+        InsertIntoDb update = new InsertIntoDb("test");
+        try {
+            update.updatePassiveResourceCurrentPrice(user.getUserId(), jsonObject.getDouble("price"), jsonObject.getString("name"));
+        } catch (SQLException throwables) {
+            return "Failed to update passive resource!";
+        }
         return "success";
     }
 }

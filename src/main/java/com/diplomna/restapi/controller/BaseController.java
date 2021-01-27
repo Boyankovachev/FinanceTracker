@@ -7,6 +7,7 @@ import com.diplomna.database.insert.InsertIntoDb;
 import com.diplomna.date.DatеManager;
 import com.diplomna.restapi.service.BaseService;
 import com.diplomna.users.sub.User;
+import com.fasterxml.jackson.databind.ObjectReader;
 import com.mashape.unirest.http.JsonNode;
 import com.mysql.cj.xdevapi.JsonArray;
 import org.apache.http.protocol.HTTP;
@@ -336,6 +337,25 @@ public class BaseController {
     @RequestMapping(value = "/header", method = RequestMethod.GET)
     public String getHeader(){
         return "parts/header";
+    }
+
+
+    @RequestMapping(value = "/remove-asset", method = RequestMethod.DELETE)
+    public @ResponseBody ResponseEntity<Object> removeAsset(@RequestBody String jsonString){
+        JSONObject jsonObject = new JSONObject(jsonString);
+        String response = baseService.removeAsset(jsonObject, user);
+        HashMap<String, String> responseMap = new HashMap<>();
+        responseMap.put("response", response);
+        return new ResponseEntity<Object>(responseMap, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/edit-passive-resource", method = RequestMethod.PUT)
+    public @ResponseBody ResponseEntity<Object> changeCurrentPrice(@RequestBody String jsonString){
+        JSONObject jsonObject = new JSONObject(jsonString);
+        String response = baseService.changePassiveResourcePrice(jsonObject, user);
+        HashMap<String, String> responseMap = new HashMap<>();
+        responseMap.put("success", response);
+        return new ResponseEntity<Object>(responseMap, HttpStatus.OK);
     }
 
 }

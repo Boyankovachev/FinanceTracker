@@ -12,16 +12,21 @@
 
     <div id="passive-resource-info">
         <h1>Passive Resource</h1>
-        <p th:text="${passive_resource.name}"></p>
+        <p th:text="${passive_resource.name}" id="name"></p>
         <p th:text="${passive_resource.description}"></p>
         <p th:text="${passive_resource.purchaseInfo.price}"></p>
-        <p th:text="${passive_resource.currentMarketPrice}"></p>
+        <p th:text="${passive_resource.currentMarketPrice}" id="price-text"></p>
         <p th:text="${passive_resource.currency}"></p>
         <p th:text="${passive_resource.currencySymbol}"></p>
         <p th:text="${passive_resource.purchaseInfo.purchaseDate.myFormatDateString}"></p>
+        <p th:text="${passive_resource.percentChange}"></p>
     </div>
     <div id="edit-passive-resource">
-        <h2>Edit Passive Resource</h2>
+        <h2>Set Current Price</h2>
+        <input type="number" placeholder="Enter Current Price" id="price"><br>
+        <button id="change-current-price">Confirm</button><br>
     </div>
+
+    <div id="error-message"></div>
 </body>
 </html>

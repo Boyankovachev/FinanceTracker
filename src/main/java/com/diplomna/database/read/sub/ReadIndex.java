@@ -24,7 +24,14 @@ public class ReadIndex {
         PreparedStatement statement = connection.prepareStatement(sql);
         statement.setString(1,symbol);
         ResultSet resultSet = statement.executeQuery();
+
         Index index = new Index();
+
+        if(!resultSet.next()){
+            return null;
+        }
+        resultSet.beforeFirst();
+
         while (resultSet.next()) {
             index.setSymbol(symbol); //  ==  index.setSymbol(resultSet.getString(1));
             index.setName(resultSet.getString(2));

@@ -25,6 +25,12 @@ public class ReadCrypto {
         statement.setString(1,symbol);
         ResultSet resultSet = statement.executeQuery();
         Crypto crypto = new Crypto();
+
+        if(!resultSet.next()){
+            return null;
+        }
+        resultSet.beforeFirst();
+
         while (resultSet.next()) {
             crypto.setSymbol(symbol); //  ==  crypto.setSymbol(resultSet.getString(1));
             crypto.setName(resultSet.getString(2));

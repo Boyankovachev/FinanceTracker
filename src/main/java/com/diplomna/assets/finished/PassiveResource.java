@@ -29,6 +29,10 @@ public class PassiveResource extends Asset {
         return purchaseInfo;
     }
 
+    public void calculatePercentChange(){
+        this.percentChange = ((this.currentMarketPrice - this.purchaseInfo.getPrice()) * 100) / this.purchaseInfo.getPrice();
+    }
+
     public void printPassiveResource(){
         /*
         Prints resource info to console.

@@ -136,4 +136,9 @@ public class ActiveAsset extends Asset {
     public void setAveragePurchasePrice(double averagePurchasePrice) {
         this.averagePurchasePrice = averagePurchasePrice;
     }
+
+     public void calculatePercentChange(){
+        this.percentChange = ((this.currentMarketPrice - this.averagePurchasePrice) * 100) / this.averagePurchasePrice;
+     }
+
 }

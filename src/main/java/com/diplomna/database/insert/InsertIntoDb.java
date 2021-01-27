@@ -151,4 +151,8 @@ public class InsertIntoDb {
             throwables.printStackTrace();
         }
     }
+    public void updatePassiveResourceCurrentPrice(int userId, double newPrice, String name) throws SQLException {
+        InsertIntoPassiveResource insertIntoPassiveResource = new InsertIntoPassiveResource(this.con, this.databaseName);
+        insertIntoPassiveResource.updatePassiveResourceCurrentPrice(userId, newPrice, name);
+    }
 }

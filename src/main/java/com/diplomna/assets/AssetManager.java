@@ -2,6 +2,7 @@ package com.diplomna.assets;
 
 import com.diplomna.assets.finished.*;
 import com.diplomna.assets.sub.PurchaseInfo;
+import com.diplomna.exceptions.AssetNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -77,6 +78,14 @@ public class AssetManager {
         }
         return null;
     }
+    public Stock getStockBySymbol(String stockSymbol){
+        for(Stock stock: stocks){
+            if(stock.getSymbol().equals(stockSymbol)){
+                return stock;
+            }
+        }
+        return null;
+    }
     public PassiveResource getPassiveResourceByName(String name){
         for(PassiveResource passiveResource: passiveResources){
             if(passiveResource.getName().equals(name)){
@@ -93,9 +102,25 @@ public class AssetManager {
         }
         return null;
     }
+    public Index getIndexBySymbol(String indexSymbol){
+        for(Index index: indexFunds){
+            if(index.getSymbol().equals(indexSymbol)){
+                return index;
+            }
+        }
+        return null;
+    }
     public Crypto getCryptoByName(String name){
         for(Crypto crypto: cryptoCurrencies){
             if(crypto.getName().equals(name)){
+                return crypto;
+            }
+        }
+        return null;
+    }
+    public Crypto getCryptoBySymbol(String cryptoSymbol){
+        for(Crypto crypto: cryptoCurrencies){
+            if(crypto.getName().equals(cryptoSymbol)){
                 return crypto;
             }
         }
@@ -194,5 +219,33 @@ public class AssetManager {
                 break;
         }
         return isPresent;
+    }
+
+    public void removeAsset(String assetType, String asset) throws AssetNotFoundException {
+        if(!isAssetInList(assetType, asset)){
+            throw new AssetNotFoundException(assetType + ": " + asset + " not found");
+        }
+        switch (assetType){
+            case "stock":
+                Stock tempStock = getStockBySymbol(asset);
+                stocks.remove(tempStock);
+                break;
+            case "index":
+                Index tempIndex = getIndexBySymbol(asset);
+                indexFunds.remove(tempIndex);
+                break;
+            case "crypto":
+                Crypto cryptoTemp = getCryptoByName(asset);
+                cryptoCurrencies.remove(cryptoTemp);
+                break;
+            case "commodity":
+                Commodities commodityTemp = getCommodityByName(asset);
+                commodities.remove(commodityTemp);
+                break;
+            case "passive-resource":
+                PassiveResource passiveResourceTemp = getPassiveResourceByName(asset);
+                passiveResources.remove(passiveResourceTemp);
+                break;
+        }
     }
 }

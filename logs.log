@@ -1,5 +1,470 @@
-2021-01-24 15:41:30.388  INFO 9524 --- [main] com.diplomna.DiplomnaApplication         : Starting DiplomnaApplication using Java 14.0.2 on DESKTOP-IS3KKB5 with PID 9524 (C:\MY SHIT\Code\Java\DiplomnaRabota\1\diplomna\target\classes started by PC in C:\MY SHIT\Code\Java\DiplomnaRabota\1\diplomna)
-2021-01-24 15:41:30.390 DEBUG 9524 --- [main] com.diplomna.DiplomnaApplication         : Running with Spring Boot v2.4.0, Spring v5.3.1
-2021-01-24 15:41:30.391  INFO 9524 --- [main] com.diplomna.DiplomnaApplication         : No active profile set, falling back to default profiles: default
-2021-01-24 15:41:32.108  INFO 9524 --- [main] com.diplomna.DiplomnaApplication         : Started DiplomnaApplication in 2.178 seconds (JVM running for 2.676)
-2021-01-24 15:41:32.111  WARN 9524 --- [main] com.diplomna.api.TestAPI                 : information
+2021-01-27 11:03:31.585  INFO 3064 --- [main] com.diplomna.DiplomnaApplication         : Starting DiplomnaApplication using Java 14.0.2 on DESKTOP-IS3KKB5 with PID 3064 (C:\MY SHIT\Code\Java\DiplomnaRabota\1\diplomna\target\classes started by PC in C:\MY SHIT\Code\Java\DiplomnaRabota\1\diplomna)
+2021-01-27 11:03:31.596 DEBUG 3064 --- [main] com.diplomna.DiplomnaApplication         : Running with Spring Boot v2.4.0, Spring v5.3.1
+2021-01-27 11:03:31.597  INFO 3064 --- [main] com.diplomna.DiplomnaApplication         : No active profile set, falling back to default profiles: default
+2021-01-27 11:03:33.561  INFO 3064 --- [main] com.diplomna.DiplomnaApplication         : Started DiplomnaApplication in 2.629 seconds (JVM running for 3.339)
+2021-01-27 11:03:52.701  WARN 3064 --- [http-nio-8080-exec-4] o.a.h.c.protocol.ResponseProcessCookies  : Cookie rejected [__cfduid="dc0f48a5875e8b769c22313e6522cda3d1611738232", version:0, domain:alphavantage.co, path:/, expiry:Fri Feb 26 11:03:52 EET 2021] Illegal 'domain' attribute "alphavantage.co". Domain of origin: "alpha-vantage.p.rapidapi.com"
+2021-01-27 11:03:53.063  WARN 3064 --- [http-nio-8080-exec-4] o.a.h.c.protocol.ResponseProcessCookies  : Cookie rejected [__cfduid="dcfa19e754c4f9cfbb2dec942e77540421611738232", version:0, domain:alphavantage.co, path:/, expiry:Fri Feb 26 11:03:52 EET 2021] Illegal 'domain' attribute "alphavantage.co". Domain of origin: "alpha-vantage.p.rapidapi.com"
+2021-01-27 11:03:53.390  WARN 3064 --- [http-nio-8080-exec-4] o.a.h.c.protocol.ResponseProcessCookies  : Cookie rejected [__cfduid="dc85b986168622811bacbf8e97e6b89981611738233", version:0, domain:alphavantage.co, path:/, expiry:Fri Feb 26 11:03:53 EET 2021] Illegal 'domain' attribute "alphavantage.co". Domain of origin: "alpha-vantage.p.rapidapi.com"
+2021-01-27 11:03:53.967  WARN 3064 --- [http-nio-8080-exec-4] o.a.h.c.protocol.ResponseProcessCookies  : Cookie rejected [__cfduid="d2401b794bf96b37f571badcb10aa0cf71611738233", version:0, domain:alphavantage.co, path:/, expiry:Fri Feb 26 11:03:53 EET 2021] Illegal 'domain' attribute "alphavantage.co". Domain of origin: "alpha-vantage.p.rapidapi.com"
+2021-01-27 11:04:09.062 ERROR 3064 --- [http-nio-8080-exec-9] c.diplomna.restapi.service.BaseService   : stock: GOOGL not found for user with id5
+2021-01-27 11:04:11.437 ERROR 3064 --- [http-nio-8080-exec-10] c.diplomna.restapi.service.BaseService   : stock: GOOGL not found for user with id5
+2021-01-27 11:04:12.314 ERROR 3064 --- [http-nio-8080-exec-1] c.diplomna.restapi.service.BaseService   : stock: GOOGL not found for user with id5
+2021-01-27 11:04:14.254 ERROR 3064 --- [http-nio-8080-exec-2] c.diplomna.restapi.service.BaseService   : stock: GOOGL not found for user with id5
+2021-01-27 11:04:14.418 ERROR 3064 --- [http-nio-8080-exec-3] c.diplomna.restapi.service.BaseService   : stock: GOOGL not found for user with id5
+2021-01-27 11:04:14.558 ERROR 3064 --- [http-nio-8080-exec-4] c.diplomna.restapi.service.BaseService   : stock: GOOGL not found for user with id5
+2021-01-27 11:04:14.708 ERROR 3064 --- [http-nio-8080-exec-5] c.diplomna.restapi.service.BaseService   : stock: GOOGL not found for user with id5
+2021-01-27 11:04:16.758 ERROR 3064 --- [http-nio-8080-exec-6] c.diplomna.restapi.service.BaseService   : stock: GOOGL not found for user with id5
+2021-01-27 11:04:16.891 ERROR 3064 --- [http-nio-8080-exec-7] c.diplomna.restapi.service.BaseService   : stock: GOOGL not found for user with id5
+2021-01-27 11:04:17.014 ERROR 3064 --- [http-nio-8080-exec-8] c.diplomna.restapi.service.BaseService   : stock: GOOGL not found for user with id5
+2021-01-27 11:04:21.314 ERROR 3064 --- [http-nio-8080-exec-10] c.diplomna.restapi.service.BaseService   : stock: TSLA not found for user with id5
+2021-01-27 11:04:21.451 ERROR 3064 --- [http-nio-8080-exec-1] c.diplomna.restapi.service.BaseService   : stock: TSLA not found for user with id5
+2021-01-27 11:04:25.658 ERROR 3064 --- [http-nio-8080-exec-4] c.diplomna.restapi.service.BaseService   : commodity: commodity ot sait 1 not found for user with id5
+2021-01-27 11:04:25.809 ERROR 3064 --- [http-nio-8080-exec-5] c.diplomna.restapi.service.BaseService   : commodity: commodity ot sait 1 not found for user with id5
+2021-01-27 11:04:25.972 ERROR 3064 --- [http-nio-8080-exec-6] c.diplomna.restapi.service.BaseService   : commodity: commodity ot sait 1 not found for user with id5
+2021-01-27 11:04:26.124 ERROR 3064 --- [http-nio-8080-exec-7] c.diplomna.restapi.service.BaseService   : commodity: commodity ot sait 1 not found for user with id5
+2021-01-27 11:04:26.268 ERROR 3064 --- [http-nio-8080-exec-8] c.diplomna.restapi.service.BaseService   : commodity: commodity ot sait 1 not found for user with id5
+2021-01-27 11:04:26.417 ERROR 3064 --- [http-nio-8080-exec-9] c.diplomna.restapi.service.BaseService   : commodity: commodity ot sait 1 not found for user with id5
+2021-01-27 11:06:10.118  INFO 10372 --- [main] com.diplomna.DiplomnaApplication         : Starting DiplomnaApplication using Java 14.0.2 on DESKTOP-IS3KKB5 with PID 10372 (C:\MY SHIT\Code\Java\DiplomnaRabota\1\diplomna\target\classes started by PC in C:\MY SHIT\Code\Java\DiplomnaRabota\1\diplomna)
+2021-01-27 11:06:10.150 DEBUG 10372 --- [main] com.diplomna.DiplomnaApplication         : Running with Spring Boot v2.4.0, Spring v5.3.1
+2021-01-27 11:06:10.151  INFO 10372 --- [main] com.diplomna.DiplomnaApplication         : No active profile set, falling back to default profiles: default
+2021-01-27 11:06:11.923  INFO 10372 --- [main] com.diplomna.DiplomnaApplication         : Started DiplomnaApplication in 2.319 seconds (JVM running for 2.903)
+2021-01-27 11:06:48.271  WARN 10372 --- [http-nio-8080-exec-5] o.a.h.c.protocol.ResponseProcessCookies  : Cookie rejected [__cfduid="d014c4f1c2f092c7cdf0a0ce5d2064f1e1611738408", version:0, domain:alphavantage.co, path:/, expiry:Fri Feb 26 11:06:48 EET 2021] Illegal 'domain' attribute "alphavantage.co". Domain of origin: "alpha-vantage.p.rapidapi.com"
+2021-01-27 11:06:48.589  WARN 10372 --- [http-nio-8080-exec-5] o.a.h.c.protocol.ResponseProcessCookies  : Cookie rejected [__cfduid="db2f703ece9d53829f9f1e2b11f20515e1611738408", version:0, domain:alphavantage.co, path:/, expiry:Fri Feb 26 11:06:48 EET 2021] Illegal 'domain' attribute "alphavantage.co". Domain of origin: "alpha-vantage.p.rapidapi.com"
+2021-01-27 11:06:49.186  WARN 10372 --- [http-nio-8080-exec-5] o.a.h.c.protocol.ResponseProcessCookies  : Cookie rejected [__cfduid="d0e703546158482c448a5c23e2deec0b61611738408", version:0, domain:alphavantage.co, path:/, expiry:Fri Feb 26 11:06:48 EET 2021] Illegal 'domain' attribute "alphavantage.co". Domain of origin: "alpha-vantage.p.rapidapi.com"
+2021-01-27 11:07:26.043 ERROR 10372 --- [http-nio-8080-exec-7] c.diplomna.restapi.service.BaseService   : stock: TSLA not found for user with id5
+2021-01-27 11:27:04.278  INFO 4308 --- [main] com.diplomna.DiplomnaApplication         : Starting DiplomnaApplication using Java 14.0.2 on DESKTOP-IS3KKB5 with PID 4308 (C:\MY SHIT\Code\Java\DiplomnaRabota\1\diplomna\target\classes started by PC in C:\MY SHIT\Code\Java\DiplomnaRabota\1\diplomna)
+2021-01-27 11:27:04.280 DEBUG 4308 --- [main] com.diplomna.DiplomnaApplication         : Running with Spring Boot v2.4.0, Spring v5.3.1
+2021-01-27 11:27:04.281  INFO 4308 --- [main] com.diplomna.DiplomnaApplication         : No active profile set, falling back to default profiles: default
+2021-01-27 11:27:05.942  INFO 4308 --- [main] com.diplomna.DiplomnaApplication         : Started DiplomnaApplication in 2.145 seconds (JVM running for 2.645)
+2021-01-27 11:27:21.385 ERROR 4308 --- [http-nio-8080-exec-6] o.a.c.c.C.[.[.[/].[dispatcherServlet]    : Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed; nested exception is java.lang.NullPointerException] with root cause
+
+java.lang.NullPointerException: null
+	at com.diplomna.restapi.service.BaseService.getStocksByUserId(BaseService.java:81) ~[classes/:na]
+	at com.diplomna.restapi.service.BaseService.setupUser(BaseService.java:45) ~[classes/:na]
+	at com.diplomna.restapi.controller.BaseController.getUserHomepage(BaseController.java:47) ~[classes/:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:564) ~[na:na]
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:197) ~[spring-web-5.3.1.jar:5.3.1]
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:141) ~[spring-web-5.3.1.jar:5.3.1]
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:106) ~[spring-webmvc-5.3.1.jar:5.3.1]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:893) ~[spring-webmvc-5.3.1.jar:5.3.1]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:807) ~[spring-webmvc-5.3.1.jar:5.3.1]
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87) ~[spring-webmvc-5.3.1.jar:5.3.1]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1061) ~[spring-webmvc-5.3.1.jar:5.3.1]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:961) ~[spring-webmvc-5.3.1.jar:5.3.1]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006) ~[spring-webmvc-5.3.1.jar:5.3.1]
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:898) ~[spring-webmvc-5.3.1.jar:5.3.1]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:626) ~[tomcat-embed-core-9.0.39.jar:4.0.FR]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883) ~[spring-webmvc-5.3.1.jar:5.3.1]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:733) ~[tomcat-embed-core-9.0.39.jar:4.0.FR]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:231) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53) ~[tomcat-embed-websocket-9.0.39.jar:9.0.39]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) ~[spring-web-5.3.1.jar:5.3.1]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119) ~[spring-web-5.3.1.jar:5.3.1]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) ~[spring-web-5.3.1.jar:5.3.1]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119) ~[spring-web-5.3.1.jar:5.3.1]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201) ~[spring-web-5.3.1.jar:5.3.1]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119) ~[spring-web-5.3.1.jar:5.3.1]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:202) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:542) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:143) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:343) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:374) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:868) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1590) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1130) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:630) ~[na:na]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
+	at java.base/java.lang.Thread.run(Thread.java:832) ~[na:na]
+
+2021-01-27 11:48:13.571  INFO 12824 --- [main] com.diplomna.DiplomnaApplication         : Starting DiplomnaApplication using Java 14.0.2 on DESKTOP-IS3KKB5 with PID 12824 (C:\MY SHIT\Code\Java\DiplomnaRabota\1\diplomna\target\classes started by PC in C:\MY SHIT\Code\Java\DiplomnaRabota\1\diplomna)
+2021-01-27 11:48:13.574 DEBUG 12824 --- [main] com.diplomna.DiplomnaApplication         : Running with Spring Boot v2.4.0, Spring v5.3.1
+2021-01-27 11:48:13.575  INFO 12824 --- [main] com.diplomna.DiplomnaApplication         : No active profile set, falling back to default profiles: default
+2021-01-27 11:48:15.297  INFO 12824 --- [main] com.diplomna.DiplomnaApplication         : Started DiplomnaApplication in 2.266 seconds (JVM running for 2.74)
+2021-01-27 11:48:40.129 ERROR 12824 --- [http-nio-8080-exec-4] o.a.c.c.C.[.[.[/].[dispatcherServlet]    : Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed; nested exception is java.lang.NullPointerException] with root cause
+
+java.lang.NullPointerException: null
+	at com.diplomna.restapi.service.BaseService.getStocksByUserId(BaseService.java:82) ~[classes/:na]
+	at com.diplomna.restapi.service.BaseService.setupUser(BaseService.java:45) ~[classes/:na]
+	at com.diplomna.restapi.controller.BaseController.getUserHomepage(BaseController.java:47) ~[classes/:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:564) ~[na:na]
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:197) ~[spring-web-5.3.1.jar:5.3.1]
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:141) ~[spring-web-5.3.1.jar:5.3.1]
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:106) ~[spring-webmvc-5.3.1.jar:5.3.1]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:893) ~[spring-webmvc-5.3.1.jar:5.3.1]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:807) ~[spring-webmvc-5.3.1.jar:5.3.1]
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87) ~[spring-webmvc-5.3.1.jar:5.3.1]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1061) ~[spring-webmvc-5.3.1.jar:5.3.1]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:961) ~[spring-webmvc-5.3.1.jar:5.3.1]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006) ~[spring-webmvc-5.3.1.jar:5.3.1]
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:898) ~[spring-webmvc-5.3.1.jar:5.3.1]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:626) ~[tomcat-embed-core-9.0.39.jar:4.0.FR]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883) ~[spring-webmvc-5.3.1.jar:5.3.1]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:733) ~[tomcat-embed-core-9.0.39.jar:4.0.FR]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:231) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53) ~[tomcat-embed-websocket-9.0.39.jar:9.0.39]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) ~[spring-web-5.3.1.jar:5.3.1]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119) ~[spring-web-5.3.1.jar:5.3.1]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) ~[spring-web-5.3.1.jar:5.3.1]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119) ~[spring-web-5.3.1.jar:5.3.1]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201) ~[spring-web-5.3.1.jar:5.3.1]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119) ~[spring-web-5.3.1.jar:5.3.1]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:202) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:542) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:143) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:343) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:374) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:868) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1590) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1130) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:630) ~[na:na]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
+	at java.base/java.lang.Thread.run(Thread.java:832) ~[na:na]
+
+2021-01-27 11:50:17.296  INFO 11304 --- [main] com.diplomna.DiplomnaApplication         : Starting DiplomnaApplication using Java 14.0.2 on DESKTOP-IS3KKB5 with PID 11304 (C:\MY SHIT\Code\Java\DiplomnaRabota\1\diplomna\target\classes started by PC in C:\MY SHIT\Code\Java\DiplomnaRabota\1\diplomna)
+2021-01-27 11:50:17.298 DEBUG 11304 --- [main] com.diplomna.DiplomnaApplication         : Running with Spring Boot v2.4.0, Spring v5.3.1
+2021-01-27 11:50:17.298  INFO 11304 --- [main] com.diplomna.DiplomnaApplication         : No active profile set, falling back to default profiles: default
+2021-01-27 11:50:18.924  INFO 11304 --- [main] com.diplomna.DiplomnaApplication         : Started DiplomnaApplication in 2.215 seconds (JVM running for 2.741)
+2021-01-27 11:50:59.922 ERROR 11304 --- [http-nio-8080-exec-5] o.a.c.c.C.[.[.[/].[dispatcherServlet]    : Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed; nested exception is java.lang.NullPointerException] with root cause
+
+java.lang.NullPointerException: null
+	at com.diplomna.restapi.service.BaseService.getStocksByUserId(BaseService.java:83) ~[classes/:na]
+	at com.diplomna.restapi.service.BaseService.setupUser(BaseService.java:45) ~[classes/:na]
+	at com.diplomna.restapi.controller.BaseController.getUserHomepage(BaseController.java:47) ~[classes/:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:564) ~[na:na]
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:197) ~[spring-web-5.3.1.jar:5.3.1]
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:141) ~[spring-web-5.3.1.jar:5.3.1]
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:106) ~[spring-webmvc-5.3.1.jar:5.3.1]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:893) ~[spring-webmvc-5.3.1.jar:5.3.1]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:807) ~[spring-webmvc-5.3.1.jar:5.3.1]
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87) ~[spring-webmvc-5.3.1.jar:5.3.1]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1061) ~[spring-webmvc-5.3.1.jar:5.3.1]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:961) ~[spring-webmvc-5.3.1.jar:5.3.1]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006) ~[spring-webmvc-5.3.1.jar:5.3.1]
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:898) ~[spring-webmvc-5.3.1.jar:5.3.1]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:626) ~[tomcat-embed-core-9.0.39.jar:4.0.FR]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883) ~[spring-webmvc-5.3.1.jar:5.3.1]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:733) ~[tomcat-embed-core-9.0.39.jar:4.0.FR]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:231) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53) ~[tomcat-embed-websocket-9.0.39.jar:9.0.39]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) ~[spring-web-5.3.1.jar:5.3.1]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119) ~[spring-web-5.3.1.jar:5.3.1]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) ~[spring-web-5.3.1.jar:5.3.1]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119) ~[spring-web-5.3.1.jar:5.3.1]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201) ~[spring-web-5.3.1.jar:5.3.1]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119) ~[spring-web-5.3.1.jar:5.3.1]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:202) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:542) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:143) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:343) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:374) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:868) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1590) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1130) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:630) ~[na:na]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
+	at java.base/java.lang.Thread.run(Thread.java:832) ~[na:na]
+
+2021-01-27 11:51:55.583  INFO 11176 --- [main] com.diplomna.DiplomnaApplication         : Starting DiplomnaApplication using Java 14.0.2 on DESKTOP-IS3KKB5 with PID 11176 (C:\MY SHIT\Code\Java\DiplomnaRabota\1\diplomna\target\classes started by PC in C:\MY SHIT\Code\Java\DiplomnaRabota\1\diplomna)
+2021-01-27 11:51:55.585 DEBUG 11176 --- [main] com.diplomna.DiplomnaApplication         : Running with Spring Boot v2.4.0, Spring v5.3.1
+2021-01-27 11:51:55.587  INFO 11176 --- [main] com.diplomna.DiplomnaApplication         : No active profile set, falling back to default profiles: default
+2021-01-27 11:51:57.503  INFO 11176 --- [main] com.diplomna.DiplomnaApplication         : Started DiplomnaApplication in 2.429 seconds (JVM running for 2.916)
+2021-01-27 11:52:06.888 ERROR 11176 --- [http-nio-8080-exec-5] o.a.c.c.C.[.[.[/].[dispatcherServlet]    : Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed; nested exception is java.lang.NullPointerException] with root cause
+
+java.lang.NullPointerException: null
+	at com.diplomna.restapi.service.BaseService.getIndexByUserId(BaseService.java:129) ~[classes/:na]
+	at com.diplomna.restapi.service.BaseService.setupUser(BaseService.java:47) ~[classes/:na]
+	at com.diplomna.restapi.controller.BaseController.getUserHomepage(BaseController.java:47) ~[classes/:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:564) ~[na:na]
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:197) ~[spring-web-5.3.1.jar:5.3.1]
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:141) ~[spring-web-5.3.1.jar:5.3.1]
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:106) ~[spring-webmvc-5.3.1.jar:5.3.1]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:893) ~[spring-webmvc-5.3.1.jar:5.3.1]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:807) ~[spring-webmvc-5.3.1.jar:5.3.1]
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87) ~[spring-webmvc-5.3.1.jar:5.3.1]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1061) ~[spring-webmvc-5.3.1.jar:5.3.1]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:961) ~[spring-webmvc-5.3.1.jar:5.3.1]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006) ~[spring-webmvc-5.3.1.jar:5.3.1]
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:898) ~[spring-webmvc-5.3.1.jar:5.3.1]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:626) ~[tomcat-embed-core-9.0.39.jar:4.0.FR]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883) ~[spring-webmvc-5.3.1.jar:5.3.1]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:733) ~[tomcat-embed-core-9.0.39.jar:4.0.FR]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:231) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53) ~[tomcat-embed-websocket-9.0.39.jar:9.0.39]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) ~[spring-web-5.3.1.jar:5.3.1]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119) ~[spring-web-5.3.1.jar:5.3.1]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) ~[spring-web-5.3.1.jar:5.3.1]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119) ~[spring-web-5.3.1.jar:5.3.1]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201) ~[spring-web-5.3.1.jar:5.3.1]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119) ~[spring-web-5.3.1.jar:5.3.1]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:202) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:542) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:143) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:343) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:374) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:868) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1590) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1130) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:630) ~[na:na]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
+	at java.base/java.lang.Thread.run(Thread.java:832) ~[na:na]
+
+2021-01-27 11:53:19.703  INFO 4872 --- [main] com.diplomna.DiplomnaApplication         : Starting DiplomnaApplication using Java 14.0.2 on DESKTOP-IS3KKB5 with PID 4872 (C:\MY SHIT\Code\Java\DiplomnaRabota\1\diplomna\target\classes started by PC in C:\MY SHIT\Code\Java\DiplomnaRabota\1\diplomna)
+2021-01-27 11:53:19.705 DEBUG 4872 --- [main] com.diplomna.DiplomnaApplication         : Running with Spring Boot v2.4.0, Spring v5.3.1
+2021-01-27 11:53:19.706  INFO 4872 --- [main] com.diplomna.DiplomnaApplication         : No active profile set, falling back to default profiles: default
+2021-01-27 11:53:21.343  INFO 4872 --- [main] com.diplomna.DiplomnaApplication         : Started DiplomnaApplication in 2.183 seconds (JVM running for 2.691)
+2021-01-27 11:53:35.344  WARN 4872 --- [http-nio-8080-exec-5] o.a.h.c.protocol.ResponseProcessCookies  : Cookie rejected [__cfduid="da1787a08697d32030974a434f66901971611741214", version:0, domain:alphavantage.co, path:/, expiry:Fri Feb 26 11:53:34 EET 2021] Illegal 'domain' attribute "alphavantage.co". Domain of origin: "alpha-vantage.p.rapidapi.com"
+2021-01-27 11:53:35.730  WARN 4872 --- [http-nio-8080-exec-5] o.a.h.c.protocol.ResponseProcessCookies  : Cookie rejected [__cfduid="de0d372faa34d81b5f238c1bad89f15f61611741215", version:0, domain:alphavantage.co, path:/, expiry:Fri Feb 26 11:53:35 EET 2021] Illegal 'domain' attribute "alphavantage.co". Domain of origin: "alpha-vantage.p.rapidapi.com"
+2021-01-27 11:53:36.319  WARN 4872 --- [http-nio-8080-exec-5] o.a.h.c.protocol.ResponseProcessCookies  : Cookie rejected [__cfduid="d159d4defdf3adcabd523cdfc709f44cc1611741215", version:0, domain:alphavantage.co, path:/, expiry:Fri Feb 26 11:53:35 EET 2021] Illegal 'domain' attribute "alphavantage.co". Domain of origin: "alpha-vantage.p.rapidapi.com"
+2021-01-27 11:54:13.654 ERROR 4872 --- [http-nio-8080-exec-9] c.diplomna.restapi.service.BaseService   : stock: TSLA not found for user with id5
+2021-01-27 11:54:15.739 ERROR 4872 --- [http-nio-8080-exec-10] c.diplomna.restapi.service.BaseService   : stock: TSLA not found for user with id5
+2021-01-27 11:54:16.867 ERROR 4872 --- [http-nio-8080-exec-1] c.diplomna.restapi.service.BaseService   : stock: TSLA not found for user with id5
+2021-01-27 11:54:17.048 ERROR 4872 --- [http-nio-8080-exec-2] c.diplomna.restapi.service.BaseService   : stock: TSLA not found for user with id5
+2021-01-27 11:54:17.202 ERROR 4872 --- [http-nio-8080-exec-3] c.diplomna.restapi.service.BaseService   : stock: TSLA not found for user with id5
+2021-01-27 11:54:17.343 ERROR 4872 --- [http-nio-8080-exec-4] c.diplomna.restapi.service.BaseService   : stock: TSLA not found for user with id5
+2021-01-27 11:54:17.494 ERROR 4872 --- [http-nio-8080-exec-5] c.diplomna.restapi.service.BaseService   : stock: TSLA not found for user with id5
+2021-01-27 11:54:17.639 ERROR 4872 --- [http-nio-8080-exec-6] c.diplomna.restapi.service.BaseService   : stock: TSLA not found for user with id5
+2021-01-27 11:54:17.762 ERROR 4872 --- [http-nio-8080-exec-7] c.diplomna.restapi.service.BaseService   : stock: TSLA not found for user with id5
+2021-01-27 11:54:17.890 ERROR 4872 --- [http-nio-8080-exec-8] c.diplomna.restapi.service.BaseService   : stock: TSLA not found for user with id5
+2021-01-27 11:54:18.016 ERROR 4872 --- [http-nio-8080-exec-9] c.diplomna.restapi.service.BaseService   : stock: TSLA not found for user with id5
+2021-01-27 11:54:18.140 ERROR 4872 --- [http-nio-8080-exec-10] c.diplomna.restapi.service.BaseService   : stock: TSLA not found for user with id5
+2021-01-27 11:54:18.271 ERROR 4872 --- [http-nio-8080-exec-1] c.diplomna.restapi.service.BaseService   : stock: TSLA not found for user with id5
+2021-01-27 11:54:18.431 ERROR 4872 --- [http-nio-8080-exec-2] c.diplomna.restapi.service.BaseService   : stock: TSLA not found for user with id5
+2021-01-27 11:54:18.553 ERROR 4872 --- [http-nio-8080-exec-3] c.diplomna.restapi.service.BaseService   : stock: TSLA not found for user with id5
+2021-01-27 11:54:18.679 ERROR 4872 --- [http-nio-8080-exec-4] c.diplomna.restapi.service.BaseService   : stock: TSLA not found for user with id5
+2021-01-27 11:54:18.820 ERROR 4872 --- [http-nio-8080-exec-5] c.diplomna.restapi.service.BaseService   : stock: TSLA not found for user with id5
+2021-01-27 11:54:51.632 ERROR 4872 --- [http-nio-8080-exec-6] c.diplomna.restapi.service.BaseService   : stock: TSLA not found for user with id5
+2021-01-27 11:54:52.041 ERROR 4872 --- [http-nio-8080-exec-7] c.diplomna.restapi.service.BaseService   : stock: TSLA not found for user with id5
+2021-01-27 11:54:52.223 ERROR 4872 --- [http-nio-8080-exec-8] c.diplomna.restapi.service.BaseService   : stock: TSLA not found for user with id5
+2021-01-27 11:55:17.800  INFO 9604 --- [main] com.diplomna.DiplomnaApplication         : Starting DiplomnaApplication using Java 14.0.2 on DESKTOP-IS3KKB5 with PID 9604 (C:\MY SHIT\Code\Java\DiplomnaRabota\1\diplomna\target\classes started by PC in C:\MY SHIT\Code\Java\DiplomnaRabota\1\diplomna)
+2021-01-27 11:55:17.802 DEBUG 9604 --- [main] com.diplomna.DiplomnaApplication         : Running with Spring Boot v2.4.0, Spring v5.3.1
+2021-01-27 11:55:17.804  INFO 9604 --- [main] com.diplomna.DiplomnaApplication         : No active profile set, falling back to default profiles: default
+2021-01-27 11:55:19.378  INFO 9604 --- [main] com.diplomna.DiplomnaApplication         : Started DiplomnaApplication in 2.12 seconds (JVM running for 2.608)
+2021-01-27 11:55:29.676  WARN 9604 --- [http-nio-8080-exec-5] o.a.h.c.protocol.ResponseProcessCookies  : Cookie rejected [__cfduid="d0e6a7d80733f89e11232e57be7caab5c1611741329", version:0, domain:alphavantage.co, path:/, expiry:Fri Feb 26 11:55:29 EET 2021] Illegal 'domain' attribute "alphavantage.co". Domain of origin: "alpha-vantage.p.rapidapi.com"
+2021-01-27 11:55:30.010  WARN 9604 --- [http-nio-8080-exec-5] o.a.h.c.protocol.ResponseProcessCookies  : Cookie rejected [__cfduid="de134fdd3219fcfbc05f5f42de63a86371611741329", version:0, domain:alphavantage.co, path:/, expiry:Fri Feb 26 11:55:29 EET 2021] Illegal 'domain' attribute "alphavantage.co". Domain of origin: "alpha-vantage.p.rapidapi.com"
+2021-01-27 11:55:30.712  WARN 9604 --- [http-nio-8080-exec-5] o.a.h.c.protocol.ResponseProcessCookies  : Cookie rejected [__cfduid="d040edb91b22937ddb53b09dc660e65ea1611741330", version:0, domain:alphavantage.co, path:/, expiry:Fri Feb 26 11:55:30 EET 2021] Illegal 'domain' attribute "alphavantage.co". Domain of origin: "alpha-vantage.p.rapidapi.com"
+2021-01-27 11:58:48.652  INFO 13096 --- [main] com.diplomna.DiplomnaApplication         : Starting DiplomnaApplication using Java 14.0.2 on DESKTOP-IS3KKB5 with PID 13096 (C:\MY SHIT\Code\Java\DiplomnaRabota\1\diplomna\target\classes started by PC in C:\MY SHIT\Code\Java\DiplomnaRabota\1\diplomna)
+2021-01-27 11:58:48.656 DEBUG 13096 --- [main] com.diplomna.DiplomnaApplication         : Running with Spring Boot v2.4.0, Spring v5.3.1
+2021-01-27 11:58:48.657  INFO 13096 --- [main] com.diplomna.DiplomnaApplication         : No active profile set, falling back to default profiles: default
+2021-01-27 11:58:50.378  INFO 13096 --- [main] com.diplomna.DiplomnaApplication         : Started DiplomnaApplication in 2.199 seconds (JVM running for 2.736)
+2021-01-27 11:59:01.201  WARN 13096 --- [http-nio-8080-exec-5] o.a.h.c.protocol.ResponseProcessCookies  : Cookie rejected [__cfduid="d5539be96535ce9bf81837c42ed11cb9e1611741540", version:0, domain:alphavantage.co, path:/, expiry:Fri Feb 26 11:59:00 EET 2021] Illegal 'domain' attribute "alphavantage.co". Domain of origin: "alpha-vantage.p.rapidapi.com"
+2021-01-27 11:59:02.368  WARN 13096 --- [http-nio-8080-exec-5] o.a.h.c.protocol.ResponseProcessCookies  : Cookie rejected [__cfduid="d6fcadefab73b3480c651ea93772d7a231611741541", version:0, domain:alphavantage.co, path:/, expiry:Fri Feb 26 11:59:01 EET 2021] Illegal 'domain' attribute "alphavantage.co". Domain of origin: "alpha-vantage.p.rapidapi.com"
+2021-01-27 11:59:03.446  WARN 13096 --- [http-nio-8080-exec-5] o.a.h.c.protocol.ResponseProcessCookies  : Cookie rejected [__cfduid="d9f26ef7023bf4f9fc7790e3834774b341611741542", version:0, domain:alphavantage.co, path:/, expiry:Fri Feb 26 11:59:02 EET 2021] Illegal 'domain' attribute "alphavantage.co". Domain of origin: "alpha-vantage.p.rapidapi.com"
+2021-01-27 12:00:22.485 ERROR 13096 --- [http-nio-8080-exec-10] c.diplomna.restapi.service.BaseService   : YahooFinanceAPI fail for symbol 
+2021-01-27 12:02:30.145  INFO 10312 --- [main] com.diplomna.DiplomnaApplication         : Starting DiplomnaApplication using Java 14.0.2 on DESKTOP-IS3KKB5 with PID 10312 (C:\MY SHIT\Code\Java\DiplomnaRabota\1\diplomna\target\classes started by PC in C:\MY SHIT\Code\Java\DiplomnaRabota\1\diplomna)
+2021-01-27 12:02:30.148 DEBUG 10312 --- [main] com.diplomna.DiplomnaApplication         : Running with Spring Boot v2.4.0, Spring v5.3.1
+2021-01-27 12:02:30.148  INFO 10312 --- [main] com.diplomna.DiplomnaApplication         : No active profile set, falling back to default profiles: default
+2021-01-27 12:02:31.962  INFO 10312 --- [main] com.diplomna.DiplomnaApplication         : Started DiplomnaApplication in 2.52 seconds (JVM running for 3.009)
+2021-01-27 12:02:47.314  WARN 10312 --- [http-nio-8080-exec-5] o.a.h.c.protocol.ResponseProcessCookies  : Cookie rejected [__cfduid="d33ac18370708dc0c14b952529ddea0a71611741767", version:0, domain:alphavantage.co, path:/, expiry:Fri Feb 26 12:02:47 EET 2021] Illegal 'domain' attribute "alphavantage.co". Domain of origin: "alpha-vantage.p.rapidapi.com"
+2021-01-27 12:02:47.923  WARN 10312 --- [http-nio-8080-exec-5] o.a.h.c.protocol.ResponseProcessCookies  : Cookie rejected [__cfduid="d1625d8066b73bf6b6826cfefc0006c641611741767", version:0, domain:alphavantage.co, path:/, expiry:Fri Feb 26 12:02:47 EET 2021] Illegal 'domain' attribute "alphavantage.co". Domain of origin: "alpha-vantage.p.rapidapi.com"
+2021-01-27 12:02:48.227  WARN 10312 --- [http-nio-8080-exec-5] o.a.h.c.protocol.ResponseProcessCookies  : Cookie rejected [__cfduid="d9c1e943be4fcf681b8f5d71dbdedbd801611741767", version:0, domain:alphavantage.co, path:/, expiry:Fri Feb 26 12:02:47 EET 2021] Illegal 'domain' attribute "alphavantage.co". Domain of origin: "alpha-vantage.p.rapidapi.com"
+2021-01-27 12:35:49.657  INFO 772 --- [main] com.diplomna.DiplomnaApplication         : Starting DiplomnaApplication using Java 14.0.2 on DESKTOP-IS3KKB5 with PID 772 (C:\MY SHIT\Code\Java\DiplomnaRabota\1\diplomna\target\classes started by PC in C:\MY SHIT\Code\Java\DiplomnaRabota\1\diplomna)
+2021-01-27 12:35:49.659 DEBUG 772 --- [main] com.diplomna.DiplomnaApplication         : Running with Spring Boot v2.4.0, Spring v5.3.1
+2021-01-27 12:35:49.660  INFO 772 --- [main] com.diplomna.DiplomnaApplication         : No active profile set, falling back to default profiles: default
+2021-01-27 12:35:52.221  INFO 772 --- [main] com.diplomna.DiplomnaApplication         : Started DiplomnaApplication in 3.173 seconds (JVM running for 3.81)
+2021-01-27 12:36:11.334  WARN 772 --- [http-nio-8080-exec-5] o.a.h.c.protocol.ResponseProcessCookies  : Cookie rejected [__cfduid="d56ee47f2142da24592cdc079d82c41aa1611743770", version:0, domain:alphavantage.co, path:/, expiry:Fri Feb 26 12:36:10 EET 2021] Illegal 'domain' attribute "alphavantage.co". Domain of origin: "alpha-vantage.p.rapidapi.com"
+2021-01-27 12:36:11.989  WARN 772 --- [http-nio-8080-exec-5] o.a.h.c.protocol.ResponseProcessCookies  : Cookie rejected [__cfduid="dba6f3da80d219a8c16f18c38bbdac1ed1611743771", version:0, domain:alphavantage.co, path:/, expiry:Fri Feb 26 12:36:11 EET 2021] Illegal 'domain' attribute "alphavantage.co". Domain of origin: "alpha-vantage.p.rapidapi.com"
+2021-01-27 12:36:12.597  WARN 772 --- [http-nio-8080-exec-5] o.a.h.c.protocol.ResponseProcessCookies  : Cookie rejected [__cfduid="da011090888118336db7c829212206da81611743771", version:0, domain:alphavantage.co, path:/, expiry:Fri Feb 26 12:36:11 EET 2021] Illegal 'domain' attribute "alphavantage.co". Domain of origin: "alpha-vantage.p.rapidapi.com"
+2021-01-27 12:38:06.752  INFO 4900 --- [main] com.diplomna.DiplomnaApplication         : Starting DiplomnaApplication using Java 14.0.2 on DESKTOP-IS3KKB5 with PID 4900 (C:\MY SHIT\Code\Java\DiplomnaRabota\1\diplomna\target\classes started by PC in C:\MY SHIT\Code\Java\DiplomnaRabota\1\diplomna)
+2021-01-27 12:38:06.758 DEBUG 4900 --- [main] com.diplomna.DiplomnaApplication         : Running with Spring Boot v2.4.0, Spring v5.3.1
+2021-01-27 12:38:06.759  INFO 4900 --- [main] com.diplomna.DiplomnaApplication         : No active profile set, falling back to default profiles: default
+2021-01-27 12:38:09.379  INFO 4900 --- [main] com.diplomna.DiplomnaApplication         : Started DiplomnaApplication in 3.311 seconds (JVM running for 3.982)
+2021-01-27 12:38:26.786  WARN 4900 --- [http-nio-8080-exec-5] o.a.h.c.protocol.ResponseProcessCookies  : Cookie rejected [__cfduid="dd8cfbed11d808da195f3f6f197dab85d1611743906", version:0, domain:alphavantage.co, path:/, expiry:Fri Feb 26 12:38:26 EET 2021] Illegal 'domain' attribute "alphavantage.co". Domain of origin: "alpha-vantage.p.rapidapi.com"
+2021-01-27 12:38:27.470  WARN 4900 --- [http-nio-8080-exec-5] o.a.h.c.protocol.ResponseProcessCookies  : Cookie rejected [__cfduid="de0385ca535ecb5b98d444bfee4b1c9d11611743906", version:0, domain:alphavantage.co, path:/, expiry:Fri Feb 26 12:38:26 EET 2021] Illegal 'domain' attribute "alphavantage.co". Domain of origin: "alpha-vantage.p.rapidapi.com"
+2021-01-27 12:38:28.054  WARN 4900 --- [http-nio-8080-exec-5] o.a.h.c.protocol.ResponseProcessCookies  : Cookie rejected [__cfduid="dbccfcfc41035ebd609eaff69bd17512e1611743907", version:0, domain:alphavantage.co, path:/, expiry:Fri Feb 26 12:38:27 EET 2021] Illegal 'domain' attribute "alphavantage.co". Domain of origin: "alpha-vantage.p.rapidapi.com"
+2021-01-27 12:39:37.636  INFO 7536 --- [main] com.diplomna.DiplomnaApplication         : Starting DiplomnaApplication using Java 14.0.2 on DESKTOP-IS3KKB5 with PID 7536 (C:\MY SHIT\Code\Java\DiplomnaRabota\1\diplomna\target\classes started by PC in C:\MY SHIT\Code\Java\DiplomnaRabota\1\diplomna)
+2021-01-27 12:39:37.640 DEBUG 7536 --- [main] com.diplomna.DiplomnaApplication         : Running with Spring Boot v2.4.0, Spring v5.3.1
+2021-01-27 12:39:37.641  INFO 7536 --- [main] com.diplomna.DiplomnaApplication         : No active profile set, falling back to default profiles: default
+2021-01-27 12:39:40.275  INFO 7536 --- [main] com.diplomna.DiplomnaApplication         : Started DiplomnaApplication in 3.265 seconds (JVM running for 3.862)
+2021-01-27 12:39:58.402  WARN 7536 --- [http-nio-8080-exec-5] o.a.h.c.protocol.ResponseProcessCookies  : Cookie rejected [__cfduid="dfd7bca128c3f0ad2807208d20c195ad51611743997", version:0, domain:alphavantage.co, path:/, expiry:Fri Feb 26 12:39:57 EET 2021] Illegal 'domain' attribute "alphavantage.co". Domain of origin: "alpha-vantage.p.rapidapi.com"
+2021-01-27 12:39:59.034  WARN 7536 --- [http-nio-8080-exec-5] o.a.h.c.protocol.ResponseProcessCookies  : Cookie rejected [__cfduid="d8f898ac5a4267aae2d60bfc7f7822cdf1611743998", version:0, domain:alphavantage.co, path:/, expiry:Fri Feb 26 12:39:58 EET 2021] Illegal 'domain' attribute "alphavantage.co". Domain of origin: "alpha-vantage.p.rapidapi.com"
+2021-01-27 12:39:59.318  WARN 7536 --- [http-nio-8080-exec-5] o.a.h.c.protocol.ResponseProcessCookies  : Cookie rejected [__cfduid="d271bcc41f0e779b03846098b29b1b0e11611743999", version:0, domain:alphavantage.co, path:/, expiry:Fri Feb 26 12:39:59 EET 2021] Illegal 'domain' attribute "alphavantage.co". Domain of origin: "alpha-vantage.p.rapidapi.com"
+2021-01-27 15:23:08.220  INFO 5472 --- [main] com.diplomna.DiplomnaApplication         : Starting DiplomnaApplication using Java 14.0.2 on DESKTOP-IS3KKB5 with PID 5472 (C:\MY SHIT\Code\Java\DiplomnaRabota\1\diplomna\target\classes started by PC in C:\MY SHIT\Code\Java\DiplomnaRabota\1\diplomna)
+2021-01-27 15:23:08.224 DEBUG 5472 --- [main] com.diplomna.DiplomnaApplication         : Running with Spring Boot v2.4.0, Spring v5.3.1
+2021-01-27 15:23:08.226  INFO 5472 --- [main] com.diplomna.DiplomnaApplication         : No active profile set, falling back to default profiles: default
+2021-01-27 15:23:10.590  INFO 5472 --- [main] com.diplomna.DiplomnaApplication         : Started DiplomnaApplication in 3.157 seconds (JVM running for 3.935)
+2021-01-27 15:23:27.899  WARN 5472 --- [http-nio-8080-exec-5] o.a.h.c.protocol.ResponseProcessCookies  : Cookie rejected [__cfduid="d55eb0a01dbfe4209bcc52825875fcdcd1611753807", version:0, domain:alphavantage.co, path:/, expiry:Fri Feb 26 15:23:27 EET 2021] Illegal 'domain' attribute "alphavantage.co". Domain of origin: "alpha-vantage.p.rapidapi.com"
+2021-01-27 15:23:28.261  WARN 5472 --- [http-nio-8080-exec-5] o.a.h.c.protocol.ResponseProcessCookies  : Cookie rejected [__cfduid="d94c8c1f562ab5add2592893607bc35041611753807", version:0, domain:alphavantage.co, path:/, expiry:Fri Feb 26 15:23:27 EET 2021] Illegal 'domain' attribute "alphavantage.co". Domain of origin: "alpha-vantage.p.rapidapi.com"
+2021-01-27 15:23:28.570  WARN 5472 --- [http-nio-8080-exec-5] o.a.h.c.protocol.ResponseProcessCookies  : Cookie rejected [__cfduid="d171a5f3bddeb885b1b1c657b0b7e52f71611753808", version:0, domain:alphavantage.co, path:/, expiry:Fri Feb 26 15:23:28 EET 2021] Illegal 'domain' attribute "alphavantage.co". Domain of origin: "alpha-vantage.p.rapidapi.com"
+2021-01-27 15:24:22.963  WARN 5472 --- [http-nio-8080-exec-6] o.a.h.c.protocol.ResponseProcessCookies  : Cookie rejected [__cfduid="d3e0c0d0c1abe1784ab88adbd849cc8a31611753862", version:0, domain:alphavantage.co, path:/, expiry:Fri Feb 26 15:24:22 EET 2021] Illegal 'domain' attribute "alphavantage.co". Domain of origin: "alpha-vantage.p.rapidapi.com"
+2021-01-27 15:24:23.331  WARN 5472 --- [http-nio-8080-exec-6] o.a.h.c.protocol.ResponseProcessCookies  : Cookie rejected [__cfduid="d50ace6b4c1018b5b40930f2a1be9431a1611753862", version:0, domain:alphavantage.co, path:/, expiry:Fri Feb 26 15:24:22 EET 2021] Illegal 'domain' attribute "alphavantage.co". Domain of origin: "alpha-vantage.p.rapidapi.com"
+2021-01-27 15:24:23.778  WARN 5472 --- [http-nio-8080-exec-6] o.a.h.c.protocol.ResponseProcessCookies  : Cookie rejected [__cfduid="d349ae04e36b25c5b8b6e224ee39e97561611753863", version:0, domain:alphavantage.co, path:/, expiry:Fri Feb 26 15:24:23 EET 2021] Illegal 'domain' attribute "alphavantage.co". Domain of origin: "alpha-vantage.p.rapidapi.com"
+2021-01-27 15:28:55.678  INFO 10812 --- [main] com.diplomna.DiplomnaApplication         : Starting DiplomnaApplication using Java 14.0.2 on DESKTOP-IS3KKB5 with PID 10812 (C:\MY SHIT\Code\Java\DiplomnaRabota\1\diplomna\target\classes started by PC in C:\MY SHIT\Code\Java\DiplomnaRabota\1\diplomna)
+2021-01-27 15:28:55.681 DEBUG 10812 --- [main] com.diplomna.DiplomnaApplication         : Running with Spring Boot v2.4.0, Spring v5.3.1
+2021-01-27 15:28:55.681  INFO 10812 --- [main] com.diplomna.DiplomnaApplication         : No active profile set, falling back to default profiles: default
+2021-01-27 15:28:57.753  INFO 10812 --- [main] com.diplomna.DiplomnaApplication         : Started DiplomnaApplication in 2.779 seconds (JVM running for 3.389)
+2021-01-27 15:29:17.798  WARN 10812 --- [http-nio-8080-exec-5] o.a.h.c.protocol.ResponseProcessCookies  : Cookie rejected [__cfduid="def3d0aa55a898054117bfa910626ef271611754157", version:0, domain:alphavantage.co, path:/, expiry:Fri Feb 26 15:29:17 EET 2021] Illegal 'domain' attribute "alphavantage.co". Domain of origin: "alpha-vantage.p.rapidapi.com"
+2021-01-27 15:29:18.548  WARN 10812 --- [http-nio-8080-exec-5] o.a.h.c.protocol.ResponseProcessCookies  : Cookie rejected [__cfduid="d2feb788dc02548ba72fc1e0315a9ef571611754157", version:0, domain:alphavantage.co, path:/, expiry:Fri Feb 26 15:29:17 EET 2021] Illegal 'domain' attribute "alphavantage.co". Domain of origin: "alpha-vantage.p.rapidapi.com"
+2021-01-27 15:29:19.120  WARN 10812 --- [http-nio-8080-exec-5] o.a.h.c.protocol.ResponseProcessCookies  : Cookie rejected [__cfduid="d60c9564c6178aaeab170c5cc1c395e031611754158", version:0, domain:alphavantage.co, path:/, expiry:Fri Feb 26 15:29:18 EET 2021] Illegal 'domain' attribute "alphavantage.co". Domain of origin: "alpha-vantage.p.rapidapi.com"
+2021-01-27 15:30:20.649  INFO 5608 --- [main] com.diplomna.DiplomnaApplication         : Starting DiplomnaApplication using Java 14.0.2 on DESKTOP-IS3KKB5 with PID 5608 (C:\MY SHIT\Code\Java\DiplomnaRabota\1\diplomna\target\classes started by PC in C:\MY SHIT\Code\Java\DiplomnaRabota\1\diplomna)
+2021-01-27 15:30:20.654 DEBUG 5608 --- [main] com.diplomna.DiplomnaApplication         : Running with Spring Boot v2.4.0, Spring v5.3.1
+2021-01-27 15:30:20.655  INFO 5608 --- [main] com.diplomna.DiplomnaApplication         : No active profile set, falling back to default profiles: default
+2021-01-27 15:30:22.574  INFO 5608 --- [main] com.diplomna.DiplomnaApplication         : Started DiplomnaApplication in 2.504 seconds (JVM running for 3.074)
+2021-01-27 15:30:41.654  WARN 5608 --- [http-nio-8080-exec-5] o.a.h.c.protocol.ResponseProcessCookies  : Cookie rejected [__cfduid="dfe61953854e6469208e3eabd214991291611754241", version:0, domain:alphavantage.co, path:/, expiry:Fri Feb 26 15:30:41 EET 2021] Illegal 'domain' attribute "alphavantage.co". Domain of origin: "alpha-vantage.p.rapidapi.com"
+2021-01-27 15:30:42.059  WARN 5608 --- [http-nio-8080-exec-5] o.a.h.c.protocol.ResponseProcessCookies  : Cookie rejected [__cfduid="db7af1b7b4a1f841d823372ac557bb4d91611754241", version:0, domain:alphavantage.co, path:/, expiry:Fri Feb 26 15:30:41 EET 2021] Illegal 'domain' attribute "alphavantage.co". Domain of origin: "alpha-vantage.p.rapidapi.com"
+2021-01-27 15:30:42.385  WARN 5608 --- [http-nio-8080-exec-5] o.a.h.c.protocol.ResponseProcessCookies  : Cookie rejected [__cfduid="d97840cbde4397fbbca53fe4020dbba2d1611754241", version:0, domain:alphavantage.co, path:/, expiry:Fri Feb 26 15:30:41 EET 2021] Illegal 'domain' attribute "alphavantage.co". Domain of origin: "alpha-vantage.p.rapidapi.com"
+2021-01-27 15:37:17.838  INFO 2616 --- [main] com.diplomna.DiplomnaApplication         : Starting DiplomnaApplication using Java 14.0.2 on DESKTOP-IS3KKB5 with PID 2616 (C:\MY SHIT\Code\Java\DiplomnaRabota\1\diplomna\target\classes started by PC in C:\MY SHIT\Code\Java\DiplomnaRabota\1\diplomna)
+2021-01-27 15:37:17.840 DEBUG 2616 --- [main] com.diplomna.DiplomnaApplication         : Running with Spring Boot v2.4.0, Spring v5.3.1
+2021-01-27 15:37:17.841  INFO 2616 --- [main] com.diplomna.DiplomnaApplication         : No active profile set, falling back to default profiles: default
+2021-01-27 15:37:19.914  INFO 2616 --- [main] com.diplomna.DiplomnaApplication         : Started DiplomnaApplication in 2.655 seconds (JVM running for 3.294)
+2021-01-27 15:37:37.677  WARN 2616 --- [http-nio-8080-exec-5] o.a.h.c.protocol.ResponseProcessCookies  : Cookie rejected [__cfduid="d0eebbe54cd91fe4be2b13a2c1c6853f81611754657", version:0, domain:alphavantage.co, path:/, expiry:Fri Feb 26 15:37:37 EET 2021] Illegal 'domain' attribute "alphavantage.co". Domain of origin: "alpha-vantage.p.rapidapi.com"
+2021-01-27 15:37:38.290  WARN 2616 --- [http-nio-8080-exec-5] o.a.h.c.protocol.ResponseProcessCookies  : Cookie rejected [__cfduid="d3ca12c68747c2c8554d0cd9ced3cfbb01611754657", version:0, domain:alphavantage.co, path:/, expiry:Fri Feb 26 15:37:37 EET 2021] Illegal 'domain' attribute "alphavantage.co". Domain of origin: "alpha-vantage.p.rapidapi.com"
+2021-01-27 15:37:38.909  WARN 2616 --- [http-nio-8080-exec-5] o.a.h.c.protocol.ResponseProcessCookies  : Cookie rejected [__cfduid="d55508572c0466265cafe1283024d2c461611754658", version:0, domain:alphavantage.co, path:/, expiry:Fri Feb 26 15:37:38 EET 2021] Illegal 'domain' attribute "alphavantage.co". Domain of origin: "alpha-vantage.p.rapidapi.com"
+2021-01-27 15:38:35.424 ERROR 2616 --- [http-nio-8080-exec-2] o.a.c.c.C.[.[.[/].[dispatcherServlet]    : Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed; nested exception is java.lang.NullPointerException] with root cause
+
+java.lang.NullPointerException: null
+	at com.diplomna.restapi.service.BaseService.changePassiveResourcePrice(BaseService.java:600) ~[classes/:na]
+	at com.diplomna.restapi.controller.BaseController.changeCurrentPrice(BaseController.java:355) ~[classes/:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:564) ~[na:na]
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:197) ~[spring-web-5.3.1.jar:5.3.1]
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:141) ~[spring-web-5.3.1.jar:5.3.1]
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:106) ~[spring-webmvc-5.3.1.jar:5.3.1]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:893) ~[spring-webmvc-5.3.1.jar:5.3.1]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:807) ~[spring-webmvc-5.3.1.jar:5.3.1]
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87) ~[spring-webmvc-5.3.1.jar:5.3.1]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1061) ~[spring-webmvc-5.3.1.jar:5.3.1]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:961) ~[spring-webmvc-5.3.1.jar:5.3.1]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006) ~[spring-webmvc-5.3.1.jar:5.3.1]
+	at org.springframework.web.servlet.FrameworkServlet.doPut(FrameworkServlet.java:920) ~[spring-webmvc-5.3.1.jar:5.3.1]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:655) ~[tomcat-embed-core-9.0.39.jar:4.0.FR]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883) ~[spring-webmvc-5.3.1.jar:5.3.1]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:733) ~[tomcat-embed-core-9.0.39.jar:4.0.FR]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:231) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53) ~[tomcat-embed-websocket-9.0.39.jar:9.0.39]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) ~[spring-web-5.3.1.jar:5.3.1]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119) ~[spring-web-5.3.1.jar:5.3.1]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) ~[spring-web-5.3.1.jar:5.3.1]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119) ~[spring-web-5.3.1.jar:5.3.1]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201) ~[spring-web-5.3.1.jar:5.3.1]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119) ~[spring-web-5.3.1.jar:5.3.1]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:202) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:542) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:143) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:343) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:374) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:868) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1590) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1130) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:630) ~[na:na]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
+	at java.base/java.lang.Thread.run(Thread.java:832) ~[na:na]
+
+2021-01-27 15:39:45.580  INFO 7344 --- [main] com.diplomna.DiplomnaApplication         : Starting DiplomnaApplication using Java 14.0.2 on DESKTOP-IS3KKB5 with PID 7344 (C:\MY SHIT\Code\Java\DiplomnaRabota\1\diplomna\target\classes started by PC in C:\MY SHIT\Code\Java\DiplomnaRabota\1\diplomna)
+2021-01-27 15:39:45.583 DEBUG 7344 --- [main] com.diplomna.DiplomnaApplication         : Running with Spring Boot v2.4.0, Spring v5.3.1
+2021-01-27 15:39:45.584  INFO 7344 --- [main] com.diplomna.DiplomnaApplication         : No active profile set, falling back to default profiles: default
+2021-01-27 15:39:47.428  INFO 7344 --- [main] com.diplomna.DiplomnaApplication         : Started DiplomnaApplication in 2.403 seconds (JVM running for 2.953)
+2021-01-27 15:40:11.606  WARN 7344 --- [http-nio-8080-exec-5] o.a.h.c.protocol.ResponseProcessCookies  : Cookie rejected [__cfduid="d3f18668296c7d684043247e59f13a79b1611754811", version:0, domain:alphavantage.co, path:/, expiry:Fri Feb 26 15:40:11 EET 2021] Illegal 'domain' attribute "alphavantage.co". Domain of origin: "alpha-vantage.p.rapidapi.com"
+2021-01-27 15:40:12.011  WARN 7344 --- [http-nio-8080-exec-5] o.a.h.c.protocol.ResponseProcessCookies  : Cookie rejected [__cfduid="dae71519c8661e63e69aa1b5ae1937ef81611754811", version:0, domain:alphavantage.co, path:/, expiry:Fri Feb 26 15:40:11 EET 2021] Illegal 'domain' attribute "alphavantage.co". Domain of origin: "alpha-vantage.p.rapidapi.com"
+2021-01-27 15:40:12.598  WARN 7344 --- [http-nio-8080-exec-5] o.a.h.c.protocol.ResponseProcessCookies  : Cookie rejected [__cfduid="d76e8b7c8bbf97c43bc47174aa25404451611754811", version:0, domain:alphavantage.co, path:/, expiry:Fri Feb 26 15:40:11 EET 2021] Illegal 'domain' attribute "alphavantage.co". Domain of origin: "alpha-vantage.p.rapidapi.com"
+2021-01-27 15:41:23.477  INFO 8968 --- [main] com.diplomna.DiplomnaApplication         : Starting DiplomnaApplication using Java 14.0.2 on DESKTOP-IS3KKB5 with PID 8968 (C:\MY SHIT\Code\Java\DiplomnaRabota\1\diplomna\target\classes started by PC in C:\MY SHIT\Code\Java\DiplomnaRabota\1\diplomna)
+2021-01-27 15:41:23.504 DEBUG 8968 --- [main] com.diplomna.DiplomnaApplication         : Running with Spring Boot v2.4.0, Spring v5.3.1
+2021-01-27 15:41:23.506  INFO 8968 --- [main] com.diplomna.DiplomnaApplication         : No active profile set, falling back to default profiles: default
+2021-01-27 15:41:25.388  INFO 8968 --- [main] com.diplomna.DiplomnaApplication         : Started DiplomnaApplication in 2.493 seconds (JVM running for 3.525)
+2021-01-27 15:41:41.855  WARN 8968 --- [http-nio-8080-exec-5] o.a.h.c.protocol.ResponseProcessCookies  : Cookie rejected [__cfduid="da1219dfe01d790d63b6d96f3671231851611754901", version:0, domain:alphavantage.co, path:/, expiry:Fri Feb 26 15:41:41 EET 2021] Illegal 'domain' attribute "alphavantage.co". Domain of origin: "alpha-vantage.p.rapidapi.com"
+2021-01-27 15:41:42.507  WARN 8968 --- [http-nio-8080-exec-5] o.a.h.c.protocol.ResponseProcessCookies  : Cookie rejected [__cfduid="d062238f366e683dc4b3a01e9e9b754401611754901", version:0, domain:alphavantage.co, path:/, expiry:Fri Feb 26 15:41:41 EET 2021] Illegal 'domain' attribute "alphavantage.co". Domain of origin: "alpha-vantage.p.rapidapi.com"
+2021-01-27 15:41:43.077  WARN 8968 --- [http-nio-8080-exec-5] o.a.h.c.protocol.ResponseProcessCookies  : Cookie rejected [__cfduid="d889b4898d33f4723875e38d0f05c79291611754902", version:0, domain:alphavantage.co, path:/, expiry:Fri Feb 26 15:41:42 EET 2021] Illegal 'domain' attribute "alphavantage.co". Domain of origin: "alpha-vantage.p.rapidapi.com"
+2021-01-27 21:29:39.982  INFO 7268 --- [main] com.diplomna.DiplomnaApplication         : Starting DiplomnaApplication using Java 14.0.2 on DESKTOP-IS3KKB5 with PID 7268 (C:\MY SHIT\Code\Java\DiplomnaRabota\1\diplomna\target\classes started by PC in C:\MY SHIT\Code\Java\DiplomnaRabota\1\diplomna)
+2021-01-27 21:29:39.985 DEBUG 7268 --- [main] com.diplomna.DiplomnaApplication         : Running with Spring Boot v2.4.0, Spring v5.3.1
+2021-01-27 21:29:39.986  INFO 7268 --- [main] com.diplomna.DiplomnaApplication         : No active profile set, falling back to default profiles: default
+2021-01-27 21:29:42.941  INFO 7268 --- [main] com.diplomna.DiplomnaApplication         : Started DiplomnaApplication in 3.833 seconds (JVM running for 4.719)
+2021-01-27 21:30:11.325  WARN 7268 --- [http-nio-8080-exec-4] o.a.h.c.protocol.ResponseProcessCookies  : Cookie rejected [__cfduid="dc73f3fa46a98839534911742e1e5eef01611775810", version:0, domain:alphavantage.co, path:/, expiry:Fri Feb 26 21:30:10 EET 2021] Illegal 'domain' attribute "alphavantage.co". Domain of origin: "alpha-vantage.p.rapidapi.com"
+2021-01-27 21:30:11.975  WARN 7268 --- [http-nio-8080-exec-4] o.a.h.c.protocol.ResponseProcessCookies  : Cookie rejected [__cfduid="d7069133a1945462b8f7526ed4f57d8991611775811", version:0, domain:alphavantage.co, path:/, expiry:Fri Feb 26 21:30:11 EET 2021] Illegal 'domain' attribute "alphavantage.co". Domain of origin: "alpha-vantage.p.rapidapi.com"
+2021-01-27 21:30:12.588  WARN 7268 --- [http-nio-8080-exec-4] o.a.h.c.protocol.ResponseProcessCookies  : Cookie rejected [__cfduid="de20c24d2cc0af0f44fe3d2ddfe6b9bd31611775811", version:0, domain:alphavantage.co, path:/, expiry:Fri Feb 26 21:30:11 EET 2021] Illegal 'domain' attribute "alphavantage.co". Domain of origin: "alpha-vantage.p.rapidapi.com"
+2021-01-27 22:21:15.844  INFO 14204 --- [main] com.diplomna.DiplomnaApplication         : Starting DiplomnaApplication using Java 14.0.2 on DESKTOP-IS3KKB5 with PID 14204 (C:\MY SHIT\Code\Java\DiplomnaRabota\1\diplomna\target\classes started by PC in C:\MY SHIT\Code\Java\DiplomnaRabota\1\diplomna)
+2021-01-27 22:21:15.848 DEBUG 14204 --- [main] com.diplomna.DiplomnaApplication         : Running with Spring Boot v2.4.0, Spring v5.3.1
+2021-01-27 22:21:15.851  INFO 14204 --- [main] com.diplomna.DiplomnaApplication         : No active profile set, falling back to default profiles: default
+2021-01-27 22:21:18.312  INFO 14204 --- [main] com.diplomna.DiplomnaApplication         : Started DiplomnaApplication in 3.141 seconds (JVM running for 3.799)
+2021-01-27 22:21:42.501  WARN 14204 --- [http-nio-8080-exec-5] o.a.h.c.protocol.ResponseProcessCookies  : Cookie rejected [__cfduid="de371fdeb30aca52faca215e1580ba49a1611778902", version:0, domain:alphavantage.co, path:/, expiry:Fri Feb 26 22:21:42 EET 2021] Illegal 'domain' attribute "alphavantage.co". Domain of origin: "alpha-vantage.p.rapidapi.com"
+2021-01-27 22:21:43.207  WARN 14204 --- [http-nio-8080-exec-5] o.a.h.c.protocol.ResponseProcessCookies  : Cookie rejected [__cfduid="d54949a65d663b7294e7c1e345d7efb871611778902", version:0, domain:alphavantage.co, path:/, expiry:Fri Feb 26 22:21:42 EET 2021] Illegal 'domain' attribute "alphavantage.co". Domain of origin: "alpha-vantage.p.rapidapi.com"
+2021-01-27 22:21:43.858  WARN 14204 --- [http-nio-8080-exec-5] o.a.h.c.protocol.ResponseProcessCookies  : Cookie rejected [__cfduid="de1110786be78e80545361a1d1cc6f2711611778903", version:0, domain:alphavantage.co, path:/, expiry:Fri Feb 26 22:21:43 EET 2021] Illegal 'domain' attribute "alphavantage.co". Domain of origin: "alpha-vantage.p.rapidapi.com"
+2021-01-27 22:23:36.042  INFO 12652 --- [main] com.diplomna.DiplomnaApplication         : Starting DiplomnaApplication using Java 14.0.2 on DESKTOP-IS3KKB5 with PID 12652 (C:\MY SHIT\Code\Java\DiplomnaRabota\1\diplomna\target\classes started by PC in C:\MY SHIT\Code\Java\DiplomnaRabota\1\diplomna)
+2021-01-27 22:23:36.045 DEBUG 12652 --- [main] com.diplomna.DiplomnaApplication         : Running with Spring Boot v2.4.0, Spring v5.3.1
+2021-01-27 22:23:36.046  INFO 12652 --- [main] com.diplomna.DiplomnaApplication         : No active profile set, falling back to default profiles: default
+2021-01-27 22:23:37.936  INFO 12652 --- [main] com.diplomna.DiplomnaApplication         : Started DiplomnaApplication in 2.504 seconds (JVM running for 3.079)
+2021-01-27 22:24:00.193  WARN 12652 --- [http-nio-8080-exec-3] o.a.h.c.protocol.ResponseProcessCookies  : Cookie rejected [__cfduid="d8b5291ca4db3a8facfc6a31eef48bfd41611779039", version:0, domain:alphavantage.co, path:/, expiry:Fri Feb 26 22:23:59 EET 2021] Illegal 'domain' attribute "alphavantage.co". Domain of origin: "alpha-vantage.p.rapidapi.com"
+2021-01-27 22:24:01.552  WARN 12652 --- [http-nio-8080-exec-3] o.a.h.c.protocol.ResponseProcessCookies  : Cookie rejected [__cfduid="de4cb6335ec7a3ff04a41cd589ec0e6761611779040", version:0, domain:alphavantage.co, path:/, expiry:Fri Feb 26 22:24:00 EET 2021] Illegal 'domain' attribute "alphavantage.co". Domain of origin: "alpha-vantage.p.rapidapi.com"
+2021-01-27 22:24:02.651  WARN 12652 --- [http-nio-8080-exec-3] o.a.h.c.protocol.ResponseProcessCookies  : Cookie rejected [__cfduid="da3f6502b501db3338579b8ef14ecc6471611779041", version:0, domain:alphavantage.co, path:/, expiry:Fri Feb 26 22:24:01 EET 2021] Illegal 'domain' attribute "alphavantage.co". Domain of origin: "alpha-vantage.p.rapidapi.com"

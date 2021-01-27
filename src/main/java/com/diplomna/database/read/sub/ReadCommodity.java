@@ -25,6 +25,12 @@ public class ReadCommodity {
         statement.setString(1,commodityName);
         ResultSet resultSet = statement.executeQuery();
         Commodities commodity = new Commodities();
+
+        if(!resultSet.next()){
+            return null;
+        }
+        resultSet.beforeFirst();
+
         while (resultSet.next()) {
             commodity.setName(commodityName); //  ==  commodity.setName(resultSet.getString(1));
             commodity.setCurrency(resultSet.getString(2));

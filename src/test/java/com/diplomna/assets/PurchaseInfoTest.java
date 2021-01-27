@@ -1,5 +1,7 @@
 package com.diplomna.assets;
 
+import com.diplomna.assets.finished.PassiveResource;
+import com.diplomna.assets.finished.Stock;
 import com.diplomna.assets.sub.ActiveAsset;
 import com.diplomna.assets.sub.PurchaseInfo;
 import com.diplomna.date.DatеManager;
@@ -24,6 +26,24 @@ public class PurchaseInfoTest {
         assertEquals(asset.getPurchaseByIndex(3).getPrice(), 2.5);
         assertEquals(asset.getPurchaseByPrice(251).getQuantity(), 13);
         assertEquals(asset.getPurchaseByQuantity(2.6).getPrice(), 2.5);
+    }
+
+    @Test
+    public void testPercentChangeCalculators(){
+        // testing percent change
+        PassiveResource passiveResource = new PassiveResource();
+        PurchaseInfo purchaseInfo = new PurchaseInfo();
+        purchaseInfo.setPrice(125);
+        passiveResource.setPurchaseInfo(purchaseInfo);
+        passiveResource.setCurrentMarketPrice(150);
+        passiveResource.calculatePercentChange();
+        assertEquals(passiveResource.getPercentChange(), 20);
+
+        Stock stock = new Stock();
+        stock.setCurrentMarketPrice(123);
+        stock.setAveragePurchasePrice(224);
+        stock.calculatePercentChange();
+        assertEquals(stock.getPercentChange(), -45.089285714285715);
     }
 
 }
