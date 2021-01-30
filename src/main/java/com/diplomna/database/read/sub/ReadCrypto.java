@@ -37,8 +37,33 @@ public class ReadCrypto {
             crypto.setCurrency(resultSet.getString(3));
             crypto.setCurrencySymbol(resultSet.getString(4));
             crypto.setDescription(resultSet.getString(5));
+            crypto.setCurrentMarketPrice(resultSet.getDouble(6));
         }
         return crypto;
+    }
+    public List<Crypto> readAllCrypto() throws SQLException {
+        String sql = "SELECT * FROM `" + databaseName +"`.crypto;";
+        PreparedStatement statement = connection.prepareStatement(sql);
+        ResultSet resultSet = statement.executeQuery();
+
+        if(!resultSet.next()){
+            return null;
+        }
+        resultSet.beforeFirst();
+
+        List<Crypto> cryptos = new ArrayList<>();
+
+        while (resultSet.next()) {
+            Crypto crypto = new Crypto();
+            crypto.setSymbol(resultSet.getString(1));
+            crypto.setName(resultSet.getString(2));
+            crypto.setCurrency(resultSet.getString(3));
+            crypto.setCurrencySymbol(resultSet.getString(4));
+            crypto.setDescription(resultSet.getString(5));
+            crypto.setCurrentMarketPrice(resultSet.getDouble(6));
+            cryptos.add(crypto);
+        }
+        return cryptos;
     }
 
     public List<String> readAllCryptoSymbols() throws SQLException {

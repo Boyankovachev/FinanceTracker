@@ -37,8 +37,33 @@ public class ReadCommodity {
             commodity.setCurrencySymbol(resultSet.getString(3));
             commodity.setExchangeName(resultSet.getString(4));
             commodity.setDescription(resultSet.getString(5));
+            commodity.setCurrentMarketPrice(resultSet.getDouble(6));
         }
         return commodity;
+    }
+    public List<Commodities> readAllCommodities()throws SQLException {
+        String sql = "SELECT * FROM `" + databaseName +"`.commodity;";
+        PreparedStatement statement = connection.prepareStatement(sql);
+        ResultSet resultSet = statement.executeQuery();
+
+        if(!resultSet.next()){
+            return null;
+        }
+        resultSet.beforeFirst();
+
+        List<Commodities> commodities = new ArrayList<>();
+
+        while (resultSet.next()) {
+            Commodities commodity = new Commodities();
+            commodity.setName(resultSet.getString(1));
+            commodity.setCurrency(resultSet.getString(2));
+            commodity.setCurrencySymbol(resultSet.getString(3));
+            commodity.setExchangeName(resultSet.getString(4));
+            commodity.setDescription(resultSet.getString(5));
+            commodity.setCurrentMarketPrice(resultSet.getDouble(6));
+            commodities.add(commodity);
+        }
+        return commodities;
     }
 
     public List<String> readAllCommodityNames() throws SQLException {
@@ -52,11 +77,3 @@ public class ReadCommodity {
         return commodity;
     }
 }
-/*
-            String sql = "CREATE TABLE IF NOT EXISTS `"+databaseName+"`.`commodity`(\n" +
-                    "    `commodity_name` VARCHAR(64) NOT NULL PRIMARY KEY,\n" +
-                    "    `currency` VARCHAR(32) NOT NULL,\n" +
-                    "    `currency_symbol` VARCHAR(12) NOT NULL,\n" +
-                    "    `exchange_name` VARCHAR(32),\n" +
-                    "    `description` TEXT);\n";
- */

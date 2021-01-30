@@ -39,8 +39,39 @@ public class ReadIndex {
             index.setCurrencySymbol(resultSet.getString(4));
             index.setExchangeName(resultSet.getString(5));
             index.setDescription(resultSet.getString(6));
+            index.setCurrentMarketPrice(resultSet.getDouble(7));
+            index.setMarketOpen(resultSet.getBoolean(8));
         }
         return index;
+    }
+    public List<Index> readAllIndex() throws SQLException {
+        String sql = "SELECT * FROM `" + databaseName +"`.index;";
+
+        PreparedStatement statement = connection.prepareStatement(sql);
+        ResultSet resultSet = statement.executeQuery();
+
+        List<Index> indexList = new ArrayList<>();
+
+        if(!resultSet.next()){
+            return null;
+        }
+        resultSet.beforeFirst();
+
+        while (resultSet.next()) {
+            Index index = new Index();
+
+            index.setSymbol(resultSet.getString(1));
+            index.setName(resultSet.getString(2));
+            index.setCurrency(resultSet.getString(3));
+            index.setCurrencySymbol(resultSet.getString(4));
+            index.setExchangeName(resultSet.getString(5));
+            index.setDescription(resultSet.getString(6));
+            index.setCurrentMarketPrice(resultSet.getDouble(7));
+            index.setMarketOpen(resultSet.getBoolean(8));
+
+            indexList.add(index);
+        }
+        return indexList;
     }
 
     public List<String> readAllIndexSymbols() throws SQLException {

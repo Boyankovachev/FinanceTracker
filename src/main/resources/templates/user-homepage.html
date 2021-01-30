@@ -54,7 +54,7 @@
             <th>Percent Change</th>
             <th>Currency</th>
         </tr>
-        <tr th:each="passive_resource: ${passive_resource}">
+        <tr th:each="passive_resource: ${passive_resource}" th:id="${passive_resource.name}">
             <td>
                 <form action="/asset" method="get">
                     <button class="open-asset" asset-type="passive-resource" th:asset-name="${passive_resource.name}" th:text="${passive_resource.name}"></button>
@@ -77,7 +77,7 @@
             <th>Currency</th>
             <th>Exchange</th>
         </tr>
-        <tr th:each="index: ${index}">
+        <tr th:each="index: ${index}" th:id="${index.symbol}">
             <td>
                 <form action="/asset" method="get">
                     <button class="open-asset" asset-type="index" th:asset-name="${index.name}" th:text="${index.name}"></button>
@@ -102,7 +102,7 @@
             <th>Percent Change</th>
             <th>Currency</th>
         </tr>
-        <tr th:each="crypto: ${crypto}">
+        <tr th:each="crypto: ${crypto}" th:id="${crypto.name}">
             <td>
                 <form action="/asset" method="get">
                     <button class="open-asset" asset-type="crypto" th:asset-name="${crypto.name}" th:text="${crypto.name}"></button>
@@ -125,7 +125,7 @@
             <th>Percent Change</th>
             <th>Currency</th>
         </tr>
-        <tr th:each="commodity: ${commodity}">
+        <tr th:each="commodity: ${commodity}" th:id="${commodity.name}">
             <td>
                 <form action="/asset" method="get">
                     <button class="open-asset" asset-type="commodity" th:asset-name="${commodity.name}" th:text="${commodity.name}"></button>

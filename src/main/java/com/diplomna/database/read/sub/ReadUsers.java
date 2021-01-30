@@ -33,4 +33,25 @@ public class ReadUsers {
         }
         return users;
     }
+
+    public List<User> readUsersWith2FA() throws SQLException {
+        String sql = "SELECT * FROM `" + databaseName +"`.user " +
+                "WHERE is_2fa_required = 1";
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery(sql);
+        List<User> users = new ArrayList<>();
+        while (resultSet.next()){
+            /*
+            System.out.print(resultSet.getString(1) + " ");
+            System.out.print(resultSet.getString(2) + " ");
+            System.out.print(resultSet.getString(3) + " ");
+            System.out.print(resultSet.getString(4) + " ");
+            System.out.print(resultSet.getString(5) + " ");
+            System.out.println(resultSet.getString(6) + " ");
+             */
+            users.add(new User(resultSet.getInt(1), resultSet.getString(2), resultSet.getString(3),
+                    resultSet.getString(4), resultSet.getString(5), resultSet.getBoolean(6)));
+        }
+        return users;
+    }
 }

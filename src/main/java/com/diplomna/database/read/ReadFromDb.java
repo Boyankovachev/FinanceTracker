@@ -31,10 +31,16 @@ public class ReadFromDb {
         }
     }
 
-    public UserManager readUsers(){
+    public UserManager readUsers(boolean onlyWith2Fa){
         ReadUsers readUsers = new ReadUsers(con, databaseName);
         try {
-            List<User> users = readUsers.readUsers();
+            List<User> users;
+            if(!onlyWith2Fa){
+                users = readUsers.readUsers();
+            }
+            else {
+                users = readUsers.readUsersWith2FA();
+            }
             /*
             for(int i=0; i<users.size(); i++){
                 System.out.print(users.get(i).getUserId() + " ");
@@ -72,6 +78,10 @@ public class ReadFromDb {
         }
         return null;
     }
+    public List<Stock> readAllStocks() throws SQLException {
+        ReadStock readStock = new ReadStock(con, databaseName);
+        return readStock.readAllStocks();
+    }
 
     public List<PassiveResource> readPassiveResourcesByUserId(int userId){
         ReadPassiveResources readPassiveResources = new ReadPassiveResources(con, databaseName);
@@ -91,6 +101,10 @@ public class ReadFromDb {
             throwables.printStackTrace();
         }
         return null;
+    }
+    public List<Index> readAllIndex() throws SQLException {
+        ReadIndex readIndex = new ReadIndex(con, databaseName);
+        return readIndex.readAllIndex();
     }
 
     public List<Index> readIndexPurchasesByUserId(int userId){
@@ -112,6 +126,10 @@ public class ReadFromDb {
         }
         return null;
     }
+    public List<Crypto> readAllCrypto() throws SQLException {
+        ReadCrypto readCrypto = new ReadCrypto(con, databaseName);
+        return readCrypto.readAllCrypto();
+    }
 
     public List<Crypto> readCryptoPurchaseByUserId(int userId){
         ReadCryptoPurchases readCryptoPurchases = new ReadCryptoPurchases(con, databaseName);
@@ -131,6 +149,10 @@ public class ReadFromDb {
             throwables.printStackTrace();
         }
         return null;
+    }
+    public List<Commodities> readAllCommodities() throws SQLException {
+        ReadCommodity readCommodity = new ReadCommodity(con, databaseName);
+        return readCommodity.readAllCommodities();
     }
 
     public List<Commodities> readCommodityPurchaseInfoByUserId(int userId){

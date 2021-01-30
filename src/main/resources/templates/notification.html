@@ -16,12 +16,14 @@
             <th>Name</th>
             <th>Price</th>
         </tr>
-        <tr th:each="notification: ${notification}">
+        <tr th:each="notification: ${notification}" th:id="${notification.notificationName}">
             <td th:text="${notification.notificationName}"></td>
             <td th:text="${notification.notificationPrice}"></td>
+            <td><button class="remove-notification" th:notification-name="${notification.notificationName}"> X </button></td>
         </tr>
     </table>
     <br><br>
+
     <div id="add-notification-div">
         <select id="select-notification">
             <option th:each="global : ${global}" th:value="${global.assetType}" th:text="${global.notificationName}" notification-type="global"></option>
@@ -34,7 +36,9 @@
         <input type="text" placeholder="Enter notification name" id="name"><br>
         <button id="add">Add</button>
     </div>
+
     <div id="error-message">
     </div>
+
 </body>
 </html>

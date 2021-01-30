@@ -155,4 +155,21 @@ public class InsertIntoDb {
         InsertIntoPassiveResource insertIntoPassiveResource = new InsertIntoPassiveResource(this.con, this.databaseName);
         insertIntoPassiveResource.updatePassiveResourceCurrentPrice(userId, newPrice, name);
     }
+
+    public void updateStockApiData(Stock stock) throws SQLException {
+        InsertIntoStock insertIntoStock = new InsertIntoStock(this.con, this.databaseName);
+        insertIntoStock.updateStockApiData(stock);
+    }
+    public void updateIndexApiData(Index index) throws SQLException {
+        InsertIntoIndex insertIntoIndex = new InsertIntoIndex(this.con, this.databaseName);
+        insertIntoIndex.updateIndexApiData(index);
+    }
+    public void updateCryptoApiData(Crypto crypto) throws SQLException {
+        InsertIntoCrypto insertIntoCrypto = new InsertIntoCrypto(this.con, this.databaseName);
+        insertIntoCrypto.updateCryptoApiData(crypto);
+    }
+    public void updateCommodityApiData(Commodities commodity) throws SQLException {
+        InsertIntoCommodity insertIntoCommodity = new InsertIntoCommodity(this.con, this.databaseName);
+        insertIntoCommodity.updateCommodityApiData(commodity);
+    }
 }

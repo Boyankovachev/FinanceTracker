@@ -55,7 +55,7 @@ public class LoginAndRegisterService {
 
     private boolean isEmailTaken(String email){
         ReadFromDb readFromDb = new ReadFromDb("test");
-        UserManager userManager = readFromDb.readUsers();
+        UserManager userManager = readFromDb.readUsers(false);
         return userManager.isEmailPresent(email);
     }
 
@@ -64,7 +64,7 @@ public class LoginAndRegisterService {
         String inputUsername = temp[0].substring(9);
         String inputPassword = temp[1].substring(9);
         ReadFromDb readFromDb = new ReadFromDb("test");
-        UserManager userManager = readFromDb.readUsers();
+        UserManager userManager = readFromDb.readUsers(false);
         if(!userManager.isUsernamePresent(inputUsername)){
             return "Incorrect username or password!";
         }
@@ -80,7 +80,7 @@ public class LoginAndRegisterService {
         //retuns the first user found with matching name
         // (for future) - fix when 2 identical names
         ReadFromDb readFromDb = new ReadFromDb("test");
-        UserManager userManager = readFromDb.readUsers();
+        UserManager userManager = readFromDb.readUsers(false);
         return userManager.getUserByName(name);
     }
 }

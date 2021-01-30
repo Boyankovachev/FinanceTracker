@@ -17,7 +17,7 @@ public class User {
     private String email;
     private AssetManager assets = new AssetManager();
     private boolean is2FactorAuthenticationRequired;
-    private List<Notification> notifications;
+    private List<Notification> notifications = new ArrayList<>();
     private int userId;
 
     public User(){}
@@ -145,6 +145,27 @@ public class User {
                 .hashString(inputPassword + salt, StandardCharsets.UTF_8)
                 .toString();
         return newHash.equals(passwordHash);
+    }
+
+    public boolean removeNotificationByName(String name){
+        int flag = 0;
+        for(int i=0; i<notifications.size(); i++){
+            if(notifications.get(i).getNotificationName().equals(name)){
+                notifications.remove(i);
+                flag++;
+            }
+        }
+        return flag != 0;
+    }
+
+    public void printUser(){
+        /*
+        Prints user to console.
+        Testing purposes!
+         */
+        System.out.println("user id: " + userId);
+        System.out.println("username: " + userName);
+        assets.printAssets();
     }
 
 }

@@ -1,5 +1,6 @@
 package com.diplomna.assets.finished;
 
+import com.diplomna.assets.sub.PurchaseInfo;
 import com.diplomna.assets.sub.StockBasedActiveAsset;
 
 public class Index extends StockBasedActiveAsset {
@@ -47,6 +48,26 @@ public class Index extends StockBasedActiveAsset {
 
     public String getExchangeName(){
         return exchangeName;
+    }
+
+    public void printIndex(){
+        /*
+        Prints index to console.
+        Testing purposes!
+         */
+        System.out.println("name:" + name);
+        System.out.println("description:" + description);
+        System.out.println("currentMarketPrice:" + currentMarketPrice);
+        for(PurchaseInfo purchaseInfo: purchaseInfo){
+            System.out.println("Price: " + purchaseInfo.getPrice() + " Quantity: " + purchaseInfo.getQuantity() + " Date: " + purchaseInfo.getPurchaseDate().getDateAsString());
+        }
+        System.out.println("quantityOwned: " + quantityOwned);
+        System.out.println("symbol: " + symbol);
+        System.out.println("currencySymbol: " + currencySymbol);
+        System.out.println("averagePurchasePrice: " + averagePurchasePrice);
+        System.out.println("isMarketOpen: " + isMarketOpen);
+        System.out.println("exchangeName: " + exchangeName);
+        System.out.println();
     }
 
 }

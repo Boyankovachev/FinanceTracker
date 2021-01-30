@@ -80,10 +80,12 @@ public class Stock extends StockBasedActiveAsset {
         System.out.println("quantityOwned: " + quantityOwned);
         System.out.println("symbol: " + symbol);
         System.out.println("currencySymbol: " + currencySymbol);
+        System.out.println("currency: " + currency);
         System.out.println("averagePurchasePrice: " + averagePurchasePrice);
         System.out.println("isMarketOpen: " + isMarketOpen);
         System.out.println("exchangeName: " + exchangeName);
         System.out.println("recommendationKey: " + recommendationKey);
+        System.out.println();
     }
 
 }

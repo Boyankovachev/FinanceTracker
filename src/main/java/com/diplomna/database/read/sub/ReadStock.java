@@ -39,8 +39,40 @@ public class ReadStock {
             stock.setCurrencySymbol(resultSet.getString(4));
             stock.setExchangeName(resultSet.getString(5));
             stock.setDescription(resultSet.getString(6));
+            stock.setCurrentMarketPrice(resultSet.getDouble(7));
+            stock.setMarketOpen(resultSet.getBoolean(8));
+            stock.setRecommendationKey(resultSet.getString(9));
         }
         return stock;
+    }
+
+    public List<Stock> readAllStocks() throws SQLException {
+        String sql = "SELECT * FROM `" + databaseName +"`.stock;";
+        PreparedStatement statement = connection.prepareStatement(sql);
+        ResultSet resultSet = statement.executeQuery();
+
+        List<Stock> stocks = new ArrayList<>();
+
+        if(!resultSet.next()){
+            return null;
+        }
+        resultSet.beforeFirst();
+
+        while (resultSet.next()) {
+            Stock stock = new Stock();
+            stock.setSymbol(resultSet.getString(1));
+            stock.setName(resultSet.getString(2));
+            stock.setCurrency(resultSet.getString(3));
+            stock.setCurrencySymbol(resultSet.getString(4));
+            stock.setExchangeName(resultSet.getString(5));
+            stock.setDescription(resultSet.getString(6));
+            stock.setCurrentMarketPrice(resultSet.getDouble(7));
+            stock.setMarketOpen(resultSet.getBoolean(8));
+            stock.setRecommendationKey(resultSet.getString(9));
+
+            stocks.add(stock);
+        }
+        return stocks;
     }
 
     public List<String> readAllStocksSymbols() throws SQLException {

@@ -70,4 +70,13 @@ public class DeleteFromDb {
         }
     }
 
+    public void deleteNotification(int userId, String notificationName){
+        DeleteFromNotification deleteFromNotification = new DeleteFromNotification(this.con, this.databaseName);
+        try {
+            deleteFromNotification.deleteNotification(userId, notificationName);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
 }

@@ -71,7 +71,10 @@ public class CreateDatabase {
                     "    `currency` VARCHAR(32) NOT NULL,\n" +
                     "    `currency_symbol` VARCHAR(12) NOT NULL,\n" +
                     "    `exchange_name` VARCHAR(32),\n" +
-                    "    `description` TEXT);\n";
+                    "    `description` TEXT,\n" +
+                    "    `current_market_price` DOUBLE,\n" +
+                    "    `is_market_open` BOOL,\n" +
+                    "    `recommendation_key` VARCHAR(32));\n";
             DbStatement.execute(sql);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -140,7 +143,9 @@ public class CreateDatabase {
                     "    `currency` VARCHAR(32) NOT NULL,\n" +
                     "    `currency_symbol` VARCHAR(12) NOT NULL,\n" +
                     "    `exchange_name` VARCHAR(32),\n" +
-                    "    `description` TEXT);\n";
+                    "    `description` TEXT,\n" +
+                    "    `current_market_price` DOUBLE,\n" +
+                    "    `is_market_open` BOOL);\n";
             DbStatement.execute(sql);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -170,7 +175,8 @@ public class CreateDatabase {
                     "    `crypto_name` VARCHAR(32) NOT NULL,\n" +
                     "    `currency` VARCHAR(32) NOT NULL,\n" +
                     "    `currency_symbol` VARCHAR(12) NOT NULL,\n" +
-                    "    `description` TEXT);\n";
+                    "    `description` TEXT,\n" +
+                    "    `current_market_price` DOUBLE);\n";
             DbStatement.execute(sql);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -200,7 +206,8 @@ public class CreateDatabase {
                     "    `currency` VARCHAR(32) NOT NULL,\n" +
                     "    `currency_symbol` VARCHAR(12) NOT NULL,\n" +
                     "    `exchange_name` VARCHAR(32),\n" +
-                    "    `description` TEXT);\n";
+                    "    `description` TEXT,\n" +
+                    "    `current_market_price` DOUBLE);\n";
             DbStatement.execute(sql);
         } catch (SQLException e) {
             e.printStackTrace();

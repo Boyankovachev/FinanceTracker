@@ -28,6 +28,12 @@ public class ReadNotifications {
         PreparedStatement statement = connection.prepareStatement(sql);
         statement.setInt(1,userId);
         ResultSet resultSet = statement.executeQuery();
+
+        if(!resultSet.next()){
+            return null;
+        }
+        resultSet.beforeFirst();
+
         List<Notification> notifications = new ArrayList<>();
         while (resultSet.next()){
             Notification notification = new Notification();

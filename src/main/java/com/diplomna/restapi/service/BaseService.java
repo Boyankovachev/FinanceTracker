@@ -9,6 +9,7 @@ import com.diplomna.assets.sub.PurchaseInfo;
 import com.diplomna.database.delete.DeleteFromDb;
 import com.diplomna.database.insert.InsertIntoDb;
 import com.diplomna.database.read.ReadFromDb;
+import com.diplomna.database.read.sub.ReadCommodity;
 import com.diplomna.date.DatеManager;
 import com.diplomna.exceptions.AssetNotFoundException;
 import com.diplomna.users.sub.AssetType;
@@ -54,12 +55,15 @@ public class BaseService {
         return user;
     }
 
-    private List<Notification> getNotificationsByUserId(int userId){
+    public List<Notification> getNotificationsByUserId(int userId){
         ReadFromDb readFromDb = new ReadFromDb("test");
+        if(readFromDb.readNotificationsByUserId(userId) == null){
+            return new ArrayList<>();
+        }
         return readFromDb.readNotificationsByUserId(userId);
     }
 
-    private List<Stock> getStocksByUserId(int userId){
+    public List<Stock> getStocksByUserId(int userId){
         ReadFromDb readFromDb = new ReadFromDb("test");
         List<Stock> stockPurchases = readFromDb.readStockPurchasesByUserId(userId);
         List<Stock> stockBase = new ArrayList<>();
@@ -75,7 +79,6 @@ public class BaseService {
             stockBase.add(readFromDb.readStockBySymbol(symbol));
         }
 
-        ParseStock parseStock = new ParseStock();
         int i,j;
         for(i=0; i<stockBase.size(); i++){
             for(j=0; j<stockPurchases.size(); j++){
@@ -85,23 +88,13 @@ public class BaseService {
             }
             stockBase.get(i).calculateQuantityOwned();
             stockBase.get(i).calculateAveragePurchasePrice();
-            try {
-                parseStock.setStockBySymbol(stockBase.get(i).getSymbol());  // getting current data from API
-                stockBase.get(i).setCurrentMarketPrice(parseStock.getRawCurrentPrice());
-                stockBase.get(i).setMarketOpen(parseStock.isMarketOpen());
-                stockBase.get(i).setRecommendationKey(parseStock.getRecommendationKey());
-                stockBase.get(i).calculatePercentChange();
-            } catch (UnirestException e) {
-                String errorMessage = "YahooFinanceAPI fail for symbol " + stockBase.get(i).getSymbol();
-                logger.error(errorMessage);
-                e.printStackTrace();
-            }
+            stockBase.get(i).calculatePercentChange();
         }
 
         return stockBase;
     }
 
-    private List<PassiveResource> getPassiveResourcesByUserId(int userId){
+    public List<PassiveResource> getPassiveResourcesByUserId(int userId){
         ReadFromDb readFromDb = new ReadFromDb("test");
         List<PassiveResource> passiveResources = readFromDb.readPassiveResourcesByUserId(userId);
         for(int i=0; i<passiveResources.size(); i++){
@@ -110,7 +103,7 @@ public class BaseService {
         return passiveResources;
     }
 
-    private List<Index> getIndexByUserId(int userId){
+    public List<Index> getIndexByUserId(int userId){
 
         ReadFromDb readFromDb = new ReadFromDb("test");
         List<Index> indexPurchases = readFromDb.readIndexPurchasesByUserId(userId);
@@ -135,28 +128,13 @@ public class BaseService {
             }
             indexBase.get(i).calculateQuantityOwned();
             indexBase.get(i).calculateAveragePurchasePrice();
-
-            AlphaVantageAPI alphaVantageAPI = new AlphaVantageAPI();
-            try {
-                alphaVantageAPI.setIndex(indexBase.get(i).getSymbol());
-                indexBase.get(i).setCurrentMarketPrice((Double.parseDouble(alphaVantageAPI.getIndexPrice())));
-
-                //information below not provided by available API
-                indexBase.get(i).setMarketOpen(true);
-
-
-                indexBase.get(i).calculatePercentChange();
-            } catch (UnirestException e) {
-                String errorMessage = "AlphaVantageAPI fail for symbol " + indexBase.get(i).getSymbol();
-                logger.error(errorMessage);
-                e.printStackTrace();
-            }
+            indexBase.get(i).calculatePercentChange();
         }
 
         return indexBase;
     }
 
-    private List<Crypto> getCryptoByUserId(int userId){
+    public List<Crypto> getCryptoByUserId(int userId){
         ReadFromDb readFromDb = new ReadFromDb("test");
         List<Crypto> cryptoPurchases = readFromDb.readCryptoPurchaseByUserId(userId);
         List<Crypto> cryptoBase = new ArrayList<>();
@@ -178,24 +156,12 @@ public class BaseService {
             }
             cryptoBase.get(i).calculateQuantityOwned();
             cryptoBase.get(i).calculateAveragePurchasePrice();
-
-            AlphaVantageAPI alphaVantageAPI = new AlphaVantageAPI();
-            try {
-                alphaVantageAPI.setCrypto(cryptoBase.get(i).getSymbol());
-                cryptoBase.get(i).setCurrentMarketPrice(Double.parseDouble(alphaVantageAPI.getCrypto().get("price")));
-
-                cryptoBase.get(i).calculatePercentChange();
-            } catch (UnirestException|JSONException e) {
-                String errorMessage = "AlphaVantageAPI fail for crypto " + cryptoBase.get(i).getSymbol();
-                logger.error(errorMessage);
-                e.printStackTrace();
-                //LOG ERROR - CRYPTO NOT FOUND BY API
-            }
+            cryptoBase.get(i).calculatePercentChange();
         }
         return cryptoBase;
     }
 
-    private List<Commodities> getCommodityByUserId(int userId){
+    public List<Commodities> getCommodityByUserId(int userId){
         ReadFromDb readFromDb = new ReadFromDb("test");
         List<Commodities> commodityPurchases = readFromDb.readCommodityPurchaseInfoByUserId(userId);
         List<Commodities> commodityBase = new ArrayList<>();
@@ -218,13 +184,8 @@ public class BaseService {
             }
             commodityBase.get(i).calculateQuantityOwned();
             commodityBase.get(i).calculateAveragePurchasePrice();
-
-            //simulate data from API
-            commodityBase.get(i).setCurrentMarketPrice(123456); //!!!
-
             commodityBase.get(i).calculatePercentChange();
         }
-
         return commodityBase;
     }
 
@@ -290,7 +251,7 @@ public class BaseService {
         v zavisimost ot assettype:
         1. proveri dali tozi user go ima veche
             -ako go ima returnvash na usera che veche ima takuv
-        2. proveri dali veche go ima v bazata danni
+        2. proveri dali veche go ima v bazata danni          -tva go praa posle
             -ako da zardi go ot bazata danni
         3. proveri dali APIa za suotvetniq resurs go namira
             -ako ne vurni greshka na useraa
@@ -301,16 +262,9 @@ public class BaseService {
          */
 
         //1 - raboti
+        //Check if user already owns such a resource
         if(user.getAssets().isAssetInList(jsonObject.getString("assetType"), jsonObject.getString("symbol"))){
             return "Passive resource with such a name already exists in your portfolio!";
-        }
-
-        //2 - raboti
-        boolean isInDB = false;
-        ReadFromDb readFromDb = new ReadFromDb("test");
-        List<String> presentSymbols = readFromDb.readPresentAsset(jsonObject.getString("assetType"));
-        if(presentSymbols.contains(jsonObject.getString("symbol"))){
-            isInDB = true;
         }
 
         //3
@@ -332,6 +286,9 @@ public class BaseService {
                     stock.setMarketOpen(parseStock.isMarketOpen());
                     stock.setExchangeName(parseStock.getExchangeName());
                     stock.setRecommendationKey(parseStock.getRecommendationKey());
+                    stock.setCurrentMarketPrice(parseStock.getRawCurrentPrice()); //latest changes
+                    stock.setMarketOpen(parseStock.isMarketOpen());               //latest changes
+                    stock.setRecommendationKey(parseStock.getRecommendationKey());//latest changes
                 } catch (UnirestException e) {
                     String errorMessage = "YahooFinanceAPI fail for symbol " + jsonObject.getString("symbol");
                     logger.error(errorMessage);
@@ -345,6 +302,8 @@ public class BaseService {
                     HashMap<String, String> info = alphaVantageAPI.getInitialIndex();
                     index.setCurrency(info.get("currency"));
                     index.setName(info.get("name"));
+                    alphaVantageAPI.setIndex(jsonObject.getString("symbol"));                    //latest changes
+                    index.setCurrentMarketPrice(Double.parseDouble(alphaVantageAPI.getIndexPrice()));//latest changes
                 } catch (UnirestException e) {
                     String errorMessage = "AlphaVantageAPI fail for index " + jsonObject.getString("symbol");
                     logger.error(errorMessage);
@@ -354,6 +313,7 @@ public class BaseService {
                 index.setDescription("description from api");
                 index.setExchangeName("exchange from api");
                 index.setCurrencySymbol("$");
+                index.setMarketOpen(true);  //latest changes
                 break;
             case "crypto":
                 /*
@@ -367,6 +327,7 @@ public class BaseService {
                     crypto.setName(info.get("name"));
                     crypto.setCurrency(info.get("currency"));
                     crypto.setCurrencySymbol(info.get("currencySymbol"));
+                    crypto.setCurrentMarketPrice(Double.parseDouble(info.get("price")));  //latest changes
                 } catch (UnirestException e) {
                     String errorMessage = "AlphaVantageAPI fail for crypto " + jsonObject.getString("symbol");
                     logger.error(errorMessage);
@@ -376,10 +337,6 @@ public class BaseService {
                 crypto.setDescription("description from api");
                 break;
             case "commodity":
-                /*
-                Get information from API and turn into object
-                if not found return to user
-                 */
                 // Free suitable API not found
                 // Simulate data from API
                 commodity.setName(jsonObject.getString("symbol"));
@@ -387,6 +344,7 @@ public class BaseService {
                 commodity.setCurrency("Dollar");
                 commodity.setCurrencySymbol("$");
                 commodity.setExchangeName("exchange from API");
+                commodity.setCurrentMarketPrice(0);
                 break;
         }
 
@@ -403,9 +361,7 @@ public class BaseService {
             return "Please provide valid number!";
         }
         purchaseInfo.setPrice(jsonObject.getDouble("price"));
-        stock.setAveragePurchasePrice(jsonObject.getDouble("price"));
         purchaseInfo.setQuantity(jsonObject.getDouble("quantity"));
-        stock.setQuantityOwned(jsonObject.getDouble("quantity"));
         purchaseInfo.setStockSymbol(jsonObject.getString("symbol"));
         if(!jsonObject.getString("date").equals("")) {
             try {
@@ -416,13 +372,17 @@ public class BaseService {
                 return "Invalid date format. Please use dd.mm.yyyy example - 14.5.2020";
             }
         }
-        stock.addPurchase(purchaseInfo);
-
 
         //5 + 6
+        ReadFromDb readFromDb = new ReadFromDb("test");
         InsertIntoDb insert = new InsertIntoDb("test");
         switch (jsonObject.getString("assetType")){
             case "stock":
+                stock.setAveragePurchasePrice(jsonObject.getDouble("price"));
+                stock.setQuantityOwned(jsonObject.getDouble("quantity"));
+                stock.addPurchase(purchaseInfo);
+
+
                 user.getAssets().addStock(stock);
                 //check if already in DB, if yes - don't add. Do for all asset types!
                 Stock tempStock = readFromDb.readStockBySymbol(stock.getSymbol());
@@ -432,6 +392,10 @@ public class BaseService {
                 insert.insertStockPurchaseInfo(user.getUserId(), purchaseInfo);
                 break;
             case "index":
+                index.setAveragePurchasePrice(jsonObject.getDouble("price"));
+                index.setQuantityOwned(jsonObject.getDouble("quantity"));
+                index.addPurchase(purchaseInfo);
+
                 user.getAssets().addIndex(index);
                 //check if already in DB, if yes - don't add. Do for all asset types!
                 Index tempIndex = readFromDb.readIndexBySymbol(index.getSymbol());
@@ -441,6 +405,10 @@ public class BaseService {
                 insert.insertIndexPurchaseInfo(user.getUserId(), purchaseInfo);
                 break;
             case "crypto":
+                crypto.setAveragePurchasePrice(jsonObject.getDouble("price"));
+                crypto.setQuantityOwned(jsonObject.getDouble("quantity"));
+                crypto.addPurchase(purchaseInfo);
+
                 user.getAssets().addCrypto(crypto);
                 //check if already in DB, if yes - don't add. Do for all asset types!
                 Crypto tempCrypto = readFromDb.readCryptoBySymbol(crypto.getSymbol());
@@ -450,6 +418,10 @@ public class BaseService {
                 insert.insertCryptoPurchaseInfo(user.getUserId(), purchaseInfo);
                 break;
             case "commodity":
+                commodity.setAveragePurchasePrice(jsonObject.getDouble("price"));
+                commodity.setQuantityOwned(jsonObject.getDouble("quantity"));
+                commodity.addPurchase(purchaseInfo);
+
                 user.getAssets().addCommodity(commodity);
                 //check if already in DB, if yes - don't add. Do for all asset types!
                 Commodities tempCommodity = readFromDb.readCommodityByCommodityName(commodity.getName());
@@ -541,6 +513,7 @@ public class BaseService {
         if(!user.getAssets().getCommodities().isEmpty())list.add(new Notification(AssetType.commodity, "All commodities"));
         return list;
     }
+
     public String addNotification(JSONObject jsonObject, User user){
         Notification newNotification = new Notification();
 
@@ -564,11 +537,12 @@ public class BaseService {
         newNotification.setNotificationName(jsonObject.getString("name"));
         newNotification.setNotificationPrice(jsonObject.getDouble("priceTarget"));
 
-        for(Notification notification: user.getNotifications()){
-            if(newNotification.isNotificationSimilar(notification)){
+        for (Notification notification : user.getNotifications()) {
+            if (newNotification.isNotificationSimilar(notification)) {
                 return "Notification duplicate!";
             }
         }
+
         user.addNotification(newNotification);
         InsertIntoDb insert = new InsertIntoDb("test");
         insert.insertNotification(user.getUserId(), newNotification);
@@ -621,5 +595,16 @@ public class BaseService {
             return "Failed to update passive resource!";
         }
         return "success";
+    }
+
+    public String removeNotification(String notificationName, User user){
+        DeleteFromDb deleteFromDb = new DeleteFromDb("test");
+        deleteFromDb.deleteNotification(user.getUserId(), notificationName);
+        if(user.removeNotificationByName(notificationName)){
+            return "success";
+        }
+        else {
+            return "Failed to remove notification!";
+        }
     }
 }

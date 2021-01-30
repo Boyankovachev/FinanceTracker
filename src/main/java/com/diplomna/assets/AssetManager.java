@@ -120,7 +120,7 @@ public class AssetManager {
     }
     public Crypto getCryptoBySymbol(String cryptoSymbol){
         for(Crypto crypto: cryptoCurrencies){
-            if(crypto.getName().equals(cryptoSymbol)){
+            if(crypto.getSymbol().equals(cryptoSymbol)){
                 return crypto;
             }
         }
@@ -246,6 +246,68 @@ public class AssetManager {
                 PassiveResource passiveResourceTemp = getPassiveResourceByName(asset);
                 passiveResources.remove(passiveResourceTemp);
                 break;
+        }
+    }
+
+    public double calculateAllStocksWorth(){
+        double total = 0;
+        for(Stock stock: stocks){
+            total = total + stock.getCurrentMarketPrice() * stock.getQuantityOwned();
+        }
+        return total;
+    }
+    public double calculateAllIndexWorth(){
+        double total = 0;
+        for(Index index: indexFunds){
+            total = total + index.getCurrentMarketPrice() * index.getQuantityOwned();
+        }
+        return total;
+    }
+    public double calculateAllCryptoWorth(){
+        double total = 0;
+        for(Crypto crypto: cryptoCurrencies){
+            total = total + crypto.getCurrentMarketPrice() * crypto.getQuantityOwned();
+        }
+        return total;
+    }
+    public double calculateAllCommodityWorth(){
+        double total = 0;
+        for(Commodities commodity: commodities){
+            total = total + commodity.getCurrentMarketPrice() * commodity.getQuantityOwned();
+        }
+        return total;
+    }
+    public double calculateAllPassiveResourceWorth(){
+        double total = 0;
+        for(PassiveResource passiveResource: passiveResources){
+            total = total + passiveResource.getCurrentMarketPrice();
+        }
+        return total;
+    }
+    public double calculateWholePortfolio(){
+        return calculateAllStocksWorth() + calculateAllIndexWorth() + calculateAllCryptoWorth() +
+                calculateAllCommodityWorth() + calculateAllPassiveResourceWorth();
+    }
+
+    public void printAssets(){
+        /*
+        Prints all assets to console.
+        Testing purposes!
+        */
+        for(Stock stock: stocks){
+            stock.printStock();
+        }
+        for(PassiveResource passiveResource: passiveResources){
+            passiveResource.printPassiveResource();
+        }
+        for (Index index: indexFunds){
+            index.printIndex();
+        }
+        for(Commodities commodity: commodities){
+            commodity.printCommodity();
+        }
+        for(Crypto crypto: cryptoCurrencies){
+            crypto.printCrypto();
         }
     }
 }

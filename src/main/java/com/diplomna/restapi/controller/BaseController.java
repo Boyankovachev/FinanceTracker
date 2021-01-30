@@ -358,4 +358,12 @@ public class BaseController {
         return new ResponseEntity<Object>(responseMap, HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/remove-notification", method = RequestMethod.DELETE)
+    public @ResponseBody ResponseEntity<Object> removeNotification(@RequestBody String jsonString){
+        String response = baseService.removeNotification(new JSONObject(jsonString).getString("notificationName"), user);
+        HashMap<String, String> responseMap = new HashMap<>();
+        responseMap.put("response", response);
+        return new ResponseEntity<Object>(responseMap, HttpStatus.OK);
+    }
+
 }

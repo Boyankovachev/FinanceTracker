@@ -51,12 +51,7 @@ public class AlphaVantageAPI {
         return info;
     }
 
-    public String getIndexPrice(){
-        //System.out.println(response.getBody().getObject().toString());
-        if(!response.getBody().getObject().getJSONObject("Global Quote").has("05. price")){
-            //LOG EXCEPTION - INDEX NOT FOUND
-            return "0";
-        }
+    public String getIndexPrice() throws JSONException{
         return response.getBody().getObject().getJSONObject("Global Quote").getString("05. price");
     }
 
