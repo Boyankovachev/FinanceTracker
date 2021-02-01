@@ -5,6 +5,7 @@ import com.diplomna.assets.finished.*;
 import com.diplomna.assets.sub.PurchaseInfo;
 import com.diplomna.database.insert.InsertIntoDb;
 import com.diplomna.date.DatеManager;
+import com.diplomna.pojo.GraphInfo;
 import com.diplomna.restapi.service.BaseService;
 import com.diplomna.users.sub.User;
 import com.fasterxml.jackson.databind.ObjectReader;
@@ -22,8 +23,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
+import org.w3c.dom.ls.LSException;
 
 import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -215,6 +219,14 @@ public class BaseController {
                     return "user-homepage";
             }
         }
+    }
+
+    @RequestMapping(value = "/get-stock-data", method = RequestMethod.GET)
+    public @ResponseBody ResponseEntity<Object> getStockData(@RequestBody String jsonString){
+        JSONObject jsonObject = new JSONObject(jsonString);
+        System.out.println(jsonObject.getString("stockSymbol"));
+        List<GraphInfo> graphInfoList = baseService.getStockGraphInfo(jsonObject.getString("stockSymbol"));
+        return new ResponseEntity<Object>(graphInfoList ,HttpStatus.OK);
     }
 
     @RequestMapping(value = "/add-purchase", method = RequestMethod.POST)

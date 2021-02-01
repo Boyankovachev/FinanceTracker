@@ -78,4 +78,9 @@ public class LoginAndRegisterController {
         return "home";
     }
 
+
+    @RequestMapping(value = "/chart", method = RequestMethod.GET)
+    public String chart(){
+        return "charttest";
+    }
 }

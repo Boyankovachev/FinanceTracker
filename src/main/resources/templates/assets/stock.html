@@ -4,7 +4,10 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <script type="application/javascript" th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js}"></script>
+    <script type="application/javascript" th:src = "@{/js/assets/stock.js}"></script>
     <script type="application/javascript" th:src = "@{/js/assets/asset.js}"></script>
+    <script type="application/javascript" th:src = "@{https://canvasjs.com/assets/script/jquery-1.11.1.min.js}"></script>
+    <script type="application/javascript" th:src = "@{https://canvasjs.com/assets/script/jquery.canvasjs.min.js}"></script>
 </head>
 <body>
 
@@ -46,6 +49,8 @@
     <input type="text" placeholder="Enter Date" id="date"><br>
     <button id="confirm" asset-type="stock">Confirm</button><br>
     <div id="error-message"></div>
+
+    <div id="chartContainer" style="height: 370px; width: 100%;"></div>
 
 </body>
 </html>

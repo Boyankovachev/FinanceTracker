@@ -25,6 +25,7 @@ public class NotificationRunner implements CommandLineRunner {
             Thread.sleep(15000);
         }
          */
-        notificationService.sendNotifications();
+        //notificationService.sendNotifications();
+        notificationService.sendMail();
     }
 }

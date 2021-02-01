@@ -4,7 +4,9 @@ import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
+import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.HashMap;
 
@@ -37,6 +39,14 @@ public class AlphaVantageAPI {
                 .asJson();
     }
 
+    public JSONObject getStockTimeSeries(String symbol) throws UnirestException, JSONException {
+        this.response = Unirest.get("https://alpha-vantage.p.rapidapi.com/query?symbol=" + symbol + "&function=TIME_SERIES_MONTHLY&datatype=json")
+                .header("x-rapidapi-key", "7d138e1390mshe8742377115d21fp1dd201jsnb3b741a37493")
+                .header("x-rapidapi-host", "alpha-vantage.p.rapidapi.com")
+                .asJson();
+        return this.response.getBody().getObject().getJSONObject("Monthly Time Series");
+    }
+
     public void setInitialIndex(String symbol) throws UnirestException {
         this.response = Unirest.get("https://alpha-vantage.p.rapidapi.com/query?keywords=" + symbol + "&function=SYMBOL_SEARCH&datatype=json")
                 .header("x-rapidapi-key", "7d138e1390mshe8742377115d21fp1dd201jsnb3b741a37493")
@@ -64,3 +74,6 @@ public class AlphaVantageAPI {
         return info;
     }
 }
+
+
+// https://alpha-vantage.p.rapidapi.com/query?symbol=MSFT&function=TIME_SERIES_MONTHLY&datatype=json - stock time series monthly

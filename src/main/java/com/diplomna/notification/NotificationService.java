@@ -7,6 +7,7 @@ import com.diplomna.assets.finished.Commodities;
 import com.diplomna.assets.finished.Crypto;
 import com.diplomna.assets.finished.Index;
 import com.diplomna.assets.finished.Stock;
+import com.diplomna.database.delete.DeleteFromDb;
 import com.diplomna.database.insert.InsertIntoDb;
 import com.diplomna.database.insert.sub.InsertIntoIndex;
 import com.diplomna.database.read.ReadFromDb;
@@ -20,12 +21,14 @@ import org.json.JSONException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
+import javax.mail.*;
+import javax.mail.internet.*;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class NotificationService {
@@ -33,15 +36,20 @@ public class NotificationService {
     @Autowired
     private BaseService baseService;
 
+    //@Autowired
+    //private JavaMailSender emailSender;
+
     private final Logger logger;
     private ReadFromDb readFromDb;
     private InsertIntoDb insertIntoDb;
+    private DeleteFromDb deleteFromDb;
 
     public NotificationService(){
         this.logger = LoggerFactory.getLogger(BaseService.class);
         this.baseService = new BaseService();
         readFromDb = new ReadFromDb("test");
         insertIntoDb = new InsertIntoDb("test");
+        deleteFromDb = new DeleteFromDb("test");
     }
 
     public void updateAllAssets(){
@@ -217,10 +225,31 @@ public class NotificationService {
                 continue;
             }
             baseService.setupUser(user);
-
+            //System.out.println("user: " + user.getUserName());
             for(Notification notification: user.getNotifications()){
-                if(checkNotification(notification, user)){
-                    System.out.println("yay prashtame meil");
+                if(checkNotification(notification, user)){ //-works
+                    //System.out.println("Sending notification: ");
+                    //prati notifikaciq
+                    if(!sendMail( /* tuka argumenti na meila*/ )){
+                        String errorMessage = "Sending mail failed for: " + notification.getNotificationName()
+                                + " for user with Id: " + user.getUserId();
+                        logger.error(errorMessage);
+                        continue;
+                    }
+                    //notification.printNotification();
+                    try {
+                        deleteFromDb.deleteNotification(user.getUserId(), notification.getNotificationName());
+                    } catch (SQLException throwables) {
+                        String errorMessage = "Delete Notification fail for notification: " + notification.getNotificationName()
+                                + " for user with Id: " + user.getUserId();
+                        logger.error(errorMessage);
+                        throwables.printStackTrace();
+                    }
+
+                    //log success
+                    String message = "Notification send for: " + notification.getNotificationName()
+                            + " for user with Id: " + user.getUserId();
+                    logger.error(message);
                 }
             }
         }
@@ -315,5 +344,23 @@ public class NotificationService {
         }
         return false;
     }
+
+    public boolean sendMail(){ // TO DO
+        /*
+        SimpleMailMessage mailMessage = new SimpleMailMessage();
+
+        mailMessage.setTo("na koi da pratq");
+        mailMessage.setSubject("subject");
+        mailMessage.setText("tekst na meila");
+
+        mailMessage.setFrom("ot koi e prateno");
+
+        emailSender.send(mailMessage);
+        return true;
+         */
+        return true;
+    }
+
+
 }
 

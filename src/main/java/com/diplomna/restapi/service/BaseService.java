@@ -12,6 +12,7 @@ import com.diplomna.database.read.ReadFromDb;
 import com.diplomna.database.read.sub.ReadCommodity;
 import com.diplomna.date.DatеManager;
 import com.diplomna.exceptions.AssetNotFoundException;
+import com.diplomna.pojo.GraphInfo;
 import com.diplomna.users.sub.AssetType;
 import com.diplomna.users.sub.Notification;
 import com.diplomna.users.sub.User;
@@ -26,13 +27,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import javax.sound.midi.SysexMessage;
 import javax.xml.crypto.Data;
 import java.sql.SQLException;
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.IdentityHashMap;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class BaseService {
@@ -599,7 +598,15 @@ public class BaseService {
 
     public String removeNotification(String notificationName, User user){
         DeleteFromDb deleteFromDb = new DeleteFromDb("test");
-        deleteFromDb.deleteNotification(user.getUserId(), notificationName);
+        try {
+            deleteFromDb.deleteNotification(user.getUserId(), notificationName);
+        } catch (SQLException throwables) {
+            String errorMessage = "Delete Notification fail for notification: " + notificationName
+                    + " for user with Id: " + user.getUserId();
+            logger.error(errorMessage);
+            throwables.printStackTrace();
+            return "Failed to remove notification!";
+        }
         if(user.removeNotificationByName(notificationName)){
             return "success";
         }
@@ -607,4 +614,68 @@ public class BaseService {
             return "Failed to remove notification!";
         }
     }
+
+    public List<GraphInfo> getStockGraphInfo(String stockSymbol){
+        List<GraphInfo> graphInfoList = new ArrayList<>();
+        AlphaVantageAPI alphaVantageAPI = new AlphaVantageAPI();
+        try {
+            JSONObject jsonObject = alphaVantageAPI.getStockTimeSeries(stockSymbol);
+
+            Iterator<String> keys = jsonObject.keys();
+
+            while(keys.hasNext()) { // iterating through JSONObject
+                String key = keys.next();
+                if (jsonObject.get(key) instanceof JSONObject) {
+                    String[] temp = key.split("-");
+                    GraphInfo graphInfo = new GraphInfo(Integer.parseInt(temp[2]),
+                            Integer.parseInt(temp[1]), Integer.parseInt(temp[0]),
+                                   Double.parseDouble(jsonObject.getJSONObject(key).get("4. close").toString()));
+
+                    graphInfoList.add(graphInfo);
+                }
+            }
+
+            //api provides data mixed up
+            //sort it
+            for(int j=0; j<graphInfoList.size()-1; j++) {
+                for (int i = 0; i < graphInfoList.size() - 1; i++) {
+                    if (graphInfoList.get(i).getYear() > graphInfoList.get(i + 1).getYear()){
+                        swapGraphInfoList(graphInfoList, i);
+                    }
+                }
+            }
+            for(int j=0; j<graphInfoList.size()-1; j++) {
+                for (int i = 0; i < graphInfoList.size() - 1; i++) {
+                    if (graphInfoList.get(i).getMonth() > graphInfoList.get(i + 1).getMonth()){
+                        swapGraphInfoList(graphInfoList, i);
+                    }
+                }
+            }
+            for(int j=0; j<graphInfoList.size()-1; j++) {
+                for (int i = 0; i < graphInfoList.size() - 1; i++) {
+                    if (graphInfoList.get(i).getYear() > graphInfoList.get(i + 1).getYear()){
+                        swapGraphInfoList(graphInfoList, i);
+                    }
+                }
+            }
+
+            return graphInfoList;
+        } catch (UnirestException e) {
+            e.printStackTrace();
+            String errorMessage = "AlphaVantage api fail monthly data for chart for symbol: " + stockSymbol;
+            logger.error(errorMessage);
+            return null;
+        } catch (JSONException e) {
+            e.printStackTrace();
+            String errorMessage = "AlphaVantage api json fail monthly data for chart for symbol: " + stockSymbol;
+            logger.error(errorMessage);
+        }
+        return null;
+    }
+    private void swapGraphInfoList(List<GraphInfo> graphInfoList, int i){
+        GraphInfo temp = graphInfoList.get(i);
+        graphInfoList.set(i, graphInfoList.get(i+1));
+        graphInfoList.set(i+1, temp);
+    }
+
 }
