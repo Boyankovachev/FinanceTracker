@@ -17,15 +17,19 @@ public class NotificationRunner implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        /*
+        //free api limitations - 500 requests per month (YahooFinance free subscription sucks)
+        //31*24*60*60*1000 - milliseconds in a month = a
+        //wait time = a/500 = 5356800 milliseconds to wait between updating all assets ;(
         while (true) {
-            System.out.println("updating all");
-            Thread.sleep(1000);
-            System.out.println("all updated");
-            Thread.sleep(15000);
+            notificationService.updateAllAssets();
+            notificationService.sendNotifications();
+            try {
+                Thread.sleep(5356800);
+            }
+            catch (InterruptedException e){
+                //shouldn't get in here
+                e.printStackTrace();
+            }
         }
-         */
-        //notificationService.sendNotifications();
-        notificationService.sendMail();
     }
 }

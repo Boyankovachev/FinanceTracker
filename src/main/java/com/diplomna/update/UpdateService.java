@@ -11,6 +11,7 @@ import com.diplomna.database.delete.DeleteFromDb;
 import com.diplomna.database.insert.InsertIntoDb;
 import com.diplomna.database.insert.sub.InsertIntoIndex;
 import com.diplomna.database.read.ReadFromDb;
+import com.diplomna.email.EmailService;
 import com.diplomna.restapi.service.BaseService;
 import com.diplomna.users.UserManager;
 import com.diplomna.users.sub.AssetType;
@@ -36,8 +37,8 @@ public class NotificationService {
     @Autowired
     private BaseService baseService;
 
-    //@Autowired
-    //private JavaMailSender emailSender;
+    @Autowired
+    private EmailService emailService;
 
     private final Logger logger;
     private ReadFromDb readFromDb;
@@ -224,19 +225,19 @@ public class NotificationService {
             if(readFromDb.readNotificationsByUserId(user.getUserId()) == null){ //check if user has any notifications set up
                 continue;
             }
+
             baseService.setupUser(user);
-            //System.out.println("user: " + user.getUserName());
+
             for(Notification notification: user.getNotifications()){
                 if(checkNotification(notification, user)){ //-works
-                    //System.out.println("Sending notification: ");
-                    //prati notifikaciq
-                    if(!sendMail( /* tuka argumenti na meila*/ )){
+
+                    if(!sendMail(user.getEmail(), notification.getNotificationName(), notification.getNotificationPrice())){
                         String errorMessage = "Sending mail failed for: " + notification.getNotificationName()
                                 + " for user with Id: " + user.getUserId();
                         logger.error(errorMessage);
                         continue;
                     }
-                    //notification.printNotification();
+
                     try {
                         deleteFromDb.deleteNotification(user.getUserId(), notification.getNotificationName());
                     } catch (SQLException throwables) {
@@ -345,19 +346,9 @@ public class NotificationService {
         return false;
     }
 
-    public boolean sendMail(){ // TO DO
-        /*
-        SimpleMailMessage mailMessage = new SimpleMailMessage();
-
-        mailMessage.setTo("na koi da pratq");
-        mailMessage.setSubject("subject");
-        mailMessage.setText("tekst na meila");
-
-        mailMessage.setFrom("ot koi e prateno");
-
-        emailSender.send(mailMessage);
-        return true;
-         */
+    public boolean sendMail(String userEmail, String notificationName, double notificationPrice){ // TO DO
+        //catch exceptions and log errors
+        emailService.sendNotificationEmail(userEmail, notificationName, notificationPrice);
         return true;
     }
 
