@@ -1,15 +1,13 @@
-package com.diplomna.notification;
+package com.diplomna.update;
 
 import com.diplomna.api.alphavantage.AlphaVantageAPI;
 import com.diplomna.api.stock.ParseStock;
-import com.diplomna.assets.AssetManager;
 import com.diplomna.assets.finished.Commodities;
 import com.diplomna.assets.finished.Crypto;
 import com.diplomna.assets.finished.Index;
 import com.diplomna.assets.finished.Stock;
 import com.diplomna.database.delete.DeleteFromDb;
 import com.diplomna.database.insert.InsertIntoDb;
-import com.diplomna.database.insert.sub.InsertIntoIndex;
 import com.diplomna.database.read.ReadFromDb;
 import com.diplomna.email.EmailService;
 import com.diplomna.restapi.service.BaseService;
@@ -22,17 +20,13 @@ import org.json.JSONException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
-import javax.mail.*;
-import javax.mail.internet.*;
 import java.sql.SQLException;
 import java.util.*;
 
 @Service
-public class NotificationService {
+public class UpdateService {
 
     @Autowired
     private BaseService baseService;
@@ -45,7 +39,7 @@ public class NotificationService {
     private InsertIntoDb insertIntoDb;
     private DeleteFromDb deleteFromDb;
 
-    public NotificationService(){
+    public UpdateService(){
         this.logger = LoggerFactory.getLogger(BaseService.class);
         this.baseService = new BaseService();
         readFromDb = new ReadFromDb("test");

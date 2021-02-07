@@ -1,0 +1,5 @@
+$(function (){
+
+    $("#footer").load("footer");
+
+});

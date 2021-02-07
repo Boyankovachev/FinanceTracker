@@ -129,7 +129,7 @@ public class User {
 
         //generate hash
         String hash = Hashing.sha256()
-                .hashString(password + saltString, StandardCharsets.UTF_8)
+                .hashString(password + saltString + "this_is_my_pepper", StandardCharsets.UTF_8)
                 .toString();
 
         List<String> result  = new ArrayList<>();
@@ -142,7 +142,7 @@ public class User {
         //hash input password with user salt
         //and check against the existing hash
         String newHash = Hashing.sha256()
-                .hashString(inputPassword + salt, StandardCharsets.UTF_8)
+                .hashString(inputPassword + salt + "this_is_my_pepper", StandardCharsets.UTF_8)
                 .toString();
         return newHash.equals(passwordHash);
     }

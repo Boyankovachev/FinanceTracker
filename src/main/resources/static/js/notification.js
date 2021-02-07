@@ -1,6 +1,7 @@
 $(function (){
 
     $("#header").load("/header");
+    $("#footer").load("/footer");
 
     $("#add").on("click", function(){
         var $select = $('#select-notification');

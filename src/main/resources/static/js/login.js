@@ -1,4 +1,5 @@
 $(function (){
+
     var $name = $('#name');
     var $password = $('#password');
 

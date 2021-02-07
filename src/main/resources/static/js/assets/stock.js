@@ -2,16 +2,14 @@ $(function (){
 
     var $symbol = $('#asset-symbol');
 
-    var input = {
-        stockSymbol: $symbol.html()
-    };
+    var input = $symbol.html();
 
     $.ajax({
-        type: 'GET',
+        type: 'POST',
         url: '/get-stock-data',
         contentType: 'application/json; charset=utf-8',
         dataType: 'json',
-        data: JSON.stringify(input),
+        data: input,
         error: function(e){
             console.log(e);
         },

@@ -2,17 +2,26 @@ package com.diplomna.restapi.service;
 
 import com.diplomna.database.insert.InsertIntoDb;
 import com.diplomna.database.read.ReadFromDb;
+import com.diplomna.email.EmailService;
 import com.diplomna.users.UserManager;
 import com.diplomna.users.sub.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 @Service
 public class LoginAndRegisterService {
+
+    @Autowired
+    private EmailService emailService;
+
+    private String authenticateCode;
+    private User user;
 
     private final Logger logger;
     public LoginAndRegisterService(){
@@ -82,5 +91,27 @@ public class LoginAndRegisterService {
         ReadFromDb readFromDb = new ReadFromDb("test");
         UserManager userManager = readFromDb.readUsers(false);
         return userManager.getUserByName(name);
+    }
+
+    public void setAuthentication(User user){
+        this.authenticateCode = generateKey();
+        this.user = user;
+        emailService.sendAuthenticationKeyEmail(authenticateCode, user.getEmail());
+    }
+    private String generateKey(){
+        return String.format("%06d", new Random().nextInt(999999));
+    }
+    public boolean checkAuthentication(String input){
+        if(authenticateCode.equals(input)){
+            authenticateCode = null;
+            return true;
+        }
+        else {
+            authenticateCode = null;
+            return false;
+        }
+    }
+    public User getUser() {
+        return user;
     }
 }

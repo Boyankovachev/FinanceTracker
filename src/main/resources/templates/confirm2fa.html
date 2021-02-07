@@ -1,10 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="application/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="application/javascript" src = "/js/confirm2fa.js"></script>
 </head>
 <body>
-$END$
+    <form action = "/" method="get">
+        <button type="submit">Back</button>
+    </form>
+    <p>Enter the 6 digit code from the email you received</p><br>
+    <input type="text" id="code" placeholder="6 digit code">
+    <button id="confirm">Confirm</button>
+
+    <div id="error-div"></div>
 </body>
 </html>

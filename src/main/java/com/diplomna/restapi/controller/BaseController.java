@@ -16,6 +16,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONString;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Required;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -58,7 +59,6 @@ public class BaseController {
         model.addAttribute("commodity", this.user.getAssets().getCommodities());
         model.addAttribute("user", this.user);
         return "user-homepage";
-        //return "test";
     }
 
     @RequestMapping(value = "/notification", method = RequestMethod.GET)
@@ -221,11 +221,10 @@ public class BaseController {
         }
     }
 
-    @RequestMapping(value = "/get-stock-data", method = RequestMethod.GET)
-    public @ResponseBody ResponseEntity<Object> getStockData(@RequestBody String jsonString){
-        JSONObject jsonObject = new JSONObject(jsonString);
-        System.out.println(jsonObject.getString("stockSymbol"));
-        List<GraphInfo> graphInfoList = baseService.getStockGraphInfo(jsonObject.getString("stockSymbol"));
+    @RequestMapping(value = "/get-stock-data", method = RequestMethod.POST)
+    public @ResponseBody ResponseEntity<Object> getStockData(@RequestBody String stockSymbol){
+        System.out.println(stockSymbol);
+        List<GraphInfo> graphInfoList = baseService.getStockGraphInfo(stockSymbol);
         return new ResponseEntity<Object>(graphInfoList ,HttpStatus.OK);
     }
 
@@ -349,6 +348,10 @@ public class BaseController {
     @RequestMapping(value = "/header", method = RequestMethod.GET)
     public String getHeader(){
         return "parts/header";
+    }
+    @RequestMapping(value = "/footer", method = RequestMethod.GET)
+    public String getFooter(){
+        return "parts/footer";
     }
 
 
