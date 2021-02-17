@@ -119,6 +119,12 @@ public class User {
     }
 
     public List<String> generateSaltAndHash(String password){
+        /*
+            generate random salt
+            add to user input password + the pepper
+            use hashing
+            return list 0 - password 1 - salt
+         */
         //generate random salt
         Random r = new SecureRandom();
         byte[] salt = new byte[20];
@@ -139,6 +145,7 @@ public class User {
     }
 
     public boolean checkPassword(String inputPassword){
+        //Check input password against actual hash coded password
         //hash user input + salt + pepper
         String newHash = Hashing.sha256()
                 .hashString(inputPassword + salt + pepper, StandardCharsets.UTF_8)
@@ -148,6 +155,7 @@ public class User {
     }
 
     public boolean removeNotificationByName(String name){
+        //remove notification by name
         int flag = 0;
         for(int i=0; i<notifications.size(); i++){
             if(notifications.get(i).getNotificationName().equals(name)){

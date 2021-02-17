@@ -48,6 +48,9 @@ public class UpdateService {
     }
 
     public void updateAllAssets(){
+        /*
+            updates all assets
+         */
         updateStocks();
         updateIndex();
         updateCommodity();
@@ -55,6 +58,9 @@ public class UpdateService {
     }
 
     private void updateStocks(){
+        /*
+            updates all stock data
+         */
         List<Stock> stocks = new ArrayList<>();
         try {
             stocks = readFromDb.readAllStocks();
@@ -93,6 +99,9 @@ public class UpdateService {
     }
 
     private void updateIndex(){
+        /*
+            updates all stock data
+         */
         List<Index> indexList = new ArrayList<>();
         try {
             indexList = readFromDb.readAllIndex();
@@ -141,6 +150,9 @@ public class UpdateService {
     }
 
     private void updateCrypto(){
+        /*
+            updates all stock data
+         */
         List<Crypto> cryptos = new ArrayList<>();
         try {
             cryptos = readFromDb.readAllCrypto();
@@ -186,6 +198,9 @@ public class UpdateService {
     }
 
     private void updateCommodity(){
+        /*
+            updates all stock data
+         */
         List<Commodities> commodities = new ArrayList<>();
         try {
             commodities = readFromDb.readAllCommodities();
@@ -218,6 +233,11 @@ public class UpdateService {
 
 
     public void sendNotifications(){
+        /*
+            check all users every notification
+            if notification has reached its price target
+            send and delete notification
+         */
         UserManager userManager = readFromDb.readUsers(false);
         for(User user: userManager.getUsers()){
 
@@ -257,6 +277,11 @@ public class UpdateService {
     }
 
     private boolean checkNotification(Notification notification, User user){
+        /*
+            Check if notification has reached its price target
+            return true if reached
+            false if not
+         */
         double price = notification.getNotificationPrice();
         if(notification.getAssetType().equals(AssetType.global)){
             if(price >= user.getAssets().calculateWholePortfolio()){
@@ -331,7 +356,6 @@ public class UpdateService {
         emailService.sendNotificationEmail(userEmail, notificationName, notificationPrice);
         return true;
     }
-
 
 }
 

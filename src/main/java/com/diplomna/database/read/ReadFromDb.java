@@ -41,16 +41,6 @@ public class ReadFromDb {
             else {
                 users = readUsers.readUsersWith2FA();
             }
-            /*
-            for(int i=0; i<users.size(); i++){
-                System.out.print(users.get(i).getUserId() + " ");
-                System.out.print(users.get(i).getUserName() + " ");
-                System.out.print(users.get(i).getPasswordHash() + " ");
-                System.out.print(users.get(i).getSalt() + " ");
-                System.out.print(users.get(i).getEmail() + " ");
-                System.out.println(users.get(i).getIs2FactorAuthenticationRequired() + " ");
-            }
-            */
             UserManager userManager = new UserManager(users);
             return userManager;
         } catch (SQLException throwables) {

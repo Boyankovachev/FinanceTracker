@@ -7,7 +7,13 @@ import java.io.Serializable;
 
 @JsonSerialize
 @JsonComponent // i bez tiq 2te raboti '_'
+               // ama pisheshe che trqq da gi ima ~_~
 public class GraphInfo{
+    /*
+        Class used for sending graph info
+        data as a POJO class to client side
+        javascript handling
+     */
     private int day;
     private int month;
     private int year;

@@ -31,6 +31,7 @@ public class ActiveAsset extends Asset {
     }
 
     public void calculateQuantityOwned(){
+        //calculates quantity owned of specific investment
         if(!areTherePurchases()){
             quantityOwned = 0;
         }
@@ -43,6 +44,8 @@ public class ActiveAsset extends Asset {
     }
 
     public void calculateAveragePurchasePrice(){
+        //calculate average purchase price
+        //return 0 if no purchases have been made
         if(!areTherePurchases()){
             averagePurchasePrice = 0;
         }
@@ -82,6 +85,7 @@ public class ActiveAsset extends Asset {
         return null;
     }
     public PurchaseInfo getPurchaseByIndex(int index){
+        //returns purchase by the specific index of the list
         try {
             return purchaseInfo.get(index);
         }
@@ -100,6 +104,7 @@ public class ActiveAsset extends Asset {
         return null;
     }
     public PurchaseInfo getPurchaseByPrice(double price){
+        //returns first purchase with specific price
         int i;
         for(i=0; i<purchaseInfo.size(); i++){
             if(purchaseInfo.get(i).getPrice() == price){
@@ -109,6 +114,7 @@ public class ActiveAsset extends Asset {
         return null;
     }
     public PurchaseInfo getPurchaseByQuantity(double quantity){
+        //returns first purchase with specific quantity
         int i;
         for(i=0; i<purchaseInfo.size(); i++){
             if(purchaseInfo.get(i).getQuantity() == quantity){
@@ -126,6 +132,7 @@ public class ActiveAsset extends Asset {
     }
 
     public boolean areTherePurchases(){
+        //returns true if purchaseInfo list is empty
         return !purchaseInfo.isEmpty();
     }
 
@@ -138,6 +145,7 @@ public class ActiveAsset extends Asset {
     }
 
      public void calculatePercentChange(){
+        //calculate return on investment
         this.percentChange = ((this.currentMarketPrice - this.averagePurchasePrice) * 100) / this.averagePurchasePrice;
      }
 

@@ -17,7 +17,9 @@ public class UpdateRunner implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-
+        /*
+            update and notification thread
+         */
         /*
         while (true) {
             //update all data from API

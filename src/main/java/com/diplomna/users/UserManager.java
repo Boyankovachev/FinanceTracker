@@ -24,6 +24,10 @@ public class UserManager {
     }
 
     public User getUserByName(String userName){
+        /*
+            return user by username
+            return null if non existant
+         */
         //ako ima poveche ot edin user sus edno i sushto ime
         //staa tupo, opravi go
         int i;
@@ -58,6 +62,9 @@ public class UserManager {
     }
 
     public boolean isEmailPresent(String email){
+        /*
+            Check if email is already registered
+         */
         for(User user: users){
             if(user.getEmail()!=null){
                 if(user.getEmail().equals(email)){
@@ -69,6 +76,9 @@ public class UserManager {
     }
 
     public boolean isUsernamePresent(String username){
+        /*
+            Check if username is already registered
+         */
         for(User user: users){
             if(user.getUserName().equals(username)){
                 return true;

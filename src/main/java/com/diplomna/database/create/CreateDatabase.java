@@ -18,7 +18,7 @@ public class CreateDatabase {
     }
 
     public void createWholeDb(){
-        //works
+        //creates whole relational database
         createDb();
         createUserTable();
         createStockTable();
@@ -34,7 +34,7 @@ public class CreateDatabase {
     }
 
     public void createDb(){
-        //works
+        //create database
         try{
             Statement st = con.createStatement();
             String sql = "CREATE DATABASE IF NOT EXISTS " + databaseName + ";";
@@ -45,7 +45,7 @@ public class CreateDatabase {
     }
 
     public void createUserTable(){
-        //works
+        //create user table
         try {
             Statement DbStatement = con.createStatement();
             String sql =
@@ -62,7 +62,7 @@ public class CreateDatabase {
         }
     }
     public void createStockTable(){
-        //works
+        //create stock table
         try {
             Statement DbStatement = con.createStatement();
             String sql = "CREATE TABLE IF NOT EXISTS `"+databaseName+"`.`stock`(\n" +
@@ -81,7 +81,7 @@ public class CreateDatabase {
         }
     }
     public void createNotificationTable(){
-        //works
+        //create notification table
         // 24.12.2020 - vij zapiskite
         try {
             Statement DbStatement = con.createStatement();
@@ -99,7 +99,7 @@ public class CreateDatabase {
         }
     }
     public void createStockPurchaseInfoTable(){
-        //works
+        //create stock purchase info table
         try {
             Statement DbStatement = con.createStatement();
             String sql = "CREATE TABLE IF NOT EXISTS `" + databaseName + "`.`stock_purchase_info`(\n" +
@@ -116,7 +116,7 @@ public class CreateDatabase {
         }
     }
     public void createPassiveResourceInfoTable(){
-        //works
+        //create passive resource table
         try {
             Statement DbStatement = con.createStatement();
             String sql = "CREATE TABLE IF NOT EXISTS `" + databaseName + "`.`passive_resource`(\n" +
@@ -135,6 +135,7 @@ public class CreateDatabase {
         }
     }
     public void createIndexTable(){
+        //create index table
         try {
             Statement DbStatement = con.createStatement();
             String sql = "CREATE TABLE IF NOT EXISTS `"+databaseName+"`.`index`(\n" +
@@ -152,6 +153,7 @@ public class CreateDatabase {
         }
     }
     public void createIndexPurchaseInfoTable(){
+        //create index purchase info table
         try {
             Statement DbStatement = con.createStatement();
             String sql = "CREATE TABLE IF NOT EXISTS `" + databaseName + "`.`index_purchase_info`(\n" +
@@ -168,6 +170,7 @@ public class CreateDatabase {
         }
     }
     public void createCryptoTable(){
+        //create crypto table
         try {
             Statement DbStatement = con.createStatement();
             String sql = "CREATE TABLE IF NOT EXISTS `"+databaseName+"`.`crypto`(\n" +
@@ -183,6 +186,7 @@ public class CreateDatabase {
         }
     }
     public void createCryptoPurchaseInfoTable(){
+        //create crypto purchase info table
         try {
             Statement DbStatement = con.createStatement();
             String sql = "CREATE TABLE IF NOT EXISTS `" + databaseName + "`.`crypto_purchase_info`(\n" +
@@ -199,6 +203,7 @@ public class CreateDatabase {
         }
     }
     public void createCommodityTable(){
+        //create commodity table
         try {
             Statement DbStatement = con.createStatement();
             String sql = "CREATE TABLE IF NOT EXISTS `"+databaseName+"`.`commodity`(\n" +
@@ -214,6 +219,7 @@ public class CreateDatabase {
         }
     }
     public void createCommodityPurchaseInfoTable(){
+        //create commodity purchase info table
         try {
             Statement DbStatement = con.createStatement();
             String sql = "CREATE TABLE IF NOT EXISTS `" + databaseName + "`.`commodity_purchase_info`(\n" +

@@ -26,6 +26,12 @@ public class EmailService {
     }
 
     public void sendNotificationEmail(String userEmail, String notificationName, double notificationPrice){
+        /*
+        Send email for notification.
+        userEmail - receiver
+        notificationName - name of notification
+        notificationPrice - price of notification
+         */
         //get Mail sender
         JavaMailSenderImpl mailSender = getMailSender();
 
@@ -43,6 +49,11 @@ public class EmailService {
     }
 
     public void sendAuthenticationKeyEmail(String key, String userEmail){
+        /*
+            Send email for notification.
+            userEmail - receiver
+            key - 2fa code
+         */
         //get Mail sender
         JavaMailSenderImpl mailSender = getMailSender();
 
@@ -56,18 +67,6 @@ public class EmailService {
 
         //send mail
         mailSender.send(mailMessage);
-    }
-
-    public void printMailSender(){
-        JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
-        mailSender.setHost(emailConfig.getHost());
-        mailSender.setPort(emailConfig.getPort());
-        mailSender.setUsername(emailConfig.getUsername());
-        mailSender.setPassword(emailConfig.getPassword());
-        System.out.println(mailSender.getHost());
-        System.out.println(mailSender.getPort());
-        System.out.println(mailSender.getUsername());
-        System.out.println(mailSender.getPassword());
     }
 
 }

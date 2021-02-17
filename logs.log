@@ -1,5 +1,45 @@
-2021-02-14 10:42:13.563  INFO 10444 --- [main] com.diplomna.DiplomnaApplication         : Starting DiplomnaApplication using Java 14.0.2 on DESKTOP-IS3KKB5 with PID 10444 (C:\MY SHIT\Code\Java\DiplomnaRabota\1\diplomna\target\classes started by PC in C:\MY SHIT\Code\Java\DiplomnaRabota\1\diplomna)
-2021-02-14 10:42:13.574 DEBUG 10444 --- [main] com.diplomna.DiplomnaApplication         : Running with Spring Boot v2.4.0, Spring v5.3.1
-2021-02-14 10:42:13.574  INFO 10444 --- [main] com.diplomna.DiplomnaApplication         : No active profile set, falling back to default profiles: default
-2021-02-14 10:42:15.975  INFO 10444 --- [main] com.diplomna.DiplomnaApplication         : Started DiplomnaApplication in 3.012 seconds (JVM running for 3.694)
-2021-02-14 11:07:10.888  WARN 10444 --- [http-nio-8080-exec-8] o.a.h.c.protocol.ResponseProcessCookies  : Cookie rejected [__cfduid="d81baf532277bdce73bd26998ada897071613293630", version:0, domain:alphavantage.co, path:/, expiry:Tue Mar 16 11:07:10 EET 2021] Illegal 'domain' attribute "alphavantage.co". Domain of origin: "alpha-vantage.p.rapidapi.com"
+2021-02-17 17:14:04.727  INFO 13168 --- [main] com.diplomna.DiplomnaApplication         : Starting DiplomnaApplication using Java 14.0.2 on DESKTOP-IS3KKB5 with PID 13168 (C:\MY SHIT\Code\Java\DiplomnaRabota\1\diplomna\target\classes started by PC in C:\MY SHIT\Code\Java\DiplomnaRabota\1\diplomna)
+2021-02-17 17:14:04.741 DEBUG 13168 --- [main] com.diplomna.DiplomnaApplication         : Running with Spring Boot v2.4.0, Spring v5.3.1
+2021-02-17 17:14:04.747  INFO 13168 --- [main] com.diplomna.DiplomnaApplication         : No active profile set, falling back to default profiles: default
+2021-02-17 17:14:06.496  WARN 13168 --- [main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'alphaVantageAPI': Injection of autowired dependencies failed; nested exception is java.lang.IllegalArgumentException: Could not resolve placeholder 'rapidapiValue' in value "${rapidapiValue}"
+2021-02-17 17:14:06.574 ERROR 13168 --- [main] o.s.boot.SpringApplication               : Application run failed
+
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'alphaVantageAPI': Injection of autowired dependencies failed; nested exception is java.lang.IllegalArgumentException: Could not resolve placeholder 'rapidapiValue' in value "${rapidapiValue}"
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessProperties(AutowiredAnnotationBeanPostProcessor.java:405) ~[spring-beans-5.3.1.jar:5.3.1]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1415) ~[spring-beans-5.3.1.jar:5.3.1]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:608) ~[spring-beans-5.3.1.jar:5.3.1]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:531) ~[spring-beans-5.3.1.jar:5.3.1]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:335) ~[spring-beans-5.3.1.jar:5.3.1]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-5.3.1.jar:5.3.1]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:333) ~[spring-beans-5.3.1.jar:5.3.1]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:208) ~[spring-beans-5.3.1.jar:5.3.1]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:944) ~[spring-beans-5.3.1.jar:5.3.1]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:925) ~[spring-context-5.3.1.jar:5.3.1]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:588) ~[spring-context-5.3.1.jar:5.3.1]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:144) ~[spring-boot-2.4.0.jar:2.4.0]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:767) ~[spring-boot-2.4.0.jar:2.4.0]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:759) ~[spring-boot-2.4.0.jar:2.4.0]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:426) ~[spring-boot-2.4.0.jar:2.4.0]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:326) ~[spring-boot-2.4.0.jar:2.4.0]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1309) ~[spring-boot-2.4.0.jar:2.4.0]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1298) ~[spring-boot-2.4.0.jar:2.4.0]
+	at com.diplomna.DiplomnaApplication.main(DiplomnaApplication.java:11) ~[classes/:na]
+Caused by: java.lang.IllegalArgumentException: Could not resolve placeholder 'rapidapiValue' in value "${rapidapiValue}"
+	at org.springframework.util.PropertyPlaceholderHelper.parseStringValue(PropertyPlaceholderHelper.java:178) ~[spring-core-5.3.1.jar:5.3.1]
+	at org.springframework.util.PropertyPlaceholderHelper.replacePlaceholders(PropertyPlaceholderHelper.java:124) ~[spring-core-5.3.1.jar:5.3.1]
+	at org.springframework.core.env.AbstractPropertyResolver.doResolvePlaceholders(AbstractPropertyResolver.java:239) ~[spring-core-5.3.1.jar:5.3.1]
+	at org.springframework.core.env.AbstractPropertyResolver.resolveRequiredPlaceholders(AbstractPropertyResolver.java:210) ~[spring-core-5.3.1.jar:5.3.1]
+	at org.springframework.context.support.PropertySourcesPlaceholderConfigurer.lambda$processProperties$0(PropertySourcesPlaceholderConfigurer.java:175) ~[spring-context-5.3.1.jar:5.3.1]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.resolveEmbeddedValue(AbstractBeanFactory.java:931) ~[spring-beans-5.3.1.jar:5.3.1]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1308) ~[spring-beans-5.3.1.jar:5.3.1]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1287) ~[spring-beans-5.3.1.jar:5.3.1]
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:640) ~[spring-beans-5.3.1.jar:5.3.1]
+	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:119) ~[spring-beans-5.3.1.jar:5.3.1]
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessProperties(AutowiredAnnotationBeanPostProcessor.java:399) ~[spring-beans-5.3.1.jar:5.3.1]
+	... 18 common frames omitted
+
+2021-02-17 17:14:25.894  INFO 6932 --- [main] com.diplomna.DiplomnaApplication         : Starting DiplomnaApplication using Java 14.0.2 on DESKTOP-IS3KKB5 with PID 6932 (C:\MY SHIT\Code\Java\DiplomnaRabota\1\diplomna\target\classes started by PC in C:\MY SHIT\Code\Java\DiplomnaRabota\1\diplomna)
+2021-02-17 17:14:25.897 DEBUG 6932 --- [main] com.diplomna.DiplomnaApplication         : Running with Spring Boot v2.4.0, Spring v5.3.1
+2021-02-17 17:14:25.898  INFO 6932 --- [main] com.diplomna.DiplomnaApplication         : No active profile set, falling back to default profiles: default
+2021-02-17 17:14:28.616  INFO 6932 --- [main] com.diplomna.DiplomnaApplication         : Started DiplomnaApplication in 3.262 seconds (JVM running for 3.847)
+2021-02-17 17:15:12.290  WARN 6932 --- [http-nio-8080-exec-1] o.a.h.c.protocol.ResponseProcessCookies  : Cookie rejected [__cfduid="d8b7f14b286fd8c31b4e79f10fb8547fd1613574907", version:0, domain:alphavantage.co, path:/, expiry:Fri Mar 19 17:15:07 EET 2021] Illegal 'domain' attribute "alphavantage.co". Domain of origin: "alpha-vantage.p.rapidapi.com"

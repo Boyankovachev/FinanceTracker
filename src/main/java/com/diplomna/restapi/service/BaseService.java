@@ -36,6 +36,12 @@ public class BaseService {
     }
 
     public User setupUser(User user){
+        /*
+            user - object without asset manager
+            initialize asset manager and add to user
+            get notifications and add to user
+            return user
+         */
         AssetManager assetManager = new AssetManager();
         assetManager.addStocks(getStocksByUserId(user.getUserId()));
         assetManager.addPassiveResources(getPassiveResourcesByUserId(user.getUserId()));
@@ -49,6 +55,7 @@ public class BaseService {
     }
 
     public List<Notification> getNotificationsByUserId(int userId){
+        //returns notification of user by id
         ReadFromDb readFromDb = new ReadFromDb("test");
         if(readFromDb.readNotificationsByUserId(userId) == null){
             return new ArrayList<>();
@@ -57,6 +64,10 @@ public class BaseService {
     }
 
     public List<Stock> getStocksByUserId(int userId){
+        /*
+            returns list of fully initialized stock objects,
+            by user id with the purchase info list
+         */
         ReadFromDb readFromDb = new ReadFromDb(databaseName);
         List<Stock> stockPurchases = readFromDb.readStockPurchasesByUserId(userId);
         List<Stock> stockBase = new ArrayList<>();
@@ -88,6 +99,7 @@ public class BaseService {
     }
 
     public List<PassiveResource> getPassiveResourcesByUserId(int userId){
+        //returns passive resources of user by id
         ReadFromDb readFromDb = new ReadFromDb("test");
         List<PassiveResource> passiveResources = readFromDb.readPassiveResourcesByUserId(userId);
         for(int i=0; i<passiveResources.size(); i++){
@@ -97,7 +109,10 @@ public class BaseService {
     }
 
     public List<Index> getIndexByUserId(int userId){
-
+        /*
+            returns list of fully initialized index objects,
+            by user id with the purchase info list
+         */
         ReadFromDb readFromDb = new ReadFromDb("test");
         List<Index> indexPurchases = readFromDb.readIndexPurchasesByUserId(userId);
         List<Index> indexBase = new ArrayList<>();
@@ -128,6 +143,10 @@ public class BaseService {
     }
 
     public List<Crypto> getCryptoByUserId(int userId){
+        /*
+            returns list of fully initialized crypto objects,
+            by user id with the purchase info list
+         */
         ReadFromDb readFromDb = new ReadFromDb("test");
         List<Crypto> cryptoPurchases = readFromDb.readCryptoPurchaseByUserId(userId);
         List<Crypto> cryptoBase = new ArrayList<>();
@@ -155,6 +174,10 @@ public class BaseService {
     }
 
     public List<Commodities> getCommodityByUserId(int userId){
+        /*
+            returns list of fully initialized commodity objects,
+            by user id with the purchase info list
+         */
         ReadFromDb readFromDb = new ReadFromDb("test");
         List<Commodities> commodityPurchases = readFromDb.readCommodityPurchaseInfoByUserId(userId);
         List<Commodities> commodityBase = new ArrayList<>();
@@ -184,6 +207,13 @@ public class BaseService {
 
     public String addPassiveAsset(JSONObject jsonObject, User user){
         /*
+            add passive asset to user
+            jsonObject contains passive asset data
+            return response (for client)
+         */
+
+
+        /* MAHNI TOVA POSLE (i oprai)
         1. proveri dali go ima veche
                 -ako go ima returnvash na usera che veche ima takuv
         2. proveri dali stoinostite sa pravilni
@@ -240,6 +270,12 @@ public class BaseService {
     }
 
     public String addAsset(JSONObject jsonObject, User user){
+        /*
+            add active asset to user
+            jsonObject contains asset data
+            return response (for client)
+         */
+
         /*
         v zavisimost ot assettype:
         1. proveri dali tozi user go ima veche
@@ -435,6 +471,11 @@ public class BaseService {
     }
 
     public String change2FA(String input, User user){
+        /*
+            Change user 2fa settings
+            return response (for client)
+         */
+
         input = input.replace("=","");  // response is with on= or off=   '=' not needed
 
         if(input.equals("on") && user.getIs2FactorAuthenticationRequired() ||
@@ -454,8 +495,12 @@ public class BaseService {
         insert.update2FA(user);
         return "success";
     }
-
     public String changeUsername(String newUsername, User user){
+        /*
+            Change user username
+            return response (for client)
+         */
+
         newUsername = newUsername.replace("=","");
         if(newUsername.length() < 4 || newUsername.length() > 32){
                 return "Invalid username";
@@ -466,6 +511,11 @@ public class BaseService {
         return "success";
     }
     public String changeEmail(String newEmail, User user){
+        /*
+            Change user email
+            return response (for client)
+         */
+
         newEmail = newEmail.replace("=","");
         newEmail = newEmail.replace("%40", "@");
         user.setEmail(newEmail);
@@ -474,6 +524,13 @@ public class BaseService {
         return "success";
     }
     public String changePassword(JSONObject jsonObject, User user){
+        /*
+            Change user password
+            jsonObject contains user input
+            return response (for client)
+         */
+
+        //algorituma (proveri go posle i toq dali e adekvaten)
         //check if current password is entered correctly
         //check validity of new password
         //check if passwords match
@@ -514,6 +571,11 @@ public class BaseService {
     }
 
     public String addNotification(JSONObject jsonObject, User user){
+        /*
+            add notification to user
+            jsonObject contains notification information
+            return response (for client)
+         */
         Notification newNotification = new Notification();
 
         if(jsonObject.getString("name").equals("") || jsonObject.getString("priceTarget").equals("")){
@@ -550,6 +612,12 @@ public class BaseService {
 
 
     public String removeAsset(JSONObject jsonObject, User user){
+        /*
+            Removes asset from user portfolio
+            jsonObject contains asset information
+            return response (for client)
+         */
+
         DeleteFromDb deleteFromDb = new DeleteFromDb("test");
         try {
             user.getAssets().removeAsset(jsonObject.getString("assetType"), jsonObject.getString("assetName"));
@@ -583,6 +651,11 @@ public class BaseService {
     }
 
     public String changePassiveResourcePrice(JSONObject jsonObject, User user) {
+        /*
+            Change price of a passive resource
+            jsonObject contains user input data
+            return response (for client)
+         */
         if( user.getAssets().getPassiveResourceByName(jsonObject.getString("name")) == null){
             return "Failed to locate passive resource";
         }
@@ -597,6 +670,12 @@ public class BaseService {
     }
 
     public String removeNotification(String notificationName, User user){
+        /*
+            Removes notification from user
+            jsonObject contains asset information
+            return response (for client)
+         */
+
         DeleteFromDb deleteFromDb = new DeleteFromDb("test");
         try {
             deleteFromDb.deleteNotification(user.getUserId(), notificationName);
@@ -616,6 +695,9 @@ public class BaseService {
     }
 
     public List<GraphInfo> getStockGraphInfo(String stockSymbol){
+        /*
+            Return stock historical data list
+         */
         List<GraphInfo> graphInfoList = new ArrayList<>();
         AlphaVantageAPI alphaVantageAPI = new AlphaVantageAPI();
         try {
@@ -673,6 +755,11 @@ public class BaseService {
         return null;
     }
     private void swapGraphInfoList(List<GraphInfo> graphInfoList, int i){
+        /*
+            swap objects in graph info list
+            from i and i + 1
+            used in getStockGraphInfo
+         */
         GraphInfo temp = graphInfoList.get(i);
         graphInfoList.set(i, graphInfoList.get(i+1));
         graphInfoList.set(i+1, temp);

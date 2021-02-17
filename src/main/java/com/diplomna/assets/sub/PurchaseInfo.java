@@ -8,6 +8,7 @@ public class PurchaseInfo {
     private double quantity;
 
     // if a purchase has a symbol
+    // used in code - not stored in DB
     private String stockSymbol = null;
 
     public PurchaseInfo(){}

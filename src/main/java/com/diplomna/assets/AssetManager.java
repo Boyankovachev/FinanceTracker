@@ -136,6 +136,12 @@ public class AssetManager {
     }
 
     public void addPurchaseToResource(String resourceType, String resourceIdentifier, PurchaseInfo purchaseInfo){
+        /*
+            Adds purchase to user.
+            resourceType - investment type (stock,index,crypto,commodity)
+            resourceIdentifier - name or symbol of investment
+            purchaseInfo - the purchase to be added
+         */
         int i;
         switch (resourceType){
             case "stock":
@@ -174,6 +180,11 @@ public class AssetManager {
     }
 
     public boolean isAssetInList(String assetType, String asset){
+        /*
+            returns true if user has specific investment
+            assetType - investment type (stock,index,crypto,commodity)
+            asset - name or symbol of investment
+         */
         int i;
         boolean isPresent = false;
         switch (assetType){
@@ -222,6 +233,11 @@ public class AssetManager {
     }
 
     public void removeAsset(String assetType, String asset) throws AssetNotFoundException {
+        /*
+            returns true if user has ivestment
+            assetType - investment type (stock,index,crypto,commodity)
+            asset - name or symbol of investment
+         */
         if(!isAssetInList(assetType, asset)){
             throw new AssetNotFoundException(assetType + ": " + asset + " not found");
         }
@@ -250,6 +266,7 @@ public class AssetManager {
     }
 
     public double calculateAllStocksWorth(){
+        //return value of all owned stocks
         double total = 0;
         for(Stock stock: stocks){
             total = total + stock.getCurrentMarketPrice() * stock.getQuantityOwned();
@@ -257,6 +274,7 @@ public class AssetManager {
         return total;
     }
     public double calculateAllIndexWorth(){
+        //return value of all owned indexes
         double total = 0;
         for(Index index: indexFunds){
             total = total + index.getCurrentMarketPrice() * index.getQuantityOwned();
@@ -264,6 +282,7 @@ public class AssetManager {
         return total;
     }
     public double calculateAllCryptoWorth(){
+        //return value of all owned cryptocurrencies
         double total = 0;
         for(Crypto crypto: cryptoCurrencies){
             total = total + crypto.getCurrentMarketPrice() * crypto.getQuantityOwned();
@@ -271,6 +290,7 @@ public class AssetManager {
         return total;
     }
     public double calculateAllCommodityWorth(){
+        //return value of all owned commodities
         double total = 0;
         for(Commodities commodity: commodities){
             total = total + commodity.getCurrentMarketPrice() * commodity.getQuantityOwned();
@@ -278,6 +298,7 @@ public class AssetManager {
         return total;
     }
     public double calculateAllPassiveResourceWorth(){
+        //return value of all owned passive resources
         double total = 0;
         for(PassiveResource passiveResource: passiveResources){
             total = total + passiveResource.getCurrentMarketPrice();
@@ -285,6 +306,7 @@ public class AssetManager {
         return total;
     }
     public double calculateWholePortfolio(){
+        //return value of whole portfolio
         return calculateAllStocksWorth() + calculateAllIndexWorth() + calculateAllCryptoWorth() +
                 calculateAllCommodityWorth() + calculateAllPassiveResourceWorth();
     }

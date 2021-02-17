@@ -29,6 +29,9 @@ public class LoginAndRegisterService {
     }
 
     public String createUser(String inputString){
+        /*
+            Create user and add to database
+         */
         String[] temp = inputString.split("&");
         String inputUsername = temp[0].substring(9);
         String inputPassword = temp[1].substring(9);
@@ -63,12 +66,19 @@ public class LoginAndRegisterService {
     }
 
     private boolean isEmailTaken(String email){
+        /*
+            Check if email is present in database
+         */
         ReadFromDb readFromDb = new ReadFromDb("test");
         UserManager userManager = readFromDb.readUsers(false);
         return userManager.isEmailPresent(email);
     }
 
     public String verifyLogin(String inputString){
+        /*
+            Check password and username
+            return response
+         */
         String[] temp = inputString.split("&");
         String inputUsername = temp[0].substring(9);
         String inputPassword = temp[1].substring(9);
@@ -94,14 +104,20 @@ public class LoginAndRegisterService {
     }
 
     public void setAuthentication(User user){
+        /*
+            generate 2fk key
+            send authentication to user
+         */
         this.authenticateCode = generateKey();
         this.user = user;
         emailService.sendAuthenticationKeyEmail(authenticateCode, user.getEmail());
     }
     private String generateKey(){
+        //generate 6 digit random string
         return String.format("%06d", new Random().nextInt(999999));
     }
     public boolean checkAuthentication(String input){
+        //check 2fa user input
         if(authenticateCode.equals(input)){
             authenticateCode = null;
             return true;
@@ -112,6 +128,8 @@ public class LoginAndRegisterService {
         }
     }
     public User getUser() {
-        return user;
+        User temp = this.user;
+        this.user = null;
+        return temp;
     }
 }
