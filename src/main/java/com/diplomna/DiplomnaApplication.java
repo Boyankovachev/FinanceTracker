@@ -7,9 +7,10 @@ import org.springframework.scheduling.annotation.EnableAsync;
 @SpringBootApplication
 @EnableAsync
 public class DiplomnaApplication {
-
 	public static void main(String[] args) {
 		SpringApplication.run(DiplomnaApplication.class, args);
+	}
+}
 
 		/*
 		//run second thread for notifications
@@ -20,6 +21,3 @@ public class DiplomnaApplication {
 			e.printStackTrace();
 		}
 		 */
-	}
-
-}

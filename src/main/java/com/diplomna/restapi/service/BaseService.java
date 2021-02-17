@@ -1,34 +1,26 @@
 package com.diplomna.restapi.service;
 
 import com.diplomna.api.alphavantage.AlphaVantageAPI;
-import com.diplomna.api.stock.ParseStock;
+import com.diplomna.api.stock.YahooFinanceAPI;
 import com.diplomna.assets.AssetManager;
 import com.diplomna.assets.finished.*;
-import com.diplomna.assets.sub.Asset;
 import com.diplomna.assets.sub.PurchaseInfo;
 import com.diplomna.database.delete.DeleteFromDb;
 import com.diplomna.database.insert.InsertIntoDb;
 import com.diplomna.database.read.ReadFromDb;
-import com.diplomna.database.read.sub.ReadCommodity;
 import com.diplomna.date.DatеManager;
 import com.diplomna.exceptions.AssetNotFoundException;
 import com.diplomna.pojo.GraphInfo;
 import com.diplomna.users.sub.AssetType;
 import com.diplomna.users.sub.Notification;
 import com.diplomna.users.sub.User;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fasterxml.jackson.databind.jsontype.impl.AsExistingPropertyTypeSerializer;
 import com.mashape.unirest.http.exceptions.UnirestException;
-import com.mysql.cj.CacheAdapter;
-import com.sun.source.tree.LabeledStatementTree;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import javax.sound.midi.SysexMessage;
-import javax.xml.crypto.Data;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.*;
@@ -37,8 +29,10 @@ import java.util.*;
 public class BaseService {
 
     private final Logger logger;
+    private String databaseName;
     public BaseService(){
         this.logger = LoggerFactory.getLogger(BaseService.class);
+        databaseName = "test";
     }
 
     public User setupUser(User user){
@@ -63,7 +57,7 @@ public class BaseService {
     }
 
     public List<Stock> getStocksByUserId(int userId){
-        ReadFromDb readFromDb = new ReadFromDb("test");
+        ReadFromDb readFromDb = new ReadFromDb(databaseName);
         List<Stock> stockPurchases = readFromDb.readStockPurchasesByUserId(userId);
         List<Stock> stockBase = new ArrayList<>();
         List<String> ownedStocksSymbols = new ArrayList<>();
@@ -74,7 +68,7 @@ public class BaseService {
             }
         }
         for(String symbol: ownedStocksSymbols){
-            // read stocks
+            // read stocks from DB
             stockBase.add(readFromDb.readStockBySymbol(symbol));
         }
 
@@ -266,6 +260,9 @@ public class BaseService {
             return "Passive resource with such a name already exists in your portfolio!";
         }
 
+        ReadFromDb readFromDb = new ReadFromDb("test");
+        InsertIntoDb insert = new InsertIntoDb("test");
+
         //3
         Stock stock = new Stock();
         Index index = new Index();
@@ -274,20 +271,25 @@ public class BaseService {
         AlphaVantageAPI alphaVantageAPI = new AlphaVantageAPI();
         switch (jsonObject.getString("assetType")){
             case "stock":
+                //check if in DB
+                Stock tempStock = readFromDb.readStockBySymbol(jsonObject.getString("symbol"));
+                if(tempStock == null) {
+                    System.out.println("load from stock not from DB not from api");
+                }
                 try {
-                    ParseStock parseStock = new ParseStock(jsonObject.getString("symbol"));
-                    stock.setName(parseStock.getName());
-                    stock.setSymbol(parseStock.getSymbol()); // == stock.setSymbol(jsonObject.getString("symbol");
-                    stock.setDescription(parseStock.getDescription());
-                    stock.setCurrentMarketPrice(parseStock.getRawCurrentPrice());
-                    stock.setCurrency(parseStock.getCurrency());
-                    stock.setCurrencySymbol(parseStock.getCurrencySymbol());
-                    stock.setMarketOpen(parseStock.isMarketOpen());
-                    stock.setExchangeName(parseStock.getExchangeName());
-                    stock.setRecommendationKey(parseStock.getRecommendationKey());
-                    stock.setCurrentMarketPrice(parseStock.getRawCurrentPrice()); //latest changes
-                    stock.setMarketOpen(parseStock.isMarketOpen());               //latest changes
-                    stock.setRecommendationKey(parseStock.getRecommendationKey());//latest changes
+                    YahooFinanceAPI yahooFinanceAPI = new YahooFinanceAPI(jsonObject.getString("symbol"));
+                    stock.setName(yahooFinanceAPI.getName());
+                    stock.setSymbol(yahooFinanceAPI.getSymbol()); // == stock.setSymbol(jsonObject.getString("symbol");
+                    stock.setDescription(yahooFinanceAPI.getDescription());
+                    stock.setCurrentMarketPrice(yahooFinanceAPI.getRawCurrentPrice());
+                    stock.setCurrency(yahooFinanceAPI.getCurrency());
+                    stock.setCurrencySymbol(yahooFinanceAPI.getCurrencySymbol());
+                    stock.setMarketOpen(yahooFinanceAPI.isMarketOpen());
+                    stock.setExchangeName(yahooFinanceAPI.getExchangeName());
+                    stock.setRecommendationKey(yahooFinanceAPI.getRecommendationKey());
+                    stock.setCurrentMarketPrice(yahooFinanceAPI.getRawCurrentPrice()); //latest changes
+                    stock.setMarketOpen(yahooFinanceAPI.isMarketOpen());               //latest changes
+                    stock.setRecommendationKey(yahooFinanceAPI.getRecommendationKey());//latest changes
                 } catch (UnirestException e) {
                     String errorMessage = "YahooFinanceAPI fail for symbol " + jsonObject.getString("symbol");
                     logger.error(errorMessage);
@@ -373,8 +375,6 @@ public class BaseService {
         }
 
         //5 + 6
-        ReadFromDb readFromDb = new ReadFromDb("test");
-        InsertIntoDb insert = new InsertIntoDb("test");
         switch (jsonObject.getString("assetType")){
             case "stock":
                 stock.setAveragePurchasePrice(jsonObject.getDouble("price"));

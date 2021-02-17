@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AssetManager {
-    private List<Stock> stocks = new ArrayList<>();;
+    private List<Stock> stocks = new ArrayList<>();
     private List<PassiveResource> passiveResources = new ArrayList<>();
     private List<Index> indexFunds = new ArrayList<>();
     private List<Commodities> commodities = new ArrayList<>();

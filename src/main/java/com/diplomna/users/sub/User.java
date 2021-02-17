@@ -19,6 +19,8 @@ public class User {
     private boolean is2FactorAuthenticationRequired;
     private List<Notification> notifications = new ArrayList<>();
     private int userId;
+    private boolean isEmailVerified;
+    private final String pepper = "";
 
     public User(){}
     public User(String userName, String passwordHash,String salt){
@@ -117,10 +119,6 @@ public class User {
     }
 
     public List<String> generateSaltAndHash(String password){
-        //Given a password generates a random salt and hashes the password
-        //returns list[0] = hashed + salted password
-        //        list[1] = salt
-
         //generate random salt
         Random r = new SecureRandom();
         byte[] salt = new byte[20];
@@ -129,9 +127,11 @@ public class User {
 
         //generate hash
         String hash = Hashing.sha256()
-                .hashString(password + saltString + "this_is_my_pepper", StandardCharsets.UTF_8)
+                .hashString(password + saltString + pepper, StandardCharsets.UTF_8)
                 .toString();
 
+        //return result
+        //result.get(0) - password, result.get(1) - salt
         List<String> result  = new ArrayList<>();
         result.add(hash);
         result.add(saltString);
@@ -139,11 +139,11 @@ public class User {
     }
 
     public boolean checkPassword(String inputPassword){
-        //hash input password with user salt
-        //and check against the existing hash
+        //hash user input + salt + pepper
         String newHash = Hashing.sha256()
-                .hashString(inputPassword + salt + "this_is_my_pepper", StandardCharsets.UTF_8)
+                .hashString(inputPassword + salt + pepper, StandardCharsets.UTF_8)
                 .toString();
+        //compare to actual hash
         return newHash.equals(passwordHash);
     }
 

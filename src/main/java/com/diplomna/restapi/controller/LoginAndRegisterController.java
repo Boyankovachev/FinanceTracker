@@ -18,7 +18,7 @@ import java.util.HashMap;
 public class LoginAndRegisterController {
 
     @Autowired
-    private LoginAndRegisterService loginAndRegisterService;
+    private final LoginAndRegisterService loginAndRegisterService;
 
     public LoginAndRegisterController(){
         loginAndRegisterService = new LoginAndRegisterService();
@@ -110,8 +110,4 @@ public class LoginAndRegisterController {
     }
 
 
-    @RequestMapping(value = "/chart", method = RequestMethod.GET)
-    public String chart(){
-        return "charttest";
-    }
 }

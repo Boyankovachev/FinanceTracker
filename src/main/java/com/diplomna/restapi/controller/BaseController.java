@@ -15,6 +15,8 @@ import org.apache.http.protocol.HTTP;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONString;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.http.HttpStatus;
@@ -40,8 +42,11 @@ public class BaseController {
 
     private User user;
 
+    private final Logger logger;
+
     public BaseController(){
         baseService = new BaseService();
+        this.logger = LoggerFactory.getLogger(BaseService.class);
     }
 
     @RequestMapping(value = "/user", method = RequestMethod.GET)
@@ -132,7 +137,6 @@ public class BaseController {
     }
 
 
-
     @RequestMapping(value = "/asset", method = RequestMethod.POST)
     public RedirectView assets(@RequestParam("asset_type") String assetType, @RequestParam("asset_name") String assetName, RedirectAttributes attributes){
         attributes.addFlashAttribute("assetName", assetName);
@@ -155,7 +159,10 @@ public class BaseController {
             switch (assetType) {
                 case "stock":
                     if(user.getAssets().getStockByName(assetName) == null){
-                        //exception i logvane
+                        String errorString = "Requested stock with symbol: "
+                                + assetName + " for user with id: " +
+                                user.getUserId() + " not found!";
+                        logger.error(errorString);
                         return "";
                     }
                     else{
@@ -223,7 +230,6 @@ public class BaseController {
 
     @RequestMapping(value = "/get-stock-data", method = RequestMethod.POST)
     public @ResponseBody ResponseEntity<Object> getStockData(@RequestBody String stockSymbol){
-        System.out.println(stockSymbol);
         List<GraphInfo> graphInfoList = baseService.getStockGraphInfo(stockSymbol);
         return new ResponseEntity<Object>(graphInfoList ,HttpStatus.OK);
     }

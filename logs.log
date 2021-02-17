@@ -1,5 +1,5 @@
-2021-02-07 19:32:35.784  INFO 1320 --- [main] com.diplomna.DiplomnaApplication         : Starting DiplomnaApplication using Java 14.0.2 on DESKTOP-IS3KKB5 with PID 1320 (C:\MY SHIT\Code\Java\DiplomnaRabota\1\diplomna\target\classes started by PC in C:\MY SHIT\Code\Java\DiplomnaRabota\1\diplomna)
-2021-02-07 19:32:35.796 DEBUG 1320 --- [main] com.diplomna.DiplomnaApplication         : Running with Spring Boot v2.4.0, Spring v5.3.1
-2021-02-07 19:32:35.798  INFO 1320 --- [main] com.diplomna.DiplomnaApplication         : No active profile set, falling back to default profiles: default
-2021-02-07 19:32:38.329  INFO 1320 --- [main] com.diplomna.DiplomnaApplication         : Started DiplomnaApplication in 3.255 seconds (JVM running for 3.993)
-2021-02-07 19:33:09.699  INFO 1320 --- [http-nio-8080-exec-9] c.diplomna.restapi.service.BaseService   : Created account with username test3
+2021-02-14 10:42:13.563  INFO 10444 --- [main] com.diplomna.DiplomnaApplication         : Starting DiplomnaApplication using Java 14.0.2 on DESKTOP-IS3KKB5 with PID 10444 (C:\MY SHIT\Code\Java\DiplomnaRabota\1\diplomna\target\classes started by PC in C:\MY SHIT\Code\Java\DiplomnaRabota\1\diplomna)
+2021-02-14 10:42:13.574 DEBUG 10444 --- [main] com.diplomna.DiplomnaApplication         : Running with Spring Boot v2.4.0, Spring v5.3.1
+2021-02-14 10:42:13.574  INFO 10444 --- [main] com.diplomna.DiplomnaApplication         : No active profile set, falling back to default profiles: default
+2021-02-14 10:42:15.975  INFO 10444 --- [main] com.diplomna.DiplomnaApplication         : Started DiplomnaApplication in 3.012 seconds (JVM running for 3.694)
+2021-02-14 11:07:10.888  WARN 10444 --- [http-nio-8080-exec-8] o.a.h.c.protocol.ResponseProcessCookies  : Cookie rejected [__cfduid="d81baf532277bdce73bd26998ada897071613293630", version:0, domain:alphavantage.co, path:/, expiry:Tue Mar 16 11:07:10 EET 2021] Illegal 'domain' attribute "alphavantage.co". Domain of origin: "alpha-vantage.p.rapidapi.com"

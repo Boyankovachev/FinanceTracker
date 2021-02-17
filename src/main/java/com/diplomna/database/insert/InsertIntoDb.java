@@ -2,9 +2,12 @@ package com.diplomna.database.insert;
 
 import com.diplomna.assets.finished.*;
 import com.diplomna.assets.sub.PurchaseInfo;
+import com.diplomna.database.delete.DeleteFromDb;
 import com.diplomna.database.insert.sub.*;
 import com.diplomna.users.sub.Notification;
 import com.diplomna.users.sub.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -16,11 +19,13 @@ public class InsertIntoDb {
     private String user;
     private String password;
     public String databaseName;
+    private final Logger logger;
     public InsertIntoDb(String databaseName){
         user = "root";
         password = "1234";
         this.connString = "jdbc:mysql://localhost:3306/?user=" + user + "&password=" + password;
         this.databaseName = databaseName;
+        this.logger = LoggerFactory.getLogger(InsertIntoDb.class);
         try {
             this.con = DriverManager.getConnection(connString);
         } catch (SQLException throwables) {
@@ -38,13 +43,19 @@ public class InsertIntoDb {
     }
 
     public void insertStock(Stock stock){
-        InsertIntoStock insertStock = new InsertIntoStock(this.con, this.databaseName);
+        InsertIntoStock insertStock =
+                new InsertIntoStock(this.con, this.databaseName);
         try {
             insertStock.insertStock(stock);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+            String errorMessage = "Insert stock failed!\n" +
+                    "Message: \n"
+                    + throwables.getMessage();
+            logger.error(errorMessage);
         }
     }
+
     public void insertStockPurchaseInfo(int userId, PurchaseInfo purchaseInfo){
         InsertIntoStockPurchaseInfo insertIntoStockPurchaseInfo = new InsertIntoStockPurchaseInfo(this.con, this.databaseName);
         try {

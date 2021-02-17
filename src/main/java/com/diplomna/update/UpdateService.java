@@ -1,7 +1,7 @@
 package com.diplomna.update;
 
 import com.diplomna.api.alphavantage.AlphaVantageAPI;
-import com.diplomna.api.stock.ParseStock;
+import com.diplomna.api.stock.YahooFinanceAPI;
 import com.diplomna.assets.finished.Commodities;
 import com.diplomna.assets.finished.Crypto;
 import com.diplomna.assets.finished.Index;
@@ -29,15 +29,15 @@ import java.util.*;
 public class UpdateService {
 
     @Autowired
-    private BaseService baseService;
+    private final BaseService baseService;
 
     @Autowired
     private EmailService emailService;
 
     private final Logger logger;
-    private ReadFromDb readFromDb;
-    private InsertIntoDb insertIntoDb;
-    private DeleteFromDb deleteFromDb;
+    private final ReadFromDb readFromDb;
+    private final InsertIntoDb insertIntoDb;
+    private final DeleteFromDb deleteFromDb;
 
     public UpdateService(){
         this.logger = LoggerFactory.getLogger(BaseService.class);
@@ -64,16 +64,17 @@ public class UpdateService {
             throwables.printStackTrace();
         }
 
-        ParseStock parseStock = new ParseStock();
+        YahooFinanceAPI yahooFinanceAPI = new YahooFinanceAPI();
         int i;
         for(i=0; i<stocks.size(); i++){
             try {
-                parseStock.setStockBySymbol(stocks.get(i).getSymbol());
-                stocks.get(i).setCurrentMarketPrice(parseStock.getRawCurrentPrice());
-                stocks.get(i).setMarketOpen(parseStock.isMarketOpen());
-                stocks.get(i).setRecommendationKey(parseStock.getRecommendationKey());
+                yahooFinanceAPI.setStockBySymbol(stocks.get(i).getSymbol());
+                stocks.get(i).setCurrentMarketPrice(yahooFinanceAPI.getRawCurrentPrice());
+                stocks.get(i).setMarketOpen(yahooFinanceAPI.isMarketOpen());
+                stocks.get(i).setRecommendationKey(yahooFinanceAPI.getRecommendationKey());
             } catch (UnirestException e) {
-                String errorMessage = "YahooFinanceAPI fail for symbol " + stocks.get(i).getSymbol();
+                String errorMessage = "YahooFinanceAPI fail for symbol "
+                        + stocks.get(i).getSymbol();
                 logger.error(errorMessage);
                 e.printStackTrace();
             }
@@ -83,7 +84,8 @@ public class UpdateService {
             try {
                 insertIntoDb.updateStockApiData(stock);
             } catch (SQLException throwables) {
-                String errorMessage = "DB fail for update stock API data fail for symbol " + stock.getSymbol();
+                String errorMessage = "DB fail for update stock API data fail for symbol "
+                        + stock.getSymbol();
                 logger.error(errorMessage);
                 throwables.printStackTrace();
             }
@@ -196,8 +198,11 @@ public class UpdateService {
         int i;
         for(i=0; i<commodities.size(); i++){
             //Public API for commodities (aka Petrol, Wheat etc) not found
+
             //simulate some values
-            commodities.get(i).setCurrentMarketPrice(0);
+            double currentPrice = commodities.get(i).getCurrentMarketPrice();
+            commodities.get(i).setCurrentMarketPrice(Math.random() * ((currentPrice+10) -
+                    (currentPrice-10) + 1) + (currentPrice - 10));
         }
 
         for(Commodities commodity: commodities){
@@ -216,7 +221,8 @@ public class UpdateService {
         UserManager userManager = readFromDb.readUsers(false);
         for(User user: userManager.getUsers()){
 
-            if(readFromDb.readNotificationsByUserId(user.getUserId()) == null){ //check if user has any notifications set up
+            //check if user has any notifications set up
+            if(readFromDb.readNotificationsByUserId(user.getUserId()) == null){
                 continue;
             }
 
@@ -253,35 +259,28 @@ public class UpdateService {
     private boolean checkNotification(Notification notification, User user){
         double price = notification.getNotificationPrice();
         if(notification.getAssetType().equals(AssetType.global)){
-            //ako e globalno
-            //System.out.println("globalnoto: " + user.getAssets().calculateWholePortfolio());
             if(price >= user.getAssets().calculateWholePortfolio()){
                 return true;
             }
         }
         else if(notification.getAssetTypeSettings()){
-            // tuka sichki ot tip
             switch (notification.getAssetType()){
                 case stock -> {
-                    //System.out.println("sichki akcii: " + user.getAssets().calculateAllStocksWorth());
                     if(price >= user.getAssets().calculateAllStocksWorth()){
                         return true;
                     }
                 }
                 case index -> {
-                    //System.out.println("sichkio indexi: " + user.getAssets().calculateAllIndexWorth());
                     if(price >= user.getAssets().calculateAllIndexWorth()){
                         return true;
                     }
                 }
                 case crypto -> {
-                    //System.out.println("sichki kirpotota: " + user.getAssets().calculateAllCryptoWorth());
                     if(price >= user.getAssets().calculateAllCryptoWorth()){
                         return true;
                     }
                 }
                 case commodity -> {
-                    //System.out.println("sicki comodita: " + user.getAssets().calculateAllCommodityWorth());
                     if(price >= user.getAssets().calculateAllCommodityWorth()){
                         return true;
                     }
@@ -289,12 +288,8 @@ public class UpdateService {
             }
         }
         else if(!notification.getAssetTypeSettings()){
-            //tuka samo edna ot tip
             switch (notification.getAssetType()){
                 case stock -> {
-                    //System.out.println("akciq: " + notification.getNotificationTarget());
-                    //System.out.println(user.getAssets().getStockBySymbol(notification.getNotificationTarget()).getQuantityOwned() *
-                    //        user.getAssets().getStockBySymbol(notification.getNotificationTarget()).getCurrentMarketPrice());
                     if(price >=
                             user.getAssets().getStockBySymbol(notification.getNotificationTarget()).getQuantityOwned() *
                                 user.getAssets().getStockBySymbol(notification.getNotificationTarget()).getCurrentMarketPrice()
@@ -303,9 +298,6 @@ public class UpdateService {
                     }
                 }
                 case index -> {
-                    //System.out.println("index: " + notification.getNotificationTarget());
-                    //System.out.println(user.getAssets().getIndexBySymbol(notification.getNotificationTarget()).getQuantityOwned()
-                    //        * user.getAssets().getIndexBySymbol(notification.getNotificationTarget()).getCurrentMarketPrice());
                     if(price >=
                             user.getAssets().getIndexBySymbol(notification.getNotificationTarget()).getQuantityOwned() *
                                     user.getAssets().getIndexBySymbol(notification.getNotificationTarget()).getCurrentMarketPrice()
@@ -314,9 +306,6 @@ public class UpdateService {
                     }
                 }
                 case crypto -> {
-                    //System.out.println("crypto: " + notification.getNotificationTarget());
-                    //System.out.println(user.getAssets().getCryptoBySymbol(notification.getNotificationTarget()).getQuantityOwned() *
-                    //        user.getAssets().getCryptoBySymbol(notification.getNotificationTarget()).getCurrentMarketPrice());
                     if(price >=
                             user.getAssets().getCryptoBySymbol(notification.getNotificationTarget()).getQuantityOwned() *
                                     user.getAssets().getCryptoBySymbol(notification.getNotificationTarget()).getCurrentMarketPrice()
@@ -325,9 +314,6 @@ public class UpdateService {
                     }
                 }
                 case commodity -> {
-                    //System.out.println("commodity " + notification.getNotificationTarget());
-                    //System.out.println(user.getAssets().getCommodityByName(notification.getNotificationTarget()).getQuantityOwned() *
-                    //        user.getAssets().getCommodityByName(notification.getNotificationTarget()).getCurrentMarketPrice());
                     if(price >=
                             user.getAssets().getCommodityByName(notification.getNotificationTarget()).getQuantityOwned() *
                                     user.getAssets().getCommodityByName(notification.getNotificationTarget()).getCurrentMarketPrice()

@@ -17,7 +17,8 @@ public class InsertIntoStock {
     public void insertStock(Stock stock) throws SQLException {
         String sql =
                 "INSERT INTO `" + databaseName + """
-                    `.stock(symbol, stock_name, currency, currency_symbol, exchange_name, description)
+                    `.stock(symbol, stock_name, currency, currency_symbol, 
+                        exchange_name, description)
                     VALUES(?,?,?,?,?,?,?,?,?);""";
         PreparedStatement statement = connection.prepareStatement(sql);
         statement.setString(1,stock.getSymbol());

@@ -1,10 +1,6 @@
 package com.diplomna.api;
 
 
-import com.diplomna.api.alphavantage.AlphaVantageAPI;
-import com.diplomna.api.stock.ParseStock;
-import com.mashape.unirest.http.exceptions.UnirestException;
-
 public class TestAPI {
     static public void main(String []args){
         /*

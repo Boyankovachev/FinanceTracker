@@ -1,7 +1,10 @@
 package com.diplomna.database.delete;
 
 import com.diplomna.database.delete.sub.*;
+import com.diplomna.restapi.service.BaseService;
 import com.diplomna.users.sub.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -13,15 +16,22 @@ public class DeleteFromDb {
     private String user;
     private String password;
     public String databaseName;
+    private final Logger logger;
     public DeleteFromDb(String databaseName){
         user = "root";
         password = "1234";
-        this.connString = "jdbc:mysql://localhost:3306/?user=" + user + "&password=" + password;
         this.databaseName = databaseName;
+        this.logger = LoggerFactory.getLogger(DeleteFromDb.class);
+        this.connString = "jdbc:mysql://localhost:3306/?user="
+                + user + "&password=" + password;
         try {
             this.con = DriverManager.getConnection(connString);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+            String errorMessage = "Database connection failed in" +
+                    " DeleteFromDB class. Message: \n"
+                    + throwables.getMessage();
+            logger.error(errorMessage);
         }
     }
 

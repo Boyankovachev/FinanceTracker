@@ -2,26 +2,53 @@ package com.diplomna.api.stock;
 
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.JsonNode;
+import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class ParseStock {
+public class YahooFinanceAPI {
+
+    final private String rapidapiKey;
+    final private String rapidapiHost;
+    final private String rapidapiKeyValue;
+    final private String rapidapiHostValue;
+
     private HttpResponse<JsonNode> stock;
     private final Logger logger;
-    public ParseStock() {
-        logger= LoggerFactory.getLogger(ParseStock.class);
+
+    public YahooFinanceAPI() {
+        rapidapiKey = "x-rapidapi-key";
+        rapidapiHost = "x-rapidapi-host";
+        rapidapiKeyValue = "7d138e1390mshe8742377115d21fp1dd201jsnb3b741a37493";
+        rapidapiHostValue = "apidojo-yahoo-finance-v1.p.rapidapi.com";
+
+        logger= LoggerFactory.getLogger(YahooFinanceAPI.class);
     }
-    public ParseStock(String symbol) throws UnirestException {
-        GetStockFromAPI stockGetter = new GetStockFromAPI();
-        stock = stockGetter.getStockBySymbolAsJSON(symbol);
-        logger= LoggerFactory.getLogger(ParseStock.class);
+    public YahooFinanceAPI(String symbol) throws UnirestException {
+
+        rapidapiKey = "x-rapidapi-key";
+        rapidapiHost = "x-rapidapi-host";
+        rapidapiKeyValue = "7d138e1390mshe8742377115d21fp1dd201jsnb3b741a37493";
+        rapidapiHostValue = "apidojo-yahoo-finance-v1.p.rapidapi.com";
+
+        //return HttpResponse<JsonNode> selected by stock symbol
+        //GET stock/get-detail
+        //YahooFinanceAPI (RapidAPI)
+        stock = Unirest.get("https://apidojo-yahoo-finance-v1.p.rapidapi.com/stock/get-detail?symbol=" + symbol)
+                .header(rapidapiKey, rapidapiKeyValue)
+                .header(rapidapiHost, rapidapiHostValue)
+                .asJson();
+
+        logger= LoggerFactory.getLogger(YahooFinanceAPI.class);
     }
 
     public void setStockBySymbol(String symbol) throws UnirestException {
-        GetStockFromAPI stockGetter = new GetStockFromAPI();
-        this.stock = stockGetter.getStockBySymbolAsJSON(symbol);
+        this.stock = Unirest.get("https://apidojo-yahoo-finance-v1.p.rapidapi.com/stock/get-detail?symbol=" + symbol)
+                .header(rapidapiKey, rapidapiKeyValue)
+                .header(rapidapiHost, rapidapiHostValue)
+                .asJson();
     }
 
     public double getRawCurrentPrice(){
@@ -44,7 +71,6 @@ public class ParseStock {
         }
         else {
             logFail();
-            //EXCEPTION;
             return null;
         }
     }
@@ -107,7 +133,6 @@ public class ParseStock {
         }
         else {
             logFail();
-            //EXCEPTION;
             return null;
         }
     }

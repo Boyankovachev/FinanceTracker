@@ -4,11 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+@SuppressWarnings("BusyWait")
 @Component
 public class UpdateRunner implements CommandLineRunner {
 
     @Autowired
-    private UpdateService updateService;
+    private final UpdateService updateService;
 
     public UpdateRunner(){
         updateService = new UpdateService();
@@ -16,6 +17,24 @@ public class UpdateRunner implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+
+        /*
+        while (true) {
+            //update all data from API
+            updateService.updateAllAssets();
+            //check notification status with the new data
+            updateService.sendNotifications();
+            try {
+                //sleep for 1 second
+                Thread.sleep(1000);
+            }
+            catch (InterruptedException e){
+                //shouldn't get in here
+                e.printStackTrace();
+            }
+        }
+
+         */
 
         /*
         //free api limitations - 500 requests per month (YahooFinance free subscription sucks)
@@ -26,20 +45,7 @@ public class UpdateRunner implements CommandLineRunner {
         реално няма да може да се обновява цената толкова пъти месечно,
         но примаме че сървъра няма да си стои пуснат постоянно!
          */
-        /*
-        while (true) {
-            updateService.updateAllAssets();
-            updateService.sendNotifications();
-            try {
-                Thread.sleep(5356800);
-            }
-            catch (InterruptedException e){
-                //shouldn't get in here
-                e.printStackTrace();
-            }
 
-        }
-        */
         System.out.println("in update thread");
 
     }
