@@ -3,17 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <script type="application/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script type="application/javascript" src = "/js/confirm2fa.js"></script>
 </head>
 <body>
     <form action = "/" method="get">
         <button type="submit">Back</button>
     </form>
     <p>Enter the 6 digit code from the email you received</p><br>
-    <input type="text" id="code" placeholder="6 digit code">
-    <button id="confirm">Confirm</button>
-
+    <form action = "/confirm-login" method="post">
+        <input type="text" placeholder="6 digit code" name="code">
+        <button type="submit">Confirm</button>
+    </form>
     <div id="error-div"></div>
 </body>
 </html>

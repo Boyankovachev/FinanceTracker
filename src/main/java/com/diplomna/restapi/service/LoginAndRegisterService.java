@@ -21,7 +21,6 @@ public class LoginAndRegisterService {
     private EmailService emailService;
 
     private String authenticateCode;
-    private User user;
 
     private final Logger logger;
     public LoginAndRegisterService(){
@@ -105,11 +104,10 @@ public class LoginAndRegisterService {
 
     public void setAuthentication(User user){
         /*
-            generate 2fk key
+            generate 2fk random key
             send authentication to user
          */
         this.authenticateCode = generateKey();
-        this.user = user;
         emailService.sendAuthenticationKeyEmail(authenticateCode, user.getEmail());
     }
     private String generateKey(){
@@ -126,10 +124,5 @@ public class LoginAndRegisterService {
             authenticateCode = null;
             return false;
         }
-    }
-    public User getUser() {
-        User temp = this.user;
-        this.user = null;
-        return temp;
     }
 }

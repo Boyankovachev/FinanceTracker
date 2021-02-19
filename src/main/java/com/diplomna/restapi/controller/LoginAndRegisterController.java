@@ -21,14 +21,16 @@ public class LoginAndRegisterController {
     @Autowired
     private final LoginAndRegisterService loginAndRegisterService;
 
+    private User user;
+
     public LoginAndRegisterController(){
         loginAndRegisterService = new LoginAndRegisterService();
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String getLogin(@ModelAttribute("loginstatus") String loginStatus, Model model){
-        if(loginStatus.equals("login failed")){
-            model.addAttribute("message", "Invalid username or password");
+        if(loginStatus!=null){
+            model.addAttribute("message", loginStatus);
         }
         return "login";
     }
@@ -42,42 +44,35 @@ public class LoginAndRegisterController {
             User user = loginAndRegisterService.getUserByName(inputUsername);
             attributes.addFlashAttribute("user", user);
             if(user.getIs2FactorAuthenticationRequired()){
+                this.user = user;
                 return new RedirectView("confirm-login");
             }
             return new RedirectView("user");
         }
         else {
-            attributes.addFlashAttribute("loginstatus", "login failed");
+            attributes.addFlashAttribute("loginstatus", "Invalid username or password");
             return new RedirectView("login");
         }
     }
 
     @RequestMapping(value = "/confirm-login", method = RequestMethod.GET)
-    public String confirmLogin(@ModelAttribute("user") User user){
-        if(user.getUserName() == null || user.getEmail() == null){
-            return "redirect:/";
-        }
-        loginAndRegisterService.setAuthentication(user);
+    public String confirmLogin(){
+        loginAndRegisterService.setAuthentication(this.user);
         return "confirm2fa";
     }
     @RequestMapping(value = "/confirm-login", method = RequestMethod.POST)
-    public ResponseEntity<Object> confirmLogin(@RequestBody String jsonString, RedirectAttributes attributes){
-        JSONObject jsonObject = new JSONObject(jsonString);
-        if(loginAndRegisterService.checkAuthentication(jsonObject.getString("code"))){
-            HashMap<String, Object> responseMap = new HashMap<>();
-            responseMap.put("response", "success");
-            return new ResponseEntity<Object>(responseMap, HttpStatus.OK);
+    public RedirectView confirmLogin(@RequestBody String input, RedirectAttributes attributes){
+
+        if(loginAndRegisterService.checkAuthentication(input.split("=")[1])){
+            attributes.addFlashAttribute("user", user);
+            this.user = null;
+            return new RedirectView("user");
         }
         else {
-            HashMap<String, String> responseMap = new HashMap<>();
-            responseMap.put("response", "Wrong code, you will be redirected to reLogin in a few seconds!");
-            return new ResponseEntity<Object>(responseMap, HttpStatus.OK);
+            this.user = null;
+            attributes.addFlashAttribute("loginstatus", "Wrong code! Try again.");
+            return new RedirectView("login");
         }
-    }
-    @RequestMapping(value = "/redirect-to-user", method = RequestMethod.GET)
-    public RedirectView redirectToUser(RedirectAttributes attributes){
-        attributes.addFlashAttribute("user", loginAndRegisterService.getUser());
-        return new RedirectView("user");
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.GET)
