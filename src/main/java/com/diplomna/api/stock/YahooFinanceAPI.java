@@ -9,15 +9,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 
 public class YahooFinanceAPI {
 
-    @Value("${rapidapiKey}")
     private String rapidapiKey;
-    @Value("${rapidapiHost}")
     private String rapidapiHost;
-    @Value("${rapidapiValue}")
     private String rapidapiKeyValue;
     private String rapidapiHostValue;
 
@@ -26,11 +24,16 @@ public class YahooFinanceAPI {
 
     public YahooFinanceAPI() {
         rapidapiHostValue = "apidojo-yahoo-finance-v1.p.rapidapi.com";
-
+        rapidapiKey = "x-rapidapi-key";
+        rapidapiHost = "x-rapidapi-host";
+        rapidapiKeyValue = "7d138e1390mshe8742377115d21fp1dd201jsnb3b741a37493";
         logger= LoggerFactory.getLogger(YahooFinanceAPI.class);
     }
     public YahooFinanceAPI(String symbol) throws UnirestException {
         rapidapiHostValue = "apidojo-yahoo-finance-v1.p.rapidapi.com";
+        rapidapiKey = "x-rapidapi-key";
+        rapidapiHost = "x-rapidapi-host";
+        rapidapiKeyValue = "7d138e1390mshe8742377115d21fp1dd201jsnb3b741a37493";
 
         //return HttpResponse<JsonNode> selected by stock symbol
         //GET stock/get-detail

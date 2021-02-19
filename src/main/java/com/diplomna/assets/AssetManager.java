@@ -181,7 +181,7 @@ public class AssetManager {
 
     public boolean isAssetInList(String assetType, String asset){
         /*
-            returns true if user has specific investment
+            returns true if investment is in object
             assetType - investment type (stock,index,crypto,commodity)
             asset - name or symbol of investment
          */
@@ -309,6 +309,23 @@ public class AssetManager {
         //return value of whole portfolio
         return calculateAllStocksWorth() + calculateAllIndexWorth() + calculateAllCryptoWorth() +
                 calculateAllCommodityWorth() + calculateAllPassiveResourceWorth();
+    }
+
+    public void updateStocks(List<Stock> updatedStocks){
+        stocks.clear();
+        stocks.addAll(updatedStocks);
+    }
+    public void updateIndex(List<Index> updatedIndexList){
+        indexFunds.clear();
+        indexFunds.addAll(updatedIndexList);
+    }
+    public void updateCrypto(List<Crypto> updatedCryptoList){
+        cryptoCurrencies.clear();
+        cryptoCurrencies.addAll(updatedCryptoList);
+    }
+    public void updateCommodities(List<Commodities> updatedCommodityList){
+        commodities.clear();
+        commodities.addAll(updatedCommodityList);
     }
 
     public void printAssets(){

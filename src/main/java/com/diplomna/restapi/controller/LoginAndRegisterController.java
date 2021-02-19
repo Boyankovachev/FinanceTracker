@@ -1,6 +1,7 @@
 package com.diplomna.restapi.controller;
 
 import com.diplomna.restapi.service.LoginAndRegisterService;
+import com.diplomna.singleton.CurrentData;
 import com.diplomna.users.sub.User;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -109,5 +110,26 @@ public class LoginAndRegisterController {
         return "home";
     }
 
+
+
+    @RequestMapping(value="/test", method = RequestMethod.GET)
+    public String test(){
+        System.out.println("in test 1 get");
+        CurrentData currentData = CurrentData.getInstance();
+        //currentData.printAssetManager();
+        return "test";
+    }
+    @RequestMapping(value="/test", method = RequestMethod.POST)
+    public RedirectView test(/*@RequestBody String string, */RedirectAttributes attributes){
+        System.out.println("in test 1 post");
+        //attributes.addFlashAttribute("string", "neshto");
+        return new RedirectView("test2");
+    }
+    @RequestMapping(value="/test2", method = RequestMethod.GET)
+    public String test2(/*@ModelAttribute("string") String string, Model model*/){
+        System.out.println("in test 2 get");
+        //model.addAttribute("string", string);
+        return "test2";
+    }
 
 }

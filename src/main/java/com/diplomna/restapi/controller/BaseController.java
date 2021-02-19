@@ -216,7 +216,6 @@ public class BaseController {
                     }
                 default:
                     //tuka exception i logvane (ne trqbva da vliza tuka)
-                    // tva e za da izbegna shibanata greska
                     model.addAttribute("stock", user.getAssets().getAllStocks());
                     model.addAttribute("passive_resource", user.getAssets().getAllPassiveResources());
                     model.addAttribute("index", user.getAssets().getAllIndex());

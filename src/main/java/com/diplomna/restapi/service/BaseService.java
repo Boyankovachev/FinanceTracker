@@ -11,6 +11,7 @@ import com.diplomna.database.read.ReadFromDb;
 import com.diplomna.date.DatеManager;
 import com.diplomna.exceptions.AssetNotFoundException;
 import com.diplomna.pojo.GraphInfo;
+import com.diplomna.singleton.CurrentData;
 import com.diplomna.users.sub.AssetType;
 import com.diplomna.users.sub.Notification;
 import com.diplomna.users.sub.User;
@@ -30,9 +31,11 @@ public class BaseService {
 
     private final Logger logger;
     private String databaseName;
+    CurrentData currentData;
     public BaseService(){
         this.logger = LoggerFactory.getLogger(BaseService.class);
         databaseName = "test";
+        currentData = CurrentData.getInstance();
     }
 
     public User setupUser(User user){
@@ -72,15 +75,18 @@ public class BaseService {
         List<Stock> stockPurchases = readFromDb.readStockPurchasesByUserId(userId);
         List<Stock> stockBase = new ArrayList<>();
         List<String> ownedStocksSymbols = new ArrayList<>();
+
         for(Stock stock: stockPurchases){
             // Add all stock symbols the user owns
+            // to a collection of strings
             if(!ownedStocksSymbols.contains(stock.getSymbol())){
                 ownedStocksSymbols.add(stock.getSymbol());
             }
         }
         for(String symbol: ownedStocksSymbols){
-            // read stocks from DB
-            stockBase.add(readFromDb.readStockBySymbol(symbol));
+            // iterate through the collection of strings
+            // and add each stock to another collection
+            stockBase.add(currentData.getAssetManager().getStockBySymbol(symbol));
         }
 
         int i,j;
@@ -119,12 +125,16 @@ public class BaseService {
         List<String> ownedIndexSymbols = new ArrayList<>();
 
         for(Index index: indexPurchases){
+            // Add all index symbols the user owns
+            // to a collection of strings
             if(!ownedIndexSymbols.contains(index.getSymbol())){
                 ownedIndexSymbols.add(index.getSymbol());
             }
         }
         for(String symbol: ownedIndexSymbols){
-            indexBase.add(readFromDb.readIndexBySymbol(symbol));
+            // iterate through the collection of strings
+            // and add each index to another collection
+            indexBase.add(currentData.getAssetManager().getIndexBySymbol(symbol));
         }
 
         int i,j;
@@ -151,14 +161,20 @@ public class BaseService {
         List<Crypto> cryptoPurchases = readFromDb.readCryptoPurchaseByUserId(userId);
         List<Crypto> cryptoBase = new ArrayList<>();
         List<String> ownedCryptoSymbols = new ArrayList<>();
+
         for(Crypto crypto: cryptoPurchases){
+            // Add all crypto symbols the user owns
+            // to a collection of strings
             if(!ownedCryptoSymbols.contains(crypto.getSymbol())){
                 ownedCryptoSymbols.add(crypto.getSymbol());
             }
         }
         for(String symbol: ownedCryptoSymbols){
-            cryptoBase.add(readFromDb.readCryptoBySymbol(symbol));
+            // iterate through the collection of strings
+            // and add each index to another collection
+            cryptoBase.add(currentData.getAssetManager().getCryptoBySymbol(symbol));
         }
+
         int i,j;
         for(i=0; i<cryptoBase.size(); i++){
             for(j=0; j<cryptoPurchases.size(); j++){
@@ -182,13 +198,18 @@ public class BaseService {
         List<Commodities> commodityPurchases = readFromDb.readCommodityPurchaseInfoByUserId(userId);
         List<Commodities> commodityBase = new ArrayList<>();
         List<String> ownedCommodityNames = new ArrayList<>();
+
         for(Commodities commodity: commodityPurchases){
+            // Add all commodity names the user owns
+            // to a collection of strings
             if(!ownedCommodityNames.contains(commodity.getName())){
                 ownedCommodityNames.add(commodity.getName());
             }
         }
         for(String name: ownedCommodityNames){
-            commodityBase.add(readFromDb.readCommodityByCommodityName(name));
+            // iterate through the collection of strings
+            // and add each commodity to another collection
+            commodityBase.add(currentData.getAssetManager().getCommodityByName(name));
         }
 
         int i,j;
@@ -211,24 +232,12 @@ public class BaseService {
             jsonObject contains passive asset data
             return response (for client)
          */
-
-
-        /* MAHNI TOVA POSLE (i oprai)
-        1. proveri dali go ima veche
-                -ako go ima returnvash na usera che veche ima takuv
-        2. proveri dali stoinostite sa pravilni
-                -ako ne sa pravilni vrushtash na usera che e vuvel nevalidni stoinosti
-        3. dobavi v ram
-                -ako datata ne e pravilno retunvash che e greshna datata
-        4. dobavi v database
-         */
-
-        //1 - raboti
+        //check if user owns passive resource with same name
         if(user.getAssets().isAssetInList("passive-resource", jsonObject.getString("name"))){
             return "Passive resource with such a name already exists in your portfolio!";
         }
 
-        //2 - raboti
+        //check user input for validity
         try {
             if (jsonObject.getDouble("price") <= 0) {
                 return "Invalid price";
@@ -240,29 +249,29 @@ public class BaseService {
         if(!jsonObject.getString("date").equals("")) {
             try {
                 DatеManager datеManager = new DatеManager();
-                datеManager.setDateFromString(jsonObject.getString("date"));  //add date to purchase info
+                datеManager.setDateFromString(jsonObject.getString("date"));
                 purchaseInfo.setPurchaseDate(datеManager);
             } catch (ParseException e) { //if date format is wrong
                 return "Invalid date format. Please use dd.mm.yyyy example - 14.5.2020";
             }
         }
 
-        //3 - raboti
-        PassiveResource newResource = new PassiveResource();                           //create new object
-        newResource.setName(jsonObject.getString("name"));                         //add name
-        purchaseInfo.setPrice(jsonObject.getDouble("price"));                      //add price to purchase info
-        newResource.setPurchaseInfo(purchaseInfo);                                      //add purchase info
+        //create and add object to user object
+        PassiveResource newResource = new PassiveResource();
+        newResource.setName(jsonObject.getString("name"));
+        purchaseInfo.setPrice(jsonObject.getDouble("price"));
+        newResource.setPurchaseInfo(purchaseInfo);
         if(!jsonObject.getString("description").equals(""))
-            newResource.setDescription(jsonObject.getString("description"));        //set description if provided
+            newResource.setDescription(jsonObject.getString("description"));
         if(!jsonObject.getString("currency").equals(""))
-            newResource.setCurrency(jsonObject.getString("currency"));              //add currency if provided
+            newResource.setCurrency(jsonObject.getString("currency"));
         if(!jsonObject.getString("currencySymbol").equals(""))
-            newResource.setCurrencySymbol(jsonObject.getString("currencySymbol"));  //add currency symbol if provided
-        newResource.setCurrentMarketPrice(jsonObject.getDouble("price"));           //add current market price equal to purchase price
+            newResource.setCurrencySymbol(jsonObject.getString("currencySymbol"));
+        newResource.setCurrentMarketPrice(jsonObject.getDouble("price"));
 
-        user.getAssets().addPassiveResource(newResource);                                //add new object to user
+        user.getAssets().addPassiveResource(newResource);
 
-        //4 - raboti
+        //add to database
         InsertIntoDb insertIntoDb = new InsertIntoDb("test");
         insertIntoDb.insertPassiveResource(user.getUserId(), newResource);
 
@@ -274,118 +283,17 @@ public class BaseService {
             add active asset to user
             jsonObject contains asset data
             return response (for client)
+            if asset is not present:
+                add to CurrentData singleton
+                and to DB
          */
-
-        /*
-        v zavisimost ot assettype:
-        1. proveri dali tozi user go ima veche
-            -ako go ima returnvash na usera che veche ima takuv
-        2. proveri dali veche go ima v bazata danni          -tva go praa posle
-            -ako da zardi go ot bazata danni
-        3. proveri dali APIa za suotvetniq resurs go namira
-            -ako ne vurni greshka na useraa
-        4. proveri dali stoinostite sa pravilni
-                -ako ne sa pravilni vrushtash na usera che e vuvel nevalidni stoinosti
-        5. dobavi v ram
-        6. dobavi v baza danni
-         */
-
-        //1 - raboti
-        //Check if user already owns such a resource
+        //Check if user already has that investment
         if(user.getAssets().isAssetInList(jsonObject.getString("assetType"), jsonObject.getString("symbol"))){
-            return "Passive resource with such a name already exists in your portfolio!";
+            return "Investment already in portfolio!";
         }
 
-        ReadFromDb readFromDb = new ReadFromDb("test");
-        InsertIntoDb insert = new InsertIntoDb("test");
-
-        //3
-        Stock stock = new Stock();
-        Index index = new Index();
-        Crypto crypto = new Crypto();
-        Commodities commodity = new Commodities();
-        AlphaVantageAPI alphaVantageAPI = new AlphaVantageAPI();
-        switch (jsonObject.getString("assetType")){
-            case "stock":
-                //check if in DB
-                Stock tempStock = readFromDb.readStockBySymbol(jsonObject.getString("symbol"));
-                if(tempStock == null) {
-                    System.out.println("load from stock not from DB not from api");
-                }
-                try {
-                    YahooFinanceAPI yahooFinanceAPI = new YahooFinanceAPI(jsonObject.getString("symbol"));
-                    stock.setName(yahooFinanceAPI.getName());
-                    stock.setSymbol(yahooFinanceAPI.getSymbol()); // == stock.setSymbol(jsonObject.getString("symbol");
-                    stock.setDescription(yahooFinanceAPI.getDescription());
-                    stock.setCurrentMarketPrice(yahooFinanceAPI.getRawCurrentPrice());
-                    stock.setCurrency(yahooFinanceAPI.getCurrency());
-                    stock.setCurrencySymbol(yahooFinanceAPI.getCurrencySymbol());
-                    stock.setMarketOpen(yahooFinanceAPI.isMarketOpen());
-                    stock.setExchangeName(yahooFinanceAPI.getExchangeName());
-                    stock.setRecommendationKey(yahooFinanceAPI.getRecommendationKey());
-                    stock.setCurrentMarketPrice(yahooFinanceAPI.getRawCurrentPrice()); //latest changes
-                    stock.setMarketOpen(yahooFinanceAPI.isMarketOpen());               //latest changes
-                    stock.setRecommendationKey(yahooFinanceAPI.getRecommendationKey());//latest changes
-                } catch (UnirestException e) {
-                    String errorMessage = "YahooFinanceAPI fail for symbol " + jsonObject.getString("symbol");
-                    logger.error(errorMessage);
-                    return "Such a stock doesn't exist";
-                }
-                break;
-            case "index":
-                index.setSymbol(jsonObject.getString("symbol"));
-                try {
-                    alphaVantageAPI.setInitialIndex(jsonObject.getString("symbol"));
-                    HashMap<String, String> info = alphaVantageAPI.getInitialIndex();
-                    index.setCurrency(info.get("currency"));
-                    index.setName(info.get("name"));
-                    alphaVantageAPI.setIndex(jsonObject.getString("symbol"));                    //latest changes
-                    index.setCurrentMarketPrice(Double.parseDouble(alphaVantageAPI.getIndexPrice()));//latest changes
-                } catch (UnirestException e) {
-                    String errorMessage = "AlphaVantageAPI fail for index " + jsonObject.getString("symbol");
-                    logger.error(errorMessage);
-                    return "Index matchers not found!";
-                }
-                //information below not provided by available API
-                index.setDescription("description from api");
-                index.setExchangeName("exchange from api");
-                index.setCurrencySymbol("$");
-                index.setMarketOpen(true);  //latest changes
-                break;
-            case "crypto":
-                /*
-                Get information from API and turn into object
-                if not found return to user
-                 */
-                crypto.setSymbol(jsonObject.getString("symbol"));
-                try {
-                    alphaVantageAPI.setCrypto(jsonObject.getString("symbol"));
-                    HashMap<String, String> info = alphaVantageAPI.getCrypto();
-                    crypto.setName(info.get("name"));
-                    crypto.setCurrency(info.get("currency"));
-                    crypto.setCurrencySymbol(info.get("currencySymbol"));
-                    crypto.setCurrentMarketPrice(Double.parseDouble(info.get("price")));  //latest changes
-                } catch (UnirestException e) {
-                    String errorMessage = "AlphaVantageAPI fail for crypto " + jsonObject.getString("symbol");
-                    logger.error(errorMessage);
-                    e.printStackTrace();
-                }
-                //information below not provided by available API
-                crypto.setDescription("description from api");
-                break;
-            case "commodity":
-                // Free suitable API not found
-                // Simulate data from API
-                commodity.setName(jsonObject.getString("symbol"));
-                commodity.setDescription("description from api");
-                commodity.setCurrency("Dollar");
-                commodity.setCurrencySymbol("$");
-                commodity.setExchangeName("exchange from API");
-                commodity.setCurrentMarketPrice(0);
-                break;
-        }
-
-        //4 - raboti
+        //Validate user input and
+        //create the initial purchase info object
         PurchaseInfo purchaseInfo = new PurchaseInfo();
         try {
             if (jsonObject.getDouble("price") <= 0) {
@@ -410,64 +318,156 @@ public class BaseService {
             }
         }
 
-        //5 + 6
+
+        //Check if resource exists in the program
+        if(currentData.getAssetManager().isAssetInList(jsonObject.getString("assetType"), jsonObject.getString("symbol"))){
+            //If resource exists just add it to user
+            addAssetToUser(jsonObject, user, purchaseInfo);
+        }
+        else{
+            //If resource doesn't exist
+            //Create object from API
+            //Add to DB and RAM
+            //Last- add to user
+            AlphaVantageAPI alphaVantageAPI = new AlphaVantageAPI();
+            InsertIntoDb insert = new InsertIntoDb("test");
+            switch (jsonObject.getString("assetType")){
+                case "stock":
+                    try {
+                        Stock stock = new Stock();
+                        YahooFinanceAPI yahooFinanceAPI = new YahooFinanceAPI(jsonObject.getString("symbol"));
+                        stock.setName(yahooFinanceAPI.getName());
+                        stock.setSymbol(yahooFinanceAPI.getSymbol()); // == stock.setSymbol(jsonObject.getString("symbol");
+                        stock.setDescription(yahooFinanceAPI.getDescription());
+                        stock.setCurrentMarketPrice(yahooFinanceAPI.getRawCurrentPrice());
+                        stock.setCurrency(yahooFinanceAPI.getCurrency());
+                        stock.setCurrencySymbol(yahooFinanceAPI.getCurrencySymbol());
+                        stock.setMarketOpen(yahooFinanceAPI.isMarketOpen());
+                        stock.setExchangeName(yahooFinanceAPI.getExchangeName());
+                        stock.setRecommendationKey(yahooFinanceAPI.getRecommendationKey());
+                        stock.setCurrentMarketPrice(yahooFinanceAPI.getRawCurrentPrice());
+                        stock.setMarketOpen(yahooFinanceAPI.isMarketOpen());
+                        stock.setRecommendationKey(yahooFinanceAPI.getRecommendationKey());
+
+                        insert.insertStock(stock); //Add to DB
+                        currentData.getAssetManager().addStock(stock); //Add to RAM
+                    } catch (UnirestException e) {
+                        String errorMessage = "YahooFinanceAPI fail for symbol " + jsonObject.getString("symbol");
+                        logger.error(errorMessage);
+                        return "Such a stock doesn't exist";
+                    }
+                    break;
+                case "index":
+                    try {
+                        Index index = new Index();
+                        index.setSymbol(jsonObject.getString("symbol"));
+                        alphaVantageAPI.setInitialIndex(jsonObject.getString("symbol"));
+                        HashMap<String, String> info = alphaVantageAPI.getInitialIndex();
+                        index.setCurrency(info.get("currency"));
+                        index.setName(info.get("name"));
+                        alphaVantageAPI.setIndex(jsonObject.getString("symbol"));
+                        index.setCurrentMarketPrice(Double.parseDouble(alphaVantageAPI.getIndexPrice()));
+
+                        //information below not provided by available API
+                        index.setDescription("description from api");
+                        index.setExchangeName("exchange from api");
+                        index.setCurrencySymbol("$");
+                        index.setMarketOpen(true);
+
+                        insert.insertIndex(index); //Add to DB
+                        currentData.getAssetManager().addIndex(index); //Add to RAM
+                    } catch (UnirestException e) {
+                        String errorMessage = "AlphaVantageAPI fail for index " + jsonObject.getString("symbol");
+                        logger.error(errorMessage);
+                        return "Index matchers not found!";
+                    }
+                    break;
+                case "crypto":
+                    try {
+                        Crypto crypto = new Crypto();
+                        crypto.setSymbol(jsonObject.getString("symbol"));
+                        alphaVantageAPI.setCrypto(jsonObject.getString("symbol"));
+                        HashMap<String, String> info = alphaVantageAPI.getCrypto();
+                        crypto.setName(info.get("name"));
+                        crypto.setCurrency(info.get("currency"));
+                        crypto.setCurrencySymbol(info.get("currencySymbol"));
+                        crypto.setCurrentMarketPrice(Double.parseDouble(info.get("price")));
+
+                        //information below not provided by available API
+                        crypto.setDescription("description from api");
+
+                        insert.insertCrypto(crypto); //Add to DB
+                        currentData.getAssetManager().addCrypto(crypto); //Add to RAM
+                    } catch (UnirestException e) {
+                        String errorMessage = "AlphaVantageAPI fail for crypto " + jsonObject.getString("symbol");
+                        logger.error(errorMessage);
+                        e.printStackTrace();
+                    }
+                    break;
+                case "commodity":
+                    Commodities commodity = new Commodities();
+                    // Free suitable API not found
+                    // Simulate data from API
+                    commodity.setName(jsonObject.getString("symbol"));
+                    commodity.setDescription("description from api");
+                    commodity.setCurrency("Dollar");
+                    commodity.setCurrencySymbol("$");
+                    commodity.setExchangeName("exchange from API");
+                    commodity.setCurrentMarketPrice(0);
+
+                    insert.insertCommodity(commodity);
+                    currentData.getAssetManager().addCommodity(commodity);
+                    break;
+            }
+
+            addAssetToUser(jsonObject, user, purchaseInfo);
+        }
+        return "success";
+    }
+    private void addAssetToUser(JSONObject jsonObject, User user, PurchaseInfo purchaseInfo){
+        /*
+            Method adds asset to user object
+            Called in addAsset method
+         */
+        InsertIntoDb insert = new InsertIntoDb("test");
         switch (jsonObject.getString("assetType")){
             case "stock":
+                Stock stock = currentData.getAssetManager().getStockBySymbol(jsonObject.getString("symbol"));
                 stock.setAveragePurchasePrice(jsonObject.getDouble("price"));
                 stock.setQuantityOwned(jsonObject.getDouble("quantity"));
+                stock.calculatePercentChange();
                 stock.addPurchase(purchaseInfo);
-
-
                 user.getAssets().addStock(stock);
-                //check if already in DB, if yes - don't add. Do for all asset types!
-                Stock tempStock = readFromDb.readStockBySymbol(stock.getSymbol());
-                if(tempStock == null) {
-                    insert.insertStock(stock);
-                }
                 insert.insertStockPurchaseInfo(user.getUserId(), purchaseInfo);
                 break;
             case "index":
+                Index index = currentData.getAssetManager().getIndexBySymbol(jsonObject.getString("symbol"));
                 index.setAveragePurchasePrice(jsonObject.getDouble("price"));
                 index.setQuantityOwned(jsonObject.getDouble("quantity"));
+                index.calculatePercentChange();
                 index.addPurchase(purchaseInfo);
-
                 user.getAssets().addIndex(index);
-                //check if already in DB, if yes - don't add. Do for all asset types!
-                Index tempIndex = readFromDb.readIndexBySymbol(index.getSymbol());
-                if (tempIndex == null){
-                    insert.insertIndex(index);
-                }
                 insert.insertIndexPurchaseInfo(user.getUserId(), purchaseInfo);
                 break;
             case "crypto":
+                Crypto crypto = currentData.getAssetManager().getCryptoBySymbol(jsonObject.getString("symbol"));
                 crypto.setAveragePurchasePrice(jsonObject.getDouble("price"));
                 crypto.setQuantityOwned(jsonObject.getDouble("quantity"));
+                crypto.calculatePercentChange();
                 crypto.addPurchase(purchaseInfo);
-
                 user.getAssets().addCrypto(crypto);
-                //check if already in DB, if yes - don't add. Do for all asset types!
-                Crypto tempCrypto = readFromDb.readCryptoBySymbol(crypto.getSymbol());
-                if (tempCrypto == null){
-                    insert.insertCrypto(crypto);
-                }
                 insert.insertCryptoPurchaseInfo(user.getUserId(), purchaseInfo);
                 break;
             case "commodity":
+                Commodities commodity = currentData.getAssetManager().getCommodityByName(jsonObject.getString("symbol"));
                 commodity.setAveragePurchasePrice(jsonObject.getDouble("price"));
                 commodity.setQuantityOwned(jsonObject.getDouble("quantity"));
+                commodity.calculatePercentChange();
                 commodity.addPurchase(purchaseInfo);
-
                 user.getAssets().addCommodity(commodity);
-                //check if already in DB, if yes - don't add. Do for all asset types!
-                Commodities tempCommodity = readFromDb.readCommodityByCommodityName(commodity.getName());
-                if (tempCommodity == null){
-                    insert.insertCommodity(commodity);
-                }
                 insert.insertCommodityPurchaseInfo(user.getUserId(), purchaseInfo);
                 break;
         }
-
-        return "success";
     }
 
     public String change2FA(String input, User user){

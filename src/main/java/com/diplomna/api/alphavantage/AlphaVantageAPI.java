@@ -4,21 +4,16 @@ import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 
 public class AlphaVantageAPI {
 
-    @Value("${rapidapiKey}")
     private String rapidapiKey;
-    @Value("${rapidapiHost}")
     private String rapidapiHost;
-    @Value("${rapidapiValue}")
     private String rapidapiKeyValue;
     private String rapidapiHostValue;
 
@@ -26,6 +21,9 @@ public class AlphaVantageAPI {
 
     public AlphaVantageAPI(){
         rapidapiHostValue = "alpha-vantage.p.rapidapi.com";
+        rapidapiKey = "x-rapidapi-key";
+        rapidapiHost = "x-rapidapi-host";
+        rapidapiKeyValue = "7d138e1390mshe8742377115d21fp1dd201jsnb3b741a37493";
     }
 
     public void setIndex(String symbol) throws UnirestException {

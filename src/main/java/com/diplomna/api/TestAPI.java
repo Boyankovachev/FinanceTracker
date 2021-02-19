@@ -1,6 +1,8 @@
 package com.diplomna.api;
 
 
+import com.diplomna.api.alphavantage.AlphaVantageAPI;
+
 public class TestAPI {
     static public void main(String []args){
         /*
@@ -27,5 +29,6 @@ public class TestAPI {
         }
 
          */
+
     }
 }

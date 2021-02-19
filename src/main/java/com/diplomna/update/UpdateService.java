@@ -2,15 +2,18 @@ package com.diplomna.update;
 
 import com.diplomna.api.alphavantage.AlphaVantageAPI;
 import com.diplomna.api.stock.YahooFinanceAPI;
+import com.diplomna.assets.AssetManager;
 import com.diplomna.assets.finished.Commodities;
 import com.diplomna.assets.finished.Crypto;
 import com.diplomna.assets.finished.Index;
 import com.diplomna.assets.finished.Stock;
+import com.diplomna.assets.sub.Asset;
 import com.diplomna.database.delete.DeleteFromDb;
 import com.diplomna.database.insert.InsertIntoDb;
 import com.diplomna.database.read.ReadFromDb;
 import com.diplomna.email.EmailService;
 import com.diplomna.restapi.service.BaseService;
+import com.diplomna.singleton.CurrentData;
 import com.diplomna.users.UserManager;
 import com.diplomna.users.sub.AssetType;
 import com.diplomna.users.sub.Notification;
@@ -39,12 +42,49 @@ public class UpdateService {
     private final InsertIntoDb insertIntoDb;
     private final DeleteFromDb deleteFromDb;
 
+    private CurrentData currentData;
+
     public UpdateService(){
         this.logger = LoggerFactory.getLogger(BaseService.class);
         this.baseService = new BaseService();
         readFromDb = new ReadFromDb("test");
         insertIntoDb = new InsertIntoDb("test");
         deleteFromDb = new DeleteFromDb("test");
+        currentData = CurrentData.getInstance();
+    }
+
+    public AssetManager setupInitialAssetManager(){
+        /*
+            The function runs once on startup.
+            Reads all assets and returns AssetManager object
+            for the CurrentData singleton.
+         */
+        AssetManager assetManager = new AssetManager();
+
+        List<Stock> stocks = new ArrayList<>();
+        List<Index> indexList = new ArrayList<>();
+        List<Crypto> cryptos = new ArrayList<>();
+        List<Commodities> commodities = new ArrayList<>();
+        try {
+            stocks = readFromDb.readAllStocks();
+            indexList = readFromDb.readAllIndex();
+            cryptos = readFromDb.readAllCrypto();
+            commodities = readFromDb.readAllCommodities();
+
+            assetManager.addStocks(stocks);
+            assetManager.addIndexList(indexList);
+            assetManager.addCryptoList(cryptos);
+            assetManager.addCommodities(commodities);
+
+            return assetManager;
+        } catch (SQLException throwables) {
+            String errorMessage = "Read all assets from" +
+                    " DB failed in setupInitialAssetManager";
+            logger.error(errorMessage);
+            throwables.printStackTrace();
+        }
+        return null;
+
     }
 
     public void updateAllAssets(){
@@ -61,14 +101,7 @@ public class UpdateService {
         /*
             updates all stock data
          */
-        List<Stock> stocks = new ArrayList<>();
-        try {
-            stocks = readFromDb.readAllStocks();
-        } catch (SQLException throwables) {
-            String errorMessage = "Read all stocks from DB failed";
-            logger.error(errorMessage);
-            throwables.printStackTrace();
-        }
+        List<Stock> stocks = currentData.getAssetManager().getAllStocks();
 
         YahooFinanceAPI yahooFinanceAPI = new YahooFinanceAPI();
         int i;
@@ -85,7 +118,7 @@ public class UpdateService {
                 e.printStackTrace();
             }
         }
-
+        currentData.getAssetManager().updateStocks(stocks);
         for(Stock stock: stocks){
             try {
                 insertIntoDb.updateStockApiData(stock);
@@ -102,14 +135,7 @@ public class UpdateService {
         /*
             updates all stock data
          */
-        List<Index> indexList = new ArrayList<>();
-        try {
-            indexList = readFromDb.readAllIndex();
-        } catch (SQLException throwables) {
-            String errorMessage = "Read all index from DB failed";
-            logger.error(errorMessage);
-            throwables.printStackTrace();
-        }
+        List<Index> indexList = currentData.getAssetManager().getAllIndex();
 
         AlphaVantageAPI alphaVantageAPI = new AlphaVantageAPI();
         int i;
@@ -137,7 +163,7 @@ public class UpdateService {
                 e.printStackTrace();
             }
         }
-
+        currentData.getAssetManager().updateIndex(indexList);
         for(Index index: indexList){
             try {
                 insertIntoDb.updateIndexApiData(index);
@@ -153,14 +179,7 @@ public class UpdateService {
         /*
             updates all stock data
          */
-        List<Crypto> cryptos = new ArrayList<>();
-        try {
-            cryptos = readFromDb.readAllCrypto();
-        } catch (SQLException throwables) {
-            String errorMessage = "Read all crypto from DB failed";
-            logger.error(errorMessage);
-            throwables.printStackTrace();
-        }
+        List<Crypto> cryptos = currentData.getAssetManager().getCrypto();
 
         int i;
         for(i=0; i<cryptos.size(); i++){
@@ -184,7 +203,7 @@ public class UpdateService {
                 e.printStackTrace();
             }
         }
-
+        currentData.getAssetManager().updateCrypto(cryptos);
         for(Crypto crypto: cryptos){
             try {
                 insertIntoDb.updateCryptoApiData(crypto);
@@ -201,14 +220,7 @@ public class UpdateService {
         /*
             updates all stock data
          */
-        List<Commodities> commodities = new ArrayList<>();
-        try {
-            commodities = readFromDb.readAllCommodities();
-        } catch (SQLException throwables) {
-            String errorMessage = "Read all commodities from DB failed";
-            logger.error(errorMessage);
-            throwables.printStackTrace();
-        }
+        List<Commodities> commodities = currentData.getAssetManager().getCommodities();
 
         int i;
         for(i=0; i<commodities.size(); i++){
@@ -219,7 +231,7 @@ public class UpdateService {
             commodities.get(i).setCurrentMarketPrice(Math.random() * ((currentPrice+10) -
                     (currentPrice-10) + 1) + (currentPrice - 10));
         }
-
+        currentData.getAssetManager().updateCommodities(commodities);
         for(Commodities commodity: commodities){
             try {
                 insertIntoDb.updateCommodityApiData(commodity);

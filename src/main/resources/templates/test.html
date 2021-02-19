@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="application/javascript" th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js}"></script>
+    <script type="application/javascript" th:src = "@{/js/test.js}"></script>
+</head>
+<body>
+    <p>test</p>
+    <form id="form" action="/test" method="post">
+        <input id="name" type="text" placeholder="Enter Username">
+        <button id="submit">Submit</button>
+    </form>
+</body>
+</html>

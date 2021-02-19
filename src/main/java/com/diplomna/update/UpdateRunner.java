@@ -1,5 +1,8 @@
 package com.diplomna.update;
 
+import com.diplomna.assets.AssetManager;
+import com.diplomna.assets.sub.Asset;
+import com.diplomna.singleton.CurrentData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -18,6 +21,13 @@ public class UpdateRunner implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         /*
+            Initialize singleton class with data from Database
+            Done only once, on startup
+         */
+        AssetManager assetManager = updateService.setupInitialAssetManager();
+        CurrentData currentData = CurrentData.getInstance();
+        currentData.setAssetManager(assetManager);
+        /*
             update and notification thread
          */
         /*
@@ -28,6 +38,7 @@ public class UpdateRunner implements CommandLineRunner {
             updateService.sendNotifications();
             try {
                 //sleep for 1 second
+                //which is good enough update frequency
                 Thread.sleep(1000);
             }
             catch (InterruptedException e){
@@ -35,8 +46,8 @@ public class UpdateRunner implements CommandLineRunner {
                 e.printStackTrace();
             }
         }
-
          */
+
 
         /*
         //free api limitations - 500 requests per month (YahooFinance free subscription sucks)
