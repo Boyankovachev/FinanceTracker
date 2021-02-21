@@ -12,6 +12,8 @@ import com.diplomna.database.delete.DeleteFromDb;
 import com.diplomna.database.insert.InsertIntoDb;
 import com.diplomna.database.read.ReadFromDb;
 import com.diplomna.email.EmailService;
+import com.diplomna.graph.GraphInfoHolder;
+import com.diplomna.graph.GraphService;
 import com.diplomna.restapi.service.BaseService;
 import com.diplomna.singleton.CurrentData;
 import com.diplomna.users.UserManager;
@@ -20,6 +22,7 @@ import com.diplomna.users.sub.Notification;
 import com.diplomna.users.sub.User;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import org.json.JSONException;
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -243,7 +246,6 @@ public class UpdateService {
         }
     }
 
-
     public void sendNotifications(){
         /*
             check all users every notification
@@ -367,6 +369,78 @@ public class UpdateService {
         //catch exceptions and log errors
         emailService.sendNotificationEmail(userEmail, notificationName, notificationPrice);
         return true;
+    }
+
+    public void updateHistoricalData(){
+
+        GraphService graphService = new GraphService();
+
+        //Update stock historical data
+        for(GraphInfoHolder graphInfoHolder: currentData.getGraphInfoManager().getStockInfoList()){
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("type", "Stock");
+            jsonObject.put("symbol", graphInfoHolder.getAssetSymbol());
+            if(!graphInfoHolder.isDailyEmpty()){
+                jsonObject.put("period", "daily");
+                graphInfoHolder.updateDaily(graphService.getChartData(jsonObject));
+                jsonObject.remove("period");
+            }
+            if(!graphInfoHolder.isWeeklyEmpty()){
+                jsonObject.put("period", "weekly");
+                graphInfoHolder.updateWeekly(graphService.getChartData(jsonObject));
+                jsonObject.remove("period");
+            }
+            if(!graphInfoHolder.isMonthlyEmpty()){
+                jsonObject.put("period", "monthly");
+                graphInfoHolder.updateMonthly(graphService.getChartData(jsonObject));
+                jsonObject.remove("period");
+            }
+        }
+
+        //Update index historical data
+        for(GraphInfoHolder graphInfoHolder: currentData.getGraphInfoManager().getIndexInfoList()){
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("type", "Index");
+            jsonObject.put("symbol", graphInfoHolder.getAssetSymbol());
+            if(!graphInfoHolder.isDailyEmpty()){
+                jsonObject.put("period", "daily");
+                graphInfoHolder.updateDaily(graphService.getChartData(jsonObject));
+                jsonObject.remove("period");
+            }
+            if(!graphInfoHolder.isWeeklyEmpty()){
+                jsonObject.put("period", "weekly");
+                graphInfoHolder.updateWeekly(graphService.getChartData(jsonObject));
+                jsonObject.remove("period");
+            }
+            if(!graphInfoHolder.isMonthlyEmpty()){
+                jsonObject.put("period", "monthly");
+                graphInfoHolder.updateMonthly(graphService.getChartData(jsonObject));
+                jsonObject.remove("period");
+            }
+        }
+
+        //Update crypto historical data
+        for(GraphInfoHolder graphInfoHolder: currentData.getGraphInfoManager().getCryptoInfoList()){
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("type", "Crypto");
+            jsonObject.put("symbol", graphInfoHolder.getAssetSymbol());
+            if(!graphInfoHolder.isDailyEmpty()){
+                jsonObject.put("period", "daily");
+                graphInfoHolder.updateDaily(graphService.getChartData(jsonObject));
+                jsonObject.remove("period");
+            }
+            if(!graphInfoHolder.isWeeklyEmpty()){
+                jsonObject.put("period", "weekly");
+                graphInfoHolder.updateWeekly(graphService.getChartData(jsonObject));
+                jsonObject.remove("period");
+            }
+            if(!graphInfoHolder.isMonthlyEmpty()){
+                jsonObject.put("period", "monthly");
+                graphInfoHolder.updateMonthly(graphService.getChartData(jsonObject));
+                jsonObject.remove("period");
+            }
+        }
+
     }
 
 }

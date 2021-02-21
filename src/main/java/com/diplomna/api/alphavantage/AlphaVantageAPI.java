@@ -33,6 +33,13 @@ public class AlphaVantageAPI {
                 .header(rapidapiHost, rapidapiHostValue)
                 .asJson();
     }
+    public void setInitialIndex(String symbol) throws UnirestException {
+        //Set response object to desired initial index
+        this.response = Unirest.get("https://alpha-vantage.p.rapidapi.com/query?keywords=" + symbol + "&function=SYMBOL_SEARCH&datatype=json")
+                .header(rapidapiKey, rapidapiKeyValue)
+                .header(rapidapiHost, rapidapiHostValue)
+                .asJson();
+    }
 
     public void setCrypto(String symbol) throws UnirestException {
         //Set response object to desired cryptocurrency
@@ -42,22 +49,24 @@ public class AlphaVantageAPI {
                 .asJson();
     }
 
-    public JSONObject getStockTimeSeries(String symbol) throws UnirestException, JSONException {
+    public JsonNode getStockAndIndexTimeSeries(String symbol, String period) throws UnirestException, JSONException {
         //Get stock historical data
-        this.response = Unirest.get("https://alpha-vantage.p.rapidapi.com/query?symbol=" + symbol + "&function=TIME_SERIES_MONTHLY&datatype=json")
+        this.response = Unirest.get("https://alpha-vantage.p.rapidapi.com/query?symbol=" + symbol + "&function=TIME_SERIES_" + period + "_ADJUSTED&datatype=json")
                 .header(rapidapiKey, rapidapiKeyValue)
                 .header(rapidapiHost, rapidapiHostValue)
                 .asJson();
-        return this.response.getBody().getObject().getJSONObject("Monthly Time Series");
+        return this.response.getBody();
     }
 
-    public void setInitialIndex(String symbol) throws UnirestException {
-        //Set response object to desired initial index
-        this.response = Unirest.get("https://alpha-vantage.p.rapidapi.com/query?keywords=" + symbol + "&function=SYMBOL_SEARCH&datatype=json")
+    public JsonNode getCryptoTimeSeries(String symbol, String period) throws UnirestException, JSONException {
+        //Get stock historical data
+        this.response = Unirest.get("https://alpha-vantage.p.rapidapi.com/query?market=USD&symbol=" + symbol + "&function=DIGITAL_CURRENCY_" + period)
                 .header(rapidapiKey, rapidapiKeyValue)
                 .header(rapidapiHost, rapidapiHostValue)
                 .asJson();
+        return this.response.getBody();
     }
+
 
     public HashMap<String, String> getInitialIndex(){
         //return initial index information as a HashMap
@@ -84,4 +93,12 @@ public class AlphaVantageAPI {
 }
 
 
-// https://alpha-vantage.p.rapidapi.com/query?symbol=MSFT&function=TIME_SERIES_MONTHLY&datatype=json - stock time series monthly
+// https://alpha-vantage.p.rapidapi.com/query?symbol=MSFT&function=TIME_SERIES_MONTHLY&datatype=json - stock time series monthly AND INDEX TOO
+// https://alpha-vantage.p.rapidapi.com/query?symbol=MSFT&function=TIME_SERIES_MONTHLY_ADJUSTED&datatype=json - stock time series monthly ADJUSTED AND INDEX TOO
+// https://alpha-vantage.p.rapidapi.com/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=MSFT&outputsize=compact&datatype=json
+// https://alpha-vantage.p.rapidapi.com/query?function=TIME_SERIES_WEEKLY_ADJUSTED&symbol=MSFT&datatype=json
+
+//crypto -   daily "https://alpha-vantage.p.rapidapi.com/query?market=USD&symbol=BTC&function=DIGITAL_CURRENCY_DAILY"
+//crypto -  weekly "https://alpha-vantage.p.rapidapi.com/query?function=DIGITAL_CURRENCY_WEEKLY&symbol=BTC&market=USD"
+//crypto - monthly "https://alpha-vantage.p.rapidapi.com/query?market=CNY&function=DIGITAL_CURRENCY_MONTHLY&symbol=BTC"
+//Razlikata e DIGITAL_CURRENCY_DAILY/WEEKLY/MONTHLY

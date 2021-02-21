@@ -20,6 +20,7 @@ public class UpdateRunner implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+
         /*
             Initialize singleton class with data from Database
             Done only once, on startup
@@ -27,39 +28,35 @@ public class UpdateRunner implements CommandLineRunner {
         AssetManager assetManager = updateService.setupInitialAssetManager();
         CurrentData currentData = CurrentData.getInstance();
         currentData.setAssetManager(assetManager);
+
+
         /*
             update and notification thread
          */
         /*
+        int i=0; //counter
         while (true) {
             //update all data from API
             updateService.updateAllAssets();
             //check notification status with the new data
             updateService.sendNotifications();
+            if(i==60){
+                i=0;
+                //update historical data every 60 seconds
+                updateService.updateHistoricalData();
+            }
             try {
                 //sleep for 1 second
-                //which is good enough update frequency
+                //good enough update frequency
                 Thread.sleep(1000);
             }
             catch (InterruptedException e){
                 //shouldn't get in here
                 e.printStackTrace();
             }
+            i++;
         }
          */
-
-
-        /*
-        //free api limitations - 500 requests per month (YahooFinance free subscription sucks)
-        //31*24*60*60*1000 - milliseconds in a month = a
-        //wait time = a/500 = 5356800 milliseconds to wait between updating all assets ;(
-
-        !не е взето в предвид брой акции за които трябва да бъде извикано api'то, така че
-        реално няма да може да се обновява цената толкова пъти месечно,
-        но примаме че сървъра няма да си стои пуснат постоянно!
-         */
-
-        System.out.println("in update thread");
 
     }
 }

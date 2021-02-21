@@ -10,7 +10,8 @@ import com.diplomna.database.insert.InsertIntoDb;
 import com.diplomna.database.read.ReadFromDb;
 import com.diplomna.date.DatеManager;
 import com.diplomna.exceptions.AssetNotFoundException;
-import com.diplomna.pojo.GraphInfo;
+import com.diplomna.graph.GraphInfo;
+import com.diplomna.graph.GraphInfoHolder;
 import com.diplomna.singleton.CurrentData;
 import com.diplomna.users.sub.AssetType;
 import com.diplomna.users.sub.Notification;
@@ -610,7 +611,6 @@ public class BaseService {
         return "success";
     }
 
-
     public String removeAsset(JSONObject jsonObject, User user){
         /*
             Removes asset from user portfolio
@@ -694,75 +694,76 @@ public class BaseService {
         }
     }
 
-    public List<GraphInfo> getStockGraphInfo(String stockSymbol){
+    public HashMap<String, String> addPurchaseToActiveAsset(JSONObject jsonObject, User user){
         /*
-            Return stock historical data list
+            Adds purchase to any active asset
+            returns response for the client
          */
-        List<GraphInfo> graphInfoList = new ArrayList<>();
-        AlphaVantageAPI alphaVantageAPI = new AlphaVantageAPI();
-        try {
-            JSONObject jsonObject = alphaVantageAPI.getStockTimeSeries(stockSymbol);
+        HashMap<String, String> map = new HashMap<>();
 
-            Iterator<String> keys = jsonObject.keys();
-
-            while(keys.hasNext()) { // iterating through JSONObject
-                String key = keys.next();
-                if (jsonObject.get(key) instanceof JSONObject) {
-                    String[] temp = key.split("-");
-                    GraphInfo graphInfo = new GraphInfo(Integer.parseInt(temp[2]),
-                            Integer.parseInt(temp[1]), Integer.parseInt(temp[0]),
-                                   Double.parseDouble(jsonObject.getJSONObject(key).get("4. close").toString()));
-
-                    graphInfoList.add(graphInfo);
-                }
+        PurchaseInfo purchaseInfo = new PurchaseInfo(jsonObject.getDouble("price"), jsonObject.getDouble("quantity"));
+        if(jsonObject.getString("date") != null && !jsonObject.getString("date").equals("")){
+            try {
+                DatеManager datеManager = new DatеManager();
+                datеManager.setDateFromString(jsonObject.getString("date"));
+                purchaseInfo.setPurchaseDate(datеManager);
+                map.put("date", datеManager.getDateAsString());
+            } catch (ParseException e) {
+                map.put("success", "Wrong date format. Please use day.month.year!");
+                return map;
             }
-
-            //api provides data mixed up
-            //sort it
-            for(int j=0; j<graphInfoList.size()-1; j++) {
-                for (int i = 0; i < graphInfoList.size() - 1; i++) {
-                    if (graphInfoList.get(i).getYear() > graphInfoList.get(i + 1).getYear()){
-                        swapGraphInfoList(graphInfoList, i);
-                    }
-                }
-            }
-            for(int j=0; j<graphInfoList.size()-1; j++) {
-                for (int i = 0; i < graphInfoList.size() - 1; i++) {
-                    if (graphInfoList.get(i).getMonth() > graphInfoList.get(i + 1).getMonth()){
-                        swapGraphInfoList(graphInfoList, i);
-                    }
-                }
-            }
-            for(int j=0; j<graphInfoList.size()-1; j++) {
-                for (int i = 0; i < graphInfoList.size() - 1; i++) {
-                    if (graphInfoList.get(i).getYear() > graphInfoList.get(i + 1).getYear()){
-                        swapGraphInfoList(graphInfoList, i);
-                    }
-                }
-            }
-
-            return graphInfoList;
-        } catch (UnirestException e) {
-            e.printStackTrace();
-            String errorMessage = "AlphaVantage api fail monthly data for chart for symbol: " + stockSymbol;
-            logger.error(errorMessage);
-            return null;
-        } catch (JSONException e) {
-            e.printStackTrace();
-            String errorMessage = "AlphaVantage api json fail monthly data for chart for symbol: " + stockSymbol;
-            logger.error(errorMessage);
         }
-        return null;
-    }
-    private void swapGraphInfoList(List<GraphInfo> graphInfoList, int i){
-        /*
-            swap objects in graph info list
-            from i and i + 1
-            used in getStockGraphInfo
-         */
-        GraphInfo temp = graphInfoList.get(i);
-        graphInfoList.set(i, graphInfoList.get(i+1));
-        graphInfoList.set(i+1, temp);
+        map.put("price", String.valueOf(jsonObject.getDouble("price")));
+        map.put("quantity", String.valueOf(jsonObject.getDouble("quantity")));
+
+        InsertIntoDb insertIntoDb = new InsertIntoDb("test");
+
+        if(jsonObject.getString("assetSymbol") != null && !jsonObject.getString("assetSymbol").equals("")) {
+            switch (jsonObject.getString("assetType")) {
+                case "stock":
+                    purchaseInfo.setStockSymbol(jsonObject.getString("assetSymbol"));
+
+                    //add new purchase to DB
+                    insertIntoDb.insertStockPurchaseInfo(user.getUserId(), purchaseInfo);
+                    //add new purchase to user
+                    user.getAssets().addPurchaseToResource(jsonObject.getString("assetType"), jsonObject.getString("assetSymbol"), purchaseInfo);
+                    break;
+                case "index":
+                    purchaseInfo.setStockSymbol(jsonObject.getString("assetSymbol"));
+
+                    //add new purchase to DB
+                    insertIntoDb.insertIndexPurchaseInfo(user.getUserId(), purchaseInfo);
+                    //add new purchase to user
+                    user.getAssets().addPurchaseToResource(jsonObject.getString("assetType"), jsonObject.getString("assetSymbol"), purchaseInfo);
+                    break;
+                case "crypto":
+                    purchaseInfo.setStockSymbol(jsonObject.getString("assetSymbol"));
+
+                    //add new purchase to DB
+                    insertIntoDb.insertCryptoPurchaseInfo(user.getUserId(), purchaseInfo);
+                    //add new purchase to RAM
+                    user.getAssets().addPurchaseToResource(jsonObject.getString("assetType"), jsonObject.getString("assetSymbol"), purchaseInfo);
+                case "commodity":
+                    //commodities have no symbol and are referenced by name
+                    purchaseInfo.setStockSymbol(jsonObject.getString("assetName"));
+
+                    //add new purchase to DB
+                    insertIntoDb.insertCommodityPurchaseInfo(user.getUserId(), purchaseInfo);
+                    //add new purchase to RAM
+                    user.getAssets().addPurchaseToResource(jsonObject.getString("assetType"), jsonObject.getString("assetName"), purchaseInfo);
+                    break;
+                default:
+                    String errorString = "Purchase not registered for user with id " + user.getUserId()
+                            + " .Asset Type not found!";
+                    logger.error(errorString);
+                    map.put("success", "An error has occurred! Purchase not registered.");
+                    return map;
+            }
+            map.put("success", "success");
+        } else {
+            map.put("success", "An error has occurred! Purchase not registered.");
+        }
+        return map;
     }
 
 }

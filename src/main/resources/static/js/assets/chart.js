@@ -1,15 +1,26 @@
 $(function (){
 
-    var $symbol = $('#asset-symbol');
+    var $period = $('#period');
+    setupChart($('option:selected', $period).val());
 
-    var input = $symbol.html();
+});
+
+function setupChart(period){
+    var $symbol = $('#asset-symbol');
+    var $type = $('#head');
+
+    var input = {
+        symbol: $symbol.html(),
+        type: $type.html(),
+        period: period
+    };
 
     $.ajax({
         type: 'POST',
-        url: '/get-stock-data',
+        url: '/get-chart-data',
         contentType: 'application/json; charset=utf-8',
         dataType: 'json',
-        data: input,
+        data: JSON.stringify(input),
         error: function(e){
             console.log(e);
         },
@@ -25,7 +36,7 @@ $(function (){
             plotChart(dataPoints);
         }
     });
-});
+}
 
 function plotChart(data) {
     var options = {
@@ -46,6 +57,6 @@ function plotChart(data) {
             dataPoints: data //add the data points
         }]
     };
+    $("#chartContainer").empty();
     $("#chartContainer").CanvasJSChart(options);
 }
-

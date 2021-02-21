@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <script type="application/javascript" th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js}"></script>
-    <script type="application/javascript" th:src = "@{/js/assets/stock.js}"></script>
+    <script type="application/javascript" th:src = "@{/js/assets/chart.js}"></script>
     <script type="application/javascript" th:src = "@{/js/assets/asset.js}"></script>
     <script type="application/javascript" th:src = "@{https://canvasjs.com/assets/script/jquery-1.11.1.min.js}"></script>
     <script type="application/javascript" th:src = "@{https://canvasjs.com/assets/script/jquery.canvasjs.min.js}"></script>
@@ -13,7 +13,7 @@
 
     <div id="header"></div>
 
-    <h1>Stock</h1>
+    <h1 id="head">Stock</h1>
     <p id="asset-name" th:text="${stock.name}"></p>
     <p id="asset-symbol" th:text="${stock.symbol}"></p>
     <p th:text="${stock.description}"></p>
@@ -50,6 +50,13 @@
     <button id="confirm" asset-type="stock">Confirm</button><br>
     <div id="error-message"></div>
 
+    <form>
+        <select onChange=setupChart(this.value) id="period">
+            <option value="monthly">Monthly</option>
+            <option value="weekly">Weekly</option>
+            <option value="daily">Daily</option>
+        </select>
+    </form>
     <div id="chartContainer" style="height: 370px; width: 100%;"></div>
 
     <div id="footer"></div>

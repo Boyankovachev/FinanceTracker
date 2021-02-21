@@ -1,24 +1,14 @@
 package com.diplomna.restapi.controller;
 
-import com.diplomna.assets.AssetManager;
 import com.diplomna.assets.finished.*;
-import com.diplomna.assets.sub.PurchaseInfo;
-import com.diplomna.database.insert.InsertIntoDb;
-import com.diplomna.date.DatеManager;
-import com.diplomna.pojo.GraphInfo;
+import com.diplomna.graph.GraphInfo;
+import com.diplomna.graph.GraphService;
 import com.diplomna.restapi.service.BaseService;
 import com.diplomna.users.sub.User;
-import com.fasterxml.jackson.databind.ObjectReader;
-import com.mashape.unirest.http.JsonNode;
-import com.mysql.cj.xdevapi.JsonArray;
-import org.apache.http.protocol.HTTP;
-import org.json.JSONArray;
 import org.json.JSONObject;
-import org.json.JSONString;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Required;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -26,11 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
-import org.w3c.dom.ls.LSException;
 
-import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -46,7 +32,7 @@ public class BaseController {
 
     public BaseController(){
         baseService = new BaseService();
-        this.logger = LoggerFactory.getLogger(BaseService.class);
+        this.logger = LoggerFactory.getLogger(BaseController.class);
     }
 
     @RequestMapping(value = "/user", method = RequestMethod.GET)
@@ -227,97 +213,20 @@ public class BaseController {
         }
     }
 
-    @RequestMapping(value = "/get-stock-data", method = RequestMethod.POST)
-    public @ResponseBody ResponseEntity<Object> getStockData(@RequestBody String stockSymbol){
-        List<GraphInfo> graphInfoList = baseService.getStockGraphInfo(stockSymbol);
-        return new ResponseEntity<Object>(graphInfoList ,HttpStatus.OK);
+    @RequestMapping(value = "/get-chart-data", method = RequestMethod.POST)
+    public @ResponseBody ResponseEntity<Object> getChartData(@RequestBody String jsonString){
+        JSONObject jsonObject = new JSONObject(jsonString);
+        GraphService graphService = new GraphService();
+        List<GraphInfo> graphInfoList = graphService.getChartData(jsonObject);
+        return new ResponseEntity<>(graphInfoList, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/add-purchase", method = RequestMethod.POST)
     public @ResponseBody
     ResponseEntity<Object> addPurchase(@RequestBody String jsonString){
         JSONObject jsonObject = new JSONObject(jsonString);
-        HashMap<String, String> map = new HashMap<>();
-        HttpStatus httpStatus = HttpStatus.OK;
-
-        PurchaseInfo purchaseInfo = new PurchaseInfo(jsonObject.getDouble("price"), jsonObject.getDouble("quantity"));
-        if(jsonObject.getString("date") != null && !jsonObject.getString("date").equals("")){
-            try {
-                DatеManager datеManager = new DatеManager();
-                datеManager.setDateFromString(jsonObject.getString("date"));
-                purchaseInfo.setPurchaseDate(datеManager);
-                map.put("date", datеManager.getDateAsString());
-            } catch (ParseException e) {
-                //return "Wrong date format. Please use day.month.year!";
-                map.put("success", "Wrong date format. Please use day.month.year!");
-            }
-        }
-        map.put("price", String.valueOf(jsonObject.getDouble("price")));
-        map.put("quantity", String.valueOf(jsonObject.getDouble("quantity")));
-
-        InsertIntoDb insertIntoDb = new InsertIntoDb("test");
-
-        switch (jsonObject.getString("assetType")){
-            case "stock":
-                if(jsonObject.getString("assetSymbol") != null && !jsonObject.getString("assetSymbol").equals("")) {
-                    purchaseInfo.setStockSymbol(jsonObject.getString("assetSymbol"));
-                    insertIntoDb.insertStockPurchaseInfo(user.getUserId(), purchaseInfo);
-                    map.put("success", "success");
-
-                    //add new purchase to RAM
-                    this.user.getAssets().addPurchaseToResource(jsonObject.getString("assetType"), jsonObject.getString("assetSymbol"), purchaseInfo);
-                }
-                else {
-                    //return "An error has occurred! Purchase not registered.";
-                    map.put("success", "An error has occurred! Purchase not registered.");
-                    httpStatus = HttpStatus.EXPECTATION_FAILED;
-                }
-                break;
-            case "index":
-                if(jsonObject.getString("assetSymbol") != null && !jsonObject.getString("assetSymbol").equals("")) {
-                    purchaseInfo.setStockSymbol(jsonObject.getString("assetSymbol"));
-                    insertIntoDb.insertIndexPurchaseInfo(user.getUserId(), purchaseInfo);
-                    map.put("success", "success");
-
-                    //add new purchase to RAM
-                    this.user.getAssets().addPurchaseToResource(jsonObject.getString("assetType"), jsonObject.getString("assetSymbol"), purchaseInfo);
-                }
-                else {
-                    map.put("success", "An error has occurred! Purchase not registered.");
-                    httpStatus = HttpStatus.EXPECTATION_FAILED;
-                }
-                break;
-            case "crypto":
-                if(jsonObject.getString("assetSymbol") != null && !jsonObject.getString("assetSymbol").equals("")) {
-                    purchaseInfo.setStockSymbol(jsonObject.getString("assetSymbol"));
-                    insertIntoDb.insertCryptoPurchaseInfo(user.getUserId(), purchaseInfo);
-                    map.put("success", "success");
-
-                    //add new purchase to RAM
-                    this.user.getAssets().addPurchaseToResource(jsonObject.getString("assetType"), jsonObject.getString("assetSymbol"), purchaseInfo);
-                }
-                else {
-                    map.put("success", "An error has occurred! Purchase not registered.");
-                    httpStatus = HttpStatus.EXPECTATION_FAILED;
-                }
-                break;
-            case "commodity":
-                //commodities have no symbol and are referenced by name
-                purchaseInfo.setStockSymbol(jsonObject.getString("assetName"));
-                insertIntoDb.insertCommodityPurchaseInfo(user.getUserId(), purchaseInfo);
-                map.put("success", "success");
-
-                //add new purchase to RAM
-                this.user.getAssets().addPurchaseToResource(jsonObject.getString("assetType"), jsonObject.getString("assetName"), purchaseInfo);
-                
-                break;
-            default:
-                //tuka exception i logvane (ne trqbva da vliza tuka)
-                map.put("success", "An error has occurred! Purchase not registered.");
-                break;
-        }
-
-        return new ResponseEntity<Object>(map, httpStatus);
+        HashMap<String, String> map = baseService.addPurchaseToActiveAsset(jsonObject, user);
+        return new ResponseEntity<Object>(map, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/add-asset", method = RequestMethod.GET)

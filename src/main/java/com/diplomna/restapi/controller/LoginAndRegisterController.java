@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -110,15 +111,14 @@ public class LoginAndRegisterController {
     @RequestMapping(value="/test", method = RequestMethod.GET)
     public String test(){
         System.out.println("in test 1 get");
-        CurrentData currentData = CurrentData.getInstance();
         //currentData.printAssetManager();
         return "test";
     }
     @RequestMapping(value="/test", method = RequestMethod.POST)
-    public RedirectView test(/*@RequestBody String string, */RedirectAttributes attributes){
+    public ModelAndView testPost(/*@RequestBody String string, */){
         System.out.println("in test 1 post");
         //attributes.addFlashAttribute("string", "neshto");
-        return new RedirectView("test2");
+        return new ModelAndView("forward:/test2");
     }
     @RequestMapping(value="/test2", method = RequestMethod.GET)
     public String test2(/*@ModelAttribute("string") String string, Model model*/){

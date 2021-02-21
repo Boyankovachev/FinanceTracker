@@ -1,13 +1,10 @@
-package com.diplomna.pojo;
+package com.diplomna.graph;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.springframework.boot.jackson.JsonComponent;
 
-import java.io.Serializable;
-
 @JsonSerialize
-@JsonComponent // i bez tiq 2te raboti '_'
-               // ama pisheshe che trqq da gi ima ~_~
+@JsonComponent
 public class GraphInfo{
     /*
         Class used for sending graph info

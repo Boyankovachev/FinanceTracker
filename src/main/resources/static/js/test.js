@@ -2,9 +2,7 @@ $(function (){
 
     var $name = $('#name');
 
-    $("#form").on("submit", function(e){
-        alert("dd");
-        e.preventDefault();
+    $("#submit").on("click", function(){
         var input = {
             username: $name.val()
         };
