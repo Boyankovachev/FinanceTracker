@@ -288,17 +288,13 @@ public class GraphService {
             sortGraphInfo(graphInfoList);
 
             return graphInfoList;
-        } catch (UnirestException e) {
+        } catch (UnirestException | JSONException e) {
             e.printStackTrace();
-            String errorMessage = "AlphaVantage api stock and index fail historical data: " + symbol;
+            String errorMessage = "AlphaVantage api stock and index fail historical data: "
+                    + symbol + "\n" + e.getMessage();
             logger.error(errorMessage);
             return null;
-        } catch (JSONException e) {
-            e.printStackTrace();
-            String errorMessage = "AlphaVantage api stock and index json fail historical data: " + symbol;
-            logger.error(errorMessage);
         }
-        return null;
     }
 
     private List<GraphInfo> getCryptoGraphInfo(String symbol, String timePeriod){

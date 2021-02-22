@@ -8,6 +8,7 @@ import com.diplomna.assets.finished.Crypto;
 import com.diplomna.assets.finished.Index;
 import com.diplomna.assets.finished.Stock;
 import com.diplomna.assets.sub.Asset;
+import com.diplomna.database.DatabaseConnection;
 import com.diplomna.database.delete.DeleteFromDb;
 import com.diplomna.database.insert.InsertIntoDb;
 import com.diplomna.database.read.ReadFromDb;
@@ -41,18 +42,14 @@ public class UpdateService {
     private EmailService emailService;
 
     private final Logger logger;
-    private final ReadFromDb readFromDb;
-    private final InsertIntoDb insertIntoDb;
-    private final DeleteFromDb deleteFromDb;
+    private final DatabaseConnection dbConnection;
 
     private CurrentData currentData;
 
     public UpdateService(){
         this.logger = LoggerFactory.getLogger(BaseService.class);
         this.baseService = new BaseService();
-        readFromDb = new ReadFromDb("test");
-        insertIntoDb = new InsertIntoDb("test");
-        deleteFromDb = new DeleteFromDb("test");
+        dbConnection = new DatabaseConnection();
         currentData = CurrentData.getInstance();
     }
 
@@ -69,10 +66,10 @@ public class UpdateService {
         List<Crypto> cryptos = new ArrayList<>();
         List<Commodities> commodities = new ArrayList<>();
         try {
-            stocks = readFromDb.readAllStocks();
-            indexList = readFromDb.readAllIndex();
-            cryptos = readFromDb.readAllCrypto();
-            commodities = readFromDb.readAllCommodities();
+            stocks = dbConnection.read().readAllStocks();
+            indexList = dbConnection.read().readAllIndex();
+            cryptos = dbConnection.read().readAllCrypto();
+            commodities = dbConnection.read().readAllCommodities();
 
             assetManager.addStocks(stocks);
             assetManager.addIndexList(indexList);
@@ -124,7 +121,7 @@ public class UpdateService {
         currentData.getAssetManager().updateStocks(stocks);
         for(Stock stock: stocks){
             try {
-                insertIntoDb.updateStockApiData(stock);
+                dbConnection.add().updateStockApiData(stock);
             } catch (SQLException throwables) {
                 String errorMessage = "DB fail for update stock API data fail for symbol "
                         + stock.getSymbol();
@@ -169,7 +166,7 @@ public class UpdateService {
         currentData.getAssetManager().updateIndex(indexList);
         for(Index index: indexList){
             try {
-                insertIntoDb.updateIndexApiData(index);
+                dbConnection.add().updateIndexApiData(index);
             } catch (SQLException throwables) {
                 String errorMessage = "DB fail for update index API data fail for symbol " + index.getSymbol();
                 logger.error(errorMessage);
@@ -209,7 +206,7 @@ public class UpdateService {
         currentData.getAssetManager().updateCrypto(cryptos);
         for(Crypto crypto: cryptos){
             try {
-                insertIntoDb.updateCryptoApiData(crypto);
+                dbConnection.add().updateCryptoApiData(crypto);
             } catch (SQLException throwables) {
                 String errorMessage = "DB fail for update crypto API data fail for symbol " + crypto.getSymbol();
                 logger.error(errorMessage);
@@ -237,7 +234,7 @@ public class UpdateService {
         currentData.getAssetManager().updateCommodities(commodities);
         for(Commodities commodity: commodities){
             try {
-                insertIntoDb.updateCommodityApiData(commodity);
+                dbConnection.add().updateCommodityApiData(commodity);
             } catch (SQLException throwables) {
                 String errorMessage = "DB fail for update commodity API data fail for name " + commodity.getName();
                 logger.error(errorMessage);
@@ -252,11 +249,11 @@ public class UpdateService {
             if notification has reached its price target
             send and delete notification
          */
-        UserManager userManager = readFromDb.readUsers(false);
+        UserManager userManager = dbConnection.read().readUsers();
         for(User user: userManager.getUsers()){
 
             //check if user has any notifications set up
-            if(readFromDb.readNotificationsByUserId(user.getUserId()) == null){
+            if(dbConnection.read().readNotificationsByUserId(user.getUserId()) == null){
                 continue;
             }
 
@@ -273,7 +270,7 @@ public class UpdateService {
                     }
 
                     try {
-                        deleteFromDb.deleteNotification(user.getUserId(), notification.getNotificationName());
+                        dbConnection.delete().deleteNotification(user.getUserId(), notification.getNotificationName());
                     } catch (SQLException throwables) {
                         String errorMessage = "Delete Notification fail for notification: " + notification.getNotificationName()
                                 + " for user with Id: " + user.getUserId();

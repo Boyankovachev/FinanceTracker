@@ -1,5 +1,6 @@
 package com.diplomna.restapi.service;
 
+import com.diplomna.database.DatabaseConnection;
 import com.diplomna.database.insert.InsertIntoDb;
 import com.diplomna.database.read.ReadFromDb;
 import com.diplomna.email.EmailService;
@@ -21,10 +22,12 @@ public class LoginAndRegisterService {
     private EmailService emailService;
 
     private String authenticateCode;
-
+    private final DatabaseConnection dbConnection;
     private final Logger logger;
+
     public LoginAndRegisterService(){
         this.logger = LoggerFactory.getLogger(BaseService.class);
+        dbConnection = new DatabaseConnection();
     }
 
     public String createUser(String inputString){
@@ -38,7 +41,6 @@ public class LoginAndRegisterService {
         String inputEmail = temp[3].substring(6);
 
         if(!inputPassword.equals(inputPassword2)){
-            //pokazvam na web stranicata che parolite ne suvpadat
             return "Passwords don't match";
         }
 
@@ -51,15 +53,13 @@ public class LoginAndRegisterService {
         if(!inputEmail.equals("")){
             inputEmail = inputEmail.replace("%40", "@");
             if(isEmailTaken(inputEmail)){
-                //tuka pokazvam na web stranicata che meila veche e registriran
                 return "Email already taken";
             }
             else {
                 user.setEmail(inputEmail);
             }
         }
-        InsertIntoDb insert = new InsertIntoDb("test");
-        insert.insertUser(user);
+        dbConnection.add().insertUser(user);
         logger.info("Created account with username " + user.getUserName());
         return "Account created successfully!";
     }
@@ -68,8 +68,7 @@ public class LoginAndRegisterService {
         /*
             Check if email is present in database
          */
-        ReadFromDb readFromDb = new ReadFromDb("test");
-        UserManager userManager = readFromDb.readUsers(false);
+        UserManager userManager = dbConnection.read().readUsers();
         return userManager.isEmailPresent(email);
     }
 
@@ -81,8 +80,7 @@ public class LoginAndRegisterService {
         String[] temp = inputString.split("&");
         String inputUsername = temp[0].substring(9);
         String inputPassword = temp[1].substring(9);
-        ReadFromDb readFromDb = new ReadFromDb("test");
-        UserManager userManager = readFromDb.readUsers(false);
+        UserManager userManager = dbConnection.read().readUsers();
         if(!userManager.isUsernamePresent(inputUsername)){
             return "Incorrect username or password!";
         }
@@ -97,8 +95,7 @@ public class LoginAndRegisterService {
     public User getUserByName(String name){
         //retuns the first user found with matching name
         // (for future) - fix when 2 identical names
-        ReadFromDb readFromDb = new ReadFromDb("test");
-        UserManager userManager = readFromDb.readUsers(false);
+        UserManager userManager = dbConnection.read().readUsers();
         return userManager.getUserByName(name);
     }
 

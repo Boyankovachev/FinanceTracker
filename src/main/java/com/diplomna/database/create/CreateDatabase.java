@@ -67,7 +67,7 @@ public class CreateDatabase {
             Statement DbStatement = con.createStatement();
             String sql = "CREATE TABLE IF NOT EXISTS `"+databaseName+"`.`stock`(\n" +
                     "    `symbol` VARCHAR(12) NOT NULL PRIMARY KEY,\n" +
-                    "    `stock_name` VARCHAR(32) NOT NULL,\n" +
+                    "    `stock_name` VARCHAR(64) NOT NULL,\n" +
                     "    `currency` VARCHAR(32) NOT NULL,\n" +
                     "    `currency_symbol` VARCHAR(12) NOT NULL,\n" +
                     "    `exchange_name` VARCHAR(32),\n" +
@@ -140,7 +140,7 @@ public class CreateDatabase {
             Statement DbStatement = con.createStatement();
             String sql = "CREATE TABLE IF NOT EXISTS `"+databaseName+"`.`index`(\n" +
                     "    `symbol` VARCHAR(12) NOT NULL PRIMARY KEY,\n" +
-                    "    `index_name` VARCHAR(32) NOT NULL,\n" +
+                    "    `index_name` VARCHAR(64) NOT NULL,\n" +
                     "    `currency` VARCHAR(32) NOT NULL,\n" +
                     "    `currency_symbol` VARCHAR(12) NOT NULL,\n" +
                     "    `exchange_name` VARCHAR(32),\n" +
@@ -175,7 +175,7 @@ public class CreateDatabase {
             Statement DbStatement = con.createStatement();
             String sql = "CREATE TABLE IF NOT EXISTS `"+databaseName+"`.`crypto`(\n" +
                     "    `symbol` VARCHAR(12) NOT NULL PRIMARY KEY,\n" +
-                    "    `crypto_name` VARCHAR(32) NOT NULL,\n" +
+                    "    `crypto_name` VARCHAR(64) NOT NULL,\n" +
                     "    `currency` VARCHAR(32) NOT NULL,\n" +
                     "    `currency_symbol` VARCHAR(12) NOT NULL,\n" +
                     "    `description` TEXT,\n" +
@@ -208,7 +208,7 @@ public class CreateDatabase {
             Statement DbStatement = con.createStatement();
             String sql = "CREATE TABLE IF NOT EXISTS `"+databaseName+"`.`commodity`(\n" +
                     "    `commodity_name` VARCHAR(64) NOT NULL PRIMARY KEY,\n" +
-                    "    `currency` VARCHAR(32) NOT NULL,\n" +
+                    "    `currency` VARCHAR(64) NOT NULL,\n" +
                     "    `currency_symbol` VARCHAR(12) NOT NULL,\n" +
                     "    `exchange_name` VARCHAR(32),\n" +
                     "    `description` TEXT,\n" +

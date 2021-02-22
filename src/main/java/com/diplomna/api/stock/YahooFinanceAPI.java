@@ -4,6 +4,7 @@ import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -54,7 +55,7 @@ public class YahooFinanceAPI {
                 .asJson();
     }
 
-    public double getRawCurrentPrice(){
+    public double getRawCurrentPrice() throws JSONException{
         //return stock current price
         if(stock!=null) {
             JSONObject json_stock = stock.getBody().getObject();
@@ -63,12 +64,11 @@ public class YahooFinanceAPI {
         }
         else {
             logFail();
-            //EXCEPTION;
             return 0;
         }
     }
 
-    public String getSymbol(){
+    public String getSymbol() throws JSONException{
         //return stock symbol
         if(stock!=null) {
             JSONObject json_stock = stock.getBody().getObject();
@@ -80,7 +80,7 @@ public class YahooFinanceAPI {
         }
     }
 
-    public String getName(){
+    public String getName() throws JSONException {
         //return stock name
         if(stock!=null) {
             JSONObject json_stock = stock.getBody().getObject();
@@ -88,12 +88,11 @@ public class YahooFinanceAPI {
         }
         else {
             logFail();
-            //EXCEPTION;
             return null;
         }
     }
 
-    public boolean isMarketOpen(){
+    public boolean isMarketOpen() throws JSONException{
         //return if market is open
         if(stock!=null) {
             JSONObject json_stock = stock.getBody().getObject();
@@ -103,12 +102,11 @@ public class YahooFinanceAPI {
         }
         else {
             logFail();
-            //EXCEPTION;
             return false;
         }
     }
 
-    public String getCurrency(){
+    public String getCurrency() throws JSONException{
         //return currency
         if(stock!=null) {
             JSONObject json_stock = stock.getBody().getObject();
@@ -116,12 +114,11 @@ public class YahooFinanceAPI {
         }
         else {
             logFail();
-            //EXCEPTION;
             return null;
         }
     }
 
-    public String getRecommendationKey(){
+    public String getRecommendationKey() throws JSONException{
         //return recommendation key
         if(stock!=null) {
             JSONObject json_stock = stock.getBody().getObject();
@@ -129,12 +126,11 @@ public class YahooFinanceAPI {
         }
         else {
             logFail();
-            //EXCEPTION;
             return null;
         }
     }
 
-    public String getExchangeName(){
+    public String getExchangeName() throws JSONException{
         //return exchange name
         if(stock!=null) {
             JSONObject json_stock = stock.getBody().getObject();
@@ -146,7 +142,7 @@ public class YahooFinanceAPI {
         }
     }
 
-    public String getCurrencySymbol(){
+    public String getCurrencySymbol() throws JSONException{
         //return currency symbol
         if(stock!=null) {
             JSONObject json_stock = stock.getBody().getObject();
@@ -154,12 +150,11 @@ public class YahooFinanceAPI {
         }
         else {
             logFail();
-            //EXCEPTION;
             return null;
         }
     }
 
-    public String getDescription(){
+    public String getDescription() throws JSONException{
         //return description
         if(stock!=null) {
             JSONObject json_stock = stock.getBody().getObject();
@@ -167,7 +162,6 @@ public class YahooFinanceAPI {
         }
         else {
             logFail();
-            //EXCEPTION;
             return null;
         }
     }

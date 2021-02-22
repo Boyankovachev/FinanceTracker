@@ -5,6 +5,7 @@ import com.diplomna.api.stock.YahooFinanceAPI;
 import com.diplomna.assets.AssetManager;
 import com.diplomna.assets.finished.*;
 import com.diplomna.assets.sub.PurchaseInfo;
+import com.diplomna.database.DatabaseConnection;
 import com.diplomna.database.delete.DeleteFromDb;
 import com.diplomna.database.insert.InsertIntoDb;
 import com.diplomna.database.read.ReadFromDb;
@@ -32,10 +33,12 @@ public class BaseService {
 
     private final Logger logger;
     private String databaseName;
-    CurrentData currentData;
+    private final CurrentData currentData;
+    private final DatabaseConnection dbConnection;
+
     public BaseService(){
         this.logger = LoggerFactory.getLogger(BaseService.class);
-        databaseName = "test";
+        dbConnection = new DatabaseConnection();
         currentData = CurrentData.getInstance();
     }
 
@@ -60,11 +63,10 @@ public class BaseService {
 
     public List<Notification> getNotificationsByUserId(int userId){
         //returns notification of user by id
-        ReadFromDb readFromDb = new ReadFromDb("test");
-        if(readFromDb.readNotificationsByUserId(userId) == null){
+        if(dbConnection.read().readNotificationsByUserId(userId) == null){
             return new ArrayList<>();
         }
-        return readFromDb.readNotificationsByUserId(userId);
+        return dbConnection.read().readNotificationsByUserId(userId);
     }
 
     public List<Stock> getStocksByUserId(int userId){
@@ -72,8 +74,7 @@ public class BaseService {
             returns list of fully initialized stock objects,
             by user id with the purchase info list
          */
-        ReadFromDb readFromDb = new ReadFromDb(databaseName);
-        List<Stock> stockPurchases = readFromDb.readStockPurchasesByUserId(userId);
+        List<Stock> stockPurchases = dbConnection.read().readStockPurchasesByUserId(userId);
         List<Stock> stockBase = new ArrayList<>();
         List<String> ownedStocksSymbols = new ArrayList<>();
 
@@ -107,10 +108,9 @@ public class BaseService {
 
     public List<PassiveResource> getPassiveResourcesByUserId(int userId){
         //returns passive resources of user by id
-        ReadFromDb readFromDb = new ReadFromDb("test");
-        List<PassiveResource> passiveResources = readFromDb.readPassiveResourcesByUserId(userId);
-        for(int i=0; i<passiveResources.size(); i++){
-            passiveResources.get(i).calculatePercentChange();
+        List<PassiveResource> passiveResources = dbConnection.read().readPassiveResourcesByUserId(userId);
+        for (PassiveResource passiveResource : passiveResources) {
+            passiveResource.calculatePercentChange();
         }
         return passiveResources;
     }
@@ -120,8 +120,7 @@ public class BaseService {
             returns list of fully initialized index objects,
             by user id with the purchase info list
          */
-        ReadFromDb readFromDb = new ReadFromDb("test");
-        List<Index> indexPurchases = readFromDb.readIndexPurchasesByUserId(userId);
+        List<Index> indexPurchases = dbConnection.read().readIndexPurchasesByUserId(userId);
         List<Index> indexBase = new ArrayList<>();
         List<String> ownedIndexSymbols = new ArrayList<>();
 
@@ -158,8 +157,7 @@ public class BaseService {
             returns list of fully initialized crypto objects,
             by user id with the purchase info list
          */
-        ReadFromDb readFromDb = new ReadFromDb("test");
-        List<Crypto> cryptoPurchases = readFromDb.readCryptoPurchaseByUserId(userId);
+        List<Crypto> cryptoPurchases = dbConnection.read().readCryptoPurchaseByUserId(userId);
         List<Crypto> cryptoBase = new ArrayList<>();
         List<String> ownedCryptoSymbols = new ArrayList<>();
 
@@ -195,8 +193,7 @@ public class BaseService {
             returns list of fully initialized commodity objects,
             by user id with the purchase info list
          */
-        ReadFromDb readFromDb = new ReadFromDb("test");
-        List<Commodities> commodityPurchases = readFromDb.readCommodityPurchaseInfoByUserId(userId);
+        List<Commodities> commodityPurchases = dbConnection.read().readCommodityPurchaseInfoByUserId(userId);
         List<Commodities> commodityBase = new ArrayList<>();
         List<String> ownedCommodityNames = new ArrayList<>();
 
@@ -273,8 +270,7 @@ public class BaseService {
         user.getAssets().addPassiveResource(newResource);
 
         //add to database
-        InsertIntoDb insertIntoDb = new InsertIntoDb("test");
-        insertIntoDb.insertPassiveResource(user.getUserId(), newResource);
+        dbConnection.add().insertPassiveResource(user.getUserId(), newResource);
 
         return "Asset added successfully!";
     }
@@ -331,7 +327,6 @@ public class BaseService {
             //Add to DB and RAM
             //Last- add to user
             AlphaVantageAPI alphaVantageAPI = new AlphaVantageAPI();
-            InsertIntoDb insert = new InsertIntoDb("test");
             switch (jsonObject.getString("assetType")){
                 case "stock":
                     try {
@@ -350,9 +345,9 @@ public class BaseService {
                         stock.setMarketOpen(yahooFinanceAPI.isMarketOpen());
                         stock.setRecommendationKey(yahooFinanceAPI.getRecommendationKey());
 
-                        insert.insertStock(stock); //Add to DB
+                        dbConnection.add().insertStock(stock); //Add to DB
                         currentData.getAssetManager().addStock(stock); //Add to RAM
-                    } catch (UnirestException e) {
+                    } catch (UnirestException | JSONException e) {
                         String errorMessage = "YahooFinanceAPI fail for symbol " + jsonObject.getString("symbol");
                         logger.error(errorMessage);
                         return "Such a stock doesn't exist";
@@ -375,9 +370,9 @@ public class BaseService {
                         index.setCurrencySymbol("$");
                         index.setMarketOpen(true);
 
-                        insert.insertIndex(index); //Add to DB
+                        dbConnection.add().insertIndex(index); //Add to DB
                         currentData.getAssetManager().addIndex(index); //Add to RAM
-                    } catch (UnirestException e) {
+                    } catch (UnirestException | JSONException e) {
                         String errorMessage = "AlphaVantageAPI fail for index " + jsonObject.getString("symbol");
                         logger.error(errorMessage);
                         return "Index matchers not found!";
@@ -397,9 +392,9 @@ public class BaseService {
                         //information below not provided by available API
                         crypto.setDescription("description from api");
 
-                        insert.insertCrypto(crypto); //Add to DB
+                        dbConnection.add().insertCrypto(crypto); //Add to DB
                         currentData.getAssetManager().addCrypto(crypto); //Add to RAM
-                    } catch (UnirestException e) {
+                    } catch (UnirestException | JSONException e) {
                         String errorMessage = "AlphaVantageAPI fail for crypto " + jsonObject.getString("symbol");
                         logger.error(errorMessage);
                         e.printStackTrace();
@@ -416,7 +411,7 @@ public class BaseService {
                     commodity.setExchangeName("exchange from API");
                     commodity.setCurrentMarketPrice(0);
 
-                    insert.insertCommodity(commodity);
+                    dbConnection.add().insertCommodity(commodity);
                     currentData.getAssetManager().addCommodity(commodity);
                     break;
             }
@@ -430,7 +425,6 @@ public class BaseService {
             Method adds asset to user object
             Called in addAsset method
          */
-        InsertIntoDb insert = new InsertIntoDb("test");
         switch (jsonObject.getString("assetType")){
             case "stock":
                 Stock stock = currentData.getAssetManager().getStockBySymbol(jsonObject.getString("symbol"));
@@ -439,7 +433,7 @@ public class BaseService {
                 stock.calculatePercentChange();
                 stock.addPurchase(purchaseInfo);
                 user.getAssets().addStock(stock);
-                insert.insertStockPurchaseInfo(user.getUserId(), purchaseInfo);
+                dbConnection.add().insertStockPurchaseInfo(user.getUserId(), purchaseInfo);
                 break;
             case "index":
                 Index index = currentData.getAssetManager().getIndexBySymbol(jsonObject.getString("symbol"));
@@ -448,7 +442,7 @@ public class BaseService {
                 index.calculatePercentChange();
                 index.addPurchase(purchaseInfo);
                 user.getAssets().addIndex(index);
-                insert.insertIndexPurchaseInfo(user.getUserId(), purchaseInfo);
+                dbConnection.add().insertIndexPurchaseInfo(user.getUserId(), purchaseInfo);
                 break;
             case "crypto":
                 Crypto crypto = currentData.getAssetManager().getCryptoBySymbol(jsonObject.getString("symbol"));
@@ -457,7 +451,7 @@ public class BaseService {
                 crypto.calculatePercentChange();
                 crypto.addPurchase(purchaseInfo);
                 user.getAssets().addCrypto(crypto);
-                insert.insertCryptoPurchaseInfo(user.getUserId(), purchaseInfo);
+                dbConnection.add().insertCryptoPurchaseInfo(user.getUserId(), purchaseInfo);
                 break;
             case "commodity":
                 Commodities commodity = currentData.getAssetManager().getCommodityByName(jsonObject.getString("symbol"));
@@ -466,7 +460,7 @@ public class BaseService {
                 commodity.calculatePercentChange();
                 commodity.addPurchase(purchaseInfo);
                 user.getAssets().addCommodity(commodity);
-                insert.insertCommodityPurchaseInfo(user.getUserId(), purchaseInfo);
+                dbConnection.add().insertCommodityPurchaseInfo(user.getUserId(), purchaseInfo);
                 break;
         }
     }
@@ -492,8 +486,7 @@ public class BaseService {
         else {
             return "fail";
         }
-        InsertIntoDb insert = new InsertIntoDb("test");
-        insert.update2FA(user);
+        dbConnection.add().update2FA(user);
         return "success";
     }
     public String changeUsername(String newUsername, User user){
@@ -507,8 +500,7 @@ public class BaseService {
                 return "Invalid username";
         }
         user.setUserName(newUsername);
-        InsertIntoDb insert = new InsertIntoDb("test");
-        insert.updateUsername(user);
+        dbConnection.add().updateUsername(user);
         return "success";
     }
     public String changeEmail(String newEmail, User user){
@@ -520,8 +512,7 @@ public class BaseService {
         newEmail = newEmail.replace("=","");
         newEmail = newEmail.replace("%40", "@");
         user.setEmail(newEmail);
-        InsertIntoDb insert = new InsertIntoDb("test");
-        insert.updateEmail(user);
+        dbConnection.add().updateEmail(user);
         return "success";
     }
     public String changePassword(JSONObject jsonObject, User user){
@@ -530,15 +521,6 @@ public class BaseService {
             jsonObject contains user input
             return response (for client)
          */
-
-        //algorituma (proveri go posle i toq dali e adekvaten)
-        //check if current password is entered correctly
-        //check validity of new password
-        //check if passwords match
-        //generate salt and hash for new password
-        //add new salt and hash to db
-        //add new password to ram
-        //return values
         if(!user.checkPassword(jsonObject.getString("currentPassword"))){
             return "Incorrect current password!";
         }
@@ -551,8 +533,7 @@ public class BaseService {
         List<String> newCredentials = user.generateSaltAndHash(jsonObject.getString("newPassword"));
         user.setPassword(newCredentials.get(0));
         user.setSalt(newCredentials.get(1));
-        InsertIntoDb insert = new InsertIntoDb("test");
-        insert.updatePassword(user);
+        dbConnection.add().updatePassword(user);
         logger.info("user " + user.getUserName() + " changed his password");
         return "success";
     }
@@ -606,8 +587,7 @@ public class BaseService {
         }
 
         user.addNotification(newNotification);
-        InsertIntoDb insert = new InsertIntoDb("test");
-        insert.insertNotification(user.getUserId(), newNotification);
+        dbConnection.add().insertNotification(user.getUserId(), newNotification);
         return "success";
     }
 
@@ -618,7 +598,6 @@ public class BaseService {
             return response (for client)
          */
 
-        DeleteFromDb deleteFromDb = new DeleteFromDb("test");
         try {
             user.getAssets().removeAsset(jsonObject.getString("assetType"), jsonObject.getString("assetName"));
         } catch (AssetNotFoundException e) {
@@ -630,19 +609,19 @@ public class BaseService {
         }
         switch (jsonObject.getString("assetType")){
             case "stock":
-                deleteFromDb.deleteAllStockPurchases(user.getUserId(), jsonObject.getString("assetName"));
+                dbConnection.delete().deleteAllStockPurchases(user.getUserId(), jsonObject.getString("assetName"));
                 break;
             case "index":
-                deleteFromDb.deleteIndexPurchases(user.getUserId(), jsonObject.getString("assetName"));
+                dbConnection.delete().deleteIndexPurchases(user.getUserId(), jsonObject.getString("assetName"));
                 break;
             case "crypto":
-                deleteFromDb.deleteCryptoPurchases(user.getUserId(), jsonObject.getString("assetName"));
+                dbConnection.delete().deleteCryptoPurchases(user.getUserId(), jsonObject.getString("assetName"));
                 break;
             case "commodity":
-                deleteFromDb.deleteCommodityPurchases(user.getUserId(), jsonObject.getString("assetName"));
+                dbConnection.delete().deleteCommodityPurchases(user.getUserId(), jsonObject.getString("assetName"));
                 break;
             case "passive-resource":
-                deleteFromDb.deletePassiveResource(user.getUserId(), jsonObject.getString("assetName"));
+                dbConnection.delete().deletePassiveResource(user.getUserId(), jsonObject.getString("assetName"));
                 break;
             default:
                 return "Unexpected error occurred! Couldn't remove asset!";
@@ -660,9 +639,8 @@ public class BaseService {
             return "Failed to locate passive resource";
         }
         user.getAssets().getPassiveResourceByName(jsonObject.getString("name")).setCurrentMarketPrice(jsonObject.getDouble("price"));
-        InsertIntoDb update = new InsertIntoDb("test");
         try {
-            update.updatePassiveResourceCurrentPrice(user.getUserId(), jsonObject.getDouble("price"), jsonObject.getString("name"));
+            dbConnection.add().updatePassiveResourceCurrentPrice(user.getUserId(), jsonObject.getDouble("price"), jsonObject.getString("name"));
         } catch (SQLException throwables) {
             return "Failed to update passive resource!";
         }
@@ -676,9 +654,8 @@ public class BaseService {
             return response (for client)
          */
 
-        DeleteFromDb deleteFromDb = new DeleteFromDb("test");
         try {
-            deleteFromDb.deleteNotification(user.getUserId(), notificationName);
+            dbConnection.delete().deleteNotification(user.getUserId(), notificationName);
         } catch (SQLException throwables) {
             String errorMessage = "Delete Notification fail for notification: " + notificationName
                     + " for user with Id: " + user.getUserId();
@@ -716,7 +693,6 @@ public class BaseService {
         map.put("price", String.valueOf(jsonObject.getDouble("price")));
         map.put("quantity", String.valueOf(jsonObject.getDouble("quantity")));
 
-        InsertIntoDb insertIntoDb = new InsertIntoDb("test");
 
         if(jsonObject.getString("assetSymbol") != null && !jsonObject.getString("assetSymbol").equals("")) {
             switch (jsonObject.getString("assetType")) {
@@ -724,7 +700,7 @@ public class BaseService {
                     purchaseInfo.setStockSymbol(jsonObject.getString("assetSymbol"));
 
                     //add new purchase to DB
-                    insertIntoDb.insertStockPurchaseInfo(user.getUserId(), purchaseInfo);
+                    dbConnection.add().insertStockPurchaseInfo(user.getUserId(), purchaseInfo);
                     //add new purchase to user
                     user.getAssets().addPurchaseToResource(jsonObject.getString("assetType"), jsonObject.getString("assetSymbol"), purchaseInfo);
                     break;
@@ -732,7 +708,7 @@ public class BaseService {
                     purchaseInfo.setStockSymbol(jsonObject.getString("assetSymbol"));
 
                     //add new purchase to DB
-                    insertIntoDb.insertIndexPurchaseInfo(user.getUserId(), purchaseInfo);
+                    dbConnection.add().insertIndexPurchaseInfo(user.getUserId(), purchaseInfo);
                     //add new purchase to user
                     user.getAssets().addPurchaseToResource(jsonObject.getString("assetType"), jsonObject.getString("assetSymbol"), purchaseInfo);
                     break;
@@ -740,7 +716,7 @@ public class BaseService {
                     purchaseInfo.setStockSymbol(jsonObject.getString("assetSymbol"));
 
                     //add new purchase to DB
-                    insertIntoDb.insertCryptoPurchaseInfo(user.getUserId(), purchaseInfo);
+                    dbConnection.add().insertCryptoPurchaseInfo(user.getUserId(), purchaseInfo);
                     //add new purchase to RAM
                     user.getAssets().addPurchaseToResource(jsonObject.getString("assetType"), jsonObject.getString("assetSymbol"), purchaseInfo);
                 case "commodity":
@@ -748,7 +724,7 @@ public class BaseService {
                     purchaseInfo.setStockSymbol(jsonObject.getString("assetName"));
 
                     //add new purchase to DB
-                    insertIntoDb.insertCommodityPurchaseInfo(user.getUserId(), purchaseInfo);
+                    dbConnection.add().insertCommodityPurchaseInfo(user.getUserId(), purchaseInfo);
                     //add new purchase to RAM
                     user.getAssets().addPurchaseToResource(jsonObject.getString("assetType"), jsonObject.getString("assetName"), purchaseInfo);
                     break;

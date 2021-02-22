@@ -1,6 +1,5 @@
 package com.diplomna.database.delete;
 
-import com.diplomna.database.delete.sub.*;
 import com.diplomna.restapi.service.BaseService;
 import com.diplomna.users.sub.User;
 import org.slf4j.Logger;
@@ -8,81 +7,98 @@ import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class DeleteFromDb {
-    private String connString;
+
     private Connection con;
-    private String user;
-    private String password;
-    public String databaseName;
     private final Logger logger;
-    public DeleteFromDb(String databaseName){
-        user = "root";
-        password = "1234";
+    private final String databaseName;
+
+    public DeleteFromDb(Connection con, String databaseName){
+        this.con = con;
         this.databaseName = databaseName;
         this.logger = LoggerFactory.getLogger(DeleteFromDb.class);
-        this.connString = "jdbc:mysql://localhost:3306/?user="
-                + user + "&password=" + password;
-        try {
-            this.con = DriverManager.getConnection(connString);
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-            String errorMessage = "Database connection failed in" +
-                    " DeleteFromDB class. Message: \n"
-                    + throwables.getMessage();
-            logger.error(errorMessage);
-        }
     }
 
-    public void deleteAllStockPurchases(int userID, String stockSymbol){
-        DeleteFromStock deleteFromStock = new DeleteFromStock(this.con, this.databaseName);
+    public void deleteAllStockPurchases(int userId, String stockSymbol){
         try {
-            deleteFromStock.deleteAllStockPurchases(userID, stockSymbol);
+            String sql = "DELETE FROM `" + databaseName + "`.stock_purchase_info " +
+                    "WHERE user_id = ? and stock_symbol = ?;";
+            PreparedStatement statement = con.prepareStatement(sql);
+            statement.setInt(1, userId);
+            statement.setString(2,stockSymbol);
+            statement.executeUpdate();
         } catch (SQLException throwables) {
+            logger.error("deleteAllStockPurchases failed\n" + throwables.getMessage());
             throwables.printStackTrace();
         }
     }
 
-    public void deletePassiveResource(int userID, String name){
-        DeleteFromPassiveResource deleteFromPassiveResource = new DeleteFromPassiveResource(this.con, this.databaseName);
+    public void deletePassiveResource(int userId, String name){
         try {
-            deleteFromPassiveResource.deletePassiveResource(userID, name);
+            String sql = "DELETE FROM `" + databaseName + "`.passive_resource " +
+                    "WHERE user_id = ? and name = ?;";
+            PreparedStatement statement = con.prepareStatement(sql);
+            statement.setInt(1,userId);
+            statement.setString(2,name);
+            statement.executeUpdate();
         } catch (SQLException throwables) {
+            logger.error("deletePassiveResource failed\n" + throwables.getMessage());
             throwables.printStackTrace();
         }
     }
 
-    public void deleteIndexPurchases(int userID, String indexSymbol){
-        DeleteFromIndex deleteFromIndex = new DeleteFromIndex(this.con, this.databaseName);
+    public void deleteIndexPurchases(int userId, String indexSymbol){
         try {
-            deleteFromIndex.deleteAllIndexPurchases(userID, indexSymbol);
+            String sql = "DELETE FROM `" + databaseName + "`.index_purchase_info " +
+                    "WHERE user_id = ? and index_symbol = ?;";
+            PreparedStatement statement = con.prepareStatement(sql);
+            statement.setInt(1,userId);
+            statement.setString(2,indexSymbol);
+            statement.executeUpdate();
         } catch (SQLException throwables) {
+            logger.error("deleteIndexPurchases failed\n" + throwables.getMessage());
             throwables.printStackTrace();
         }
     }
 
-    public void deleteCryptoPurchases(int userID, String cryptoSymbol){
-        DeleteFromCrypto deleteFromCrypto = new DeleteFromCrypto(this.con, this.databaseName);
+    public void deleteCryptoPurchases(int userId, String cryptoSymbol){
         try {
-            deleteFromCrypto.deleteAllCryptoPurchases(userID, cryptoSymbol);
+            String sql = "DELETE FROM `" + databaseName + "`.crypto_purchase_info " +
+                    "WHERE user_id = ? and crypto_symbol = ?;";
+            PreparedStatement statement = con.prepareStatement(sql);
+            statement.setInt(1,userId);
+            statement.setString(2,cryptoSymbol);
+            statement.executeUpdate();
         } catch (SQLException throwables) {
+            logger.error("deleteCryptoPurchases failed\n" + throwables.getMessage());
             throwables.printStackTrace();
         }
     }
 
-    public void deleteCommodityPurchases(int userID, String name){
-        DeleteFromCommodities deleteFromCommodities = new DeleteFromCommodities(this.con, this.databaseName);
+    public void deleteCommodityPurchases(int userId, String name){
         try {
-            deleteFromCommodities.deleteAllCommodityPurchases(userID, name);
+            String sql = "DELETE FROM `" + databaseName + "`.commodity_purchase_info " +
+                    "WHERE user_id = ? and commodity_name = ?;";
+            PreparedStatement statement = con.prepareStatement(sql);
+            statement.setInt(1,userId);
+            statement.setString(2,name);
+            statement.executeUpdate();
         } catch (SQLException throwables) {
+            logger.error("deleteCommodityPurchases failed\n" + throwables.getMessage());
             throwables.printStackTrace();
         }
     }
 
     public void deleteNotification(int userId, String notificationName) throws SQLException{
-        DeleteFromNotification deleteFromNotification = new DeleteFromNotification(this.con, this.databaseName);
-        deleteFromNotification.deleteNotification(userId, notificationName);
+        String sql = "DELETE FROM `" + databaseName + "`.notification " +
+                "WHERE user_id = ? and notification_name = ?;";
+        PreparedStatement statement = con.prepareStatement(sql);
+        statement.setInt(1,userId);
+        statement.setString(2,notificationName);
+        statement.executeUpdate();
     }
 
 }

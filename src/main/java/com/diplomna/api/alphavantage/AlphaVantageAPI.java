@@ -68,7 +68,7 @@ public class AlphaVantageAPI {
     }
 
 
-    public HashMap<String, String> getInitialIndex(){
+    public HashMap<String, String> getInitialIndex() throws JSONException{
         //return initial index information as a HashMap
         HashMap<String, String> info = new HashMap<>();
         info.put("name", response.getBody().getObject().getJSONArray("bestMatches").getJSONObject(0).getString("2. name"));

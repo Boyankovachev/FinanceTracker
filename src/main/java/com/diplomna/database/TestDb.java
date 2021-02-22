@@ -1,26 +1,7 @@
 package com.diplomna.database;
 
-import com.diplomna.assets.finished.Crypto;
-import com.diplomna.assets.finished.Index;
-import com.diplomna.assets.finished.Stock;
-import com.diplomna.assets.sub.ActiveAsset;
-import com.diplomna.database.create.CreateDatabase;
-import com.diplomna.database.create.InsertTestDataIntoDb;
-import com.diplomna.database.delete.DeleteFromDb;
-import com.diplomna.database.delete.sub.DeleteFromStock;
-import com.diplomna.database.insert.InsertIntoDb;
-import com.diplomna.database.read.ReadFromDb;
-import com.diplomna.users.UserManager;
-import com.diplomna.users.sub.User;
-import org.springframework.web.servlet.view.RedirectView;
-
-import java.sql.SQLException;
-import java.util.List;
-
 public class TestDb {
     public static void main(String []args) {
-
-
         //CreateDatabase createDatabase = new CreateDatabase("test");
         //createDatabase.createWholeDb();
 
@@ -85,6 +66,7 @@ public class TestDb {
         }
 
          */
+        /*
         ReadFromDb readFromDb = new ReadFromDb("test");
         List<Crypto> stocks = null;
         try {
@@ -95,5 +77,6 @@ public class TestDb {
         for(Crypto stock: stocks){
             stock.printCrypto();
         }
+         */
     }
 }
