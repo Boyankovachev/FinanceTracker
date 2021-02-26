@@ -141,10 +141,8 @@ public class UpdateService {
         int i;
         for(i=0; i<indexList.size(); i++){
             try {
-                alphaVantageAPI.setIndex(indexList.get(i).getSymbol());
-
                 try {
-                    double indexCurrentPrice = Double.parseDouble(alphaVantageAPI.getIndexPrice());
+                    double indexCurrentPrice = Double.parseDouble(alphaVantageAPI.getIndexPrice(indexList.get(i).getSymbol()));
                     indexList.get(i).setCurrentMarketPrice(indexCurrentPrice);
                 }catch (JSONException e){
                     indexList.get(i).setCurrentMarketPrice(0);
@@ -153,7 +151,6 @@ public class UpdateService {
                     logger.error(errorMessage);
                     e.printStackTrace();
                 }
-
 
                 //information below not provided by available API
                 indexList.get(i).setMarketOpen(true);
@@ -185,10 +182,8 @@ public class UpdateService {
         for(i=0; i<cryptos.size(); i++){
             try {
                 AlphaVantageAPI alphaVantageAPI = new AlphaVantageAPI();
-                alphaVantageAPI.setCrypto(cryptos.get(i).getSymbol());
                 try {
-                    double cryptoCurrentPrice = Double.parseDouble(alphaVantageAPI.getCrypto().get("price"));
-                    System.out.println("crypto symbol: " + cryptos.get(i).getSymbol() + "  price: " + cryptoCurrentPrice);
+                    double cryptoCurrentPrice = Double.parseDouble(alphaVantageAPI.getCrypto(cryptos.get(i).getSymbol()).get("price"));
                     cryptos.get(i).setCurrentMarketPrice(cryptoCurrentPrice);
                 }catch (JSONException e){
                     cryptos.get(i).setCurrentMarketPrice(0);

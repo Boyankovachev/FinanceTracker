@@ -5,6 +5,7 @@ import com.diplomna.users.sub.User;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -36,9 +37,9 @@ public class UserTest {
     @Test
     public void testPasswords(){
         User user = new User();
-        List<String> data = user.generateSaltAndHash("parolata1234");
-        user.setPassword(data.get(0));
-        user.setSalt(data.get(1));
+        HashMap<String, String> data = user.generateSaltAndHash("parolata1234");
+        user.setPassword(data.get("hash"));
+        user.setSalt(data.get("salt"));
         assertTrue(user.checkPassword("parolata1234"));
     }
 

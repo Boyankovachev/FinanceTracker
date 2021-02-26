@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
@@ -46,9 +47,9 @@ public class LoginAndRegisterService {
 
         User user = new User();
         user.setUserName(inputUsername);
-        List<String> temp2 = user.generateSaltAndHash(inputPassword);
-        user.setPassword(temp2.get(0));
-        user.setSalt(temp2.get(1));
+        HashMap<String , String> temp2 = user.generateSaltAndHash(inputPassword);
+        user.setPassword(temp2.get("hash"));
+        user.setSalt(temp2.get("salt"));
 
         if(!inputEmail.equals("")){
             inputEmail = inputEmail.replace("%40", "@");

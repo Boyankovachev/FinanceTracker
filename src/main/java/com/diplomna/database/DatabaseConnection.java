@@ -32,9 +32,9 @@ public class DatabaseConnection {
         try {
             this.con = DriverManager.getConnection(connString);
 
-            read = new ReadFromDb(this.con, databaseName);
-            add = new InsertIntoDb(this.con, databaseName);
-            delete = new DeleteFromDb(this.con, databaseName);
+            this.read = new ReadFromDb(this.con, databaseName);
+            this.add = new InsertIntoDb(this.con, databaseName);
+            this.delete = new DeleteFromDb(this.con, databaseName);
 
         } catch (SQLException throwables) {
             logger.error("Couldn't create DB connection");

@@ -5,10 +5,7 @@ import com.google.common.hash.Hashing;
 
 import java.nio.charset.StandardCharsets;
 import java.security.SecureRandom;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class User {
     private String userName;
@@ -118,7 +115,7 @@ public class User {
         return notifications;
     }
 
-    public List<String> generateSaltAndHash(String password){
+    public HashMap<String, String> generateSaltAndHash(String password){
         /*
             generate random salt
             add to user input password + the pepper
@@ -137,10 +134,9 @@ public class User {
                 .toString();
 
         //return result
-        //result.get(0) - password, result.get(1) - salt
-        List<String> result  = new ArrayList<>();
-        result.add(hash);
-        result.add(saltString);
+        HashMap<String, String> result= new HashMap<>();
+        result.put("hash", hash);
+        result.put("salt", saltString);
         return result;
     }
 

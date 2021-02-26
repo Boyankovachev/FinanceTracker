@@ -12,12 +12,10 @@ import java.util.HashMap;
 
 public class AlphaVantageAPI {
 
-    private String rapidapiKey;
-    private String rapidapiHost;
-    private String rapidapiKeyValue;
-    private String rapidapiHostValue;
-
-    private HttpResponse<JsonNode> response = null;
+    private final String rapidapiKey;
+    private final String rapidapiHost;
+    private final String rapidapiKeyValue;
+    private final String rapidapiHostValue;
 
     public AlphaVantageAPI(){
         rapidapiHostValue = "alpha-vantage.p.rapidapi.com";
@@ -26,62 +24,51 @@ public class AlphaVantageAPI {
         rapidapiKeyValue = "7d138e1390mshe8742377115d21fp1dd201jsnb3b741a37493";
     }
 
-    public void setIndex(String symbol) throws UnirestException {
-        //Set response object to desired index
-        this.response = Unirest.get("https://alpha-vantage.p.rapidapi.com/query?function=GLOBAL_QUOTE&symbol=" + symbol)
-                .header(rapidapiKey, rapidapiKeyValue)
-                .header(rapidapiHost, rapidapiHostValue)
-                .asJson();
-    }
-    public void setInitialIndex(String symbol) throws UnirestException {
-        //Set response object to desired initial index
-        this.response = Unirest.get("https://alpha-vantage.p.rapidapi.com/query?keywords=" + symbol + "&function=SYMBOL_SEARCH&datatype=json")
-                .header(rapidapiKey, rapidapiKeyValue)
-                .header(rapidapiHost, rapidapiHostValue)
-                .asJson();
-    }
-
-    public void setCrypto(String symbol) throws UnirestException {
-        //Set response object to desired cryptocurrency
-        this.response = Unirest.get("https://alpha-vantage.p.rapidapi.com/query?from_currency=" + symbol + "&function=CURRENCY_EXCHANGE_RATE&to_currency=USD")
-                .header(rapidapiKey, rapidapiKeyValue)
-                .header(rapidapiHost, rapidapiHostValue)
-                .asJson();
-    }
-
     public JsonNode getStockAndIndexTimeSeries(String symbol, String period) throws UnirestException, JSONException {
         //Get stock historical data
-        this.response = Unirest.get("https://alpha-vantage.p.rapidapi.com/query?symbol=" + symbol + "&function=TIME_SERIES_" + period + "_ADJUSTED&datatype=json")
+        HttpResponse<JsonNode> response = Unirest.get("https://alpha-vantage.p.rapidapi.com/query?symbol=" + symbol + "&function=TIME_SERIES_" + period + "_ADJUSTED&datatype=json")
                 .header(rapidapiKey, rapidapiKeyValue)
                 .header(rapidapiHost, rapidapiHostValue)
                 .asJson();
-        return this.response.getBody();
+        return response.getBody();
     }
 
     public JsonNode getCryptoTimeSeries(String symbol, String period) throws UnirestException, JSONException {
         //Get stock historical data
-        this.response = Unirest.get("https://alpha-vantage.p.rapidapi.com/query?market=USD&symbol=" + symbol + "&function=DIGITAL_CURRENCY_" + period)
+        HttpResponse<JsonNode> response = Unirest.get("https://alpha-vantage.p.rapidapi.com/query?market=USD&symbol=" + symbol + "&function=DIGITAL_CURRENCY_" + period)
                 .header(rapidapiKey, rapidapiKeyValue)
                 .header(rapidapiHost, rapidapiHostValue)
                 .asJson();
-        return this.response.getBody();
+        return response.getBody();
     }
 
-
-    public HashMap<String, String> getInitialIndex() throws JSONException{
+    public HashMap<String, String> getInitialIndex(String symbol) throws JSONException, UnirestException {
+        HttpResponse<JsonNode> response = Unirest.get("https://alpha-vantage.p.rapidapi.com/query?keywords=" + symbol + "&function=SYMBOL_SEARCH&datatype=json")
+                .header(rapidapiKey, rapidapiKeyValue)
+                .header(rapidapiHost, rapidapiHostValue)
+                .asJson();
         //return initial index information as a HashMap
+
         HashMap<String, String> info = new HashMap<>();
         info.put("name", response.getBody().getObject().getJSONArray("bestMatches").getJSONObject(0).getString("2. name"));
         info.put("currency", response.getBody().getObject().getJSONArray("bestMatches").getJSONObject(0).getString("8. currency"));
         return info;
     }
 
-    public String getIndexPrice() throws JSONException{
+    public String getIndexPrice(String symbol) throws JSONException, UnirestException {
+        HttpResponse<JsonNode> response = Unirest.get("https://alpha-vantage.p.rapidapi.com/query?function=GLOBAL_QUOTE&symbol=" + symbol)
+                .header(rapidapiKey, rapidapiKeyValue)
+                .header(rapidapiHost, rapidapiHostValue)
+                .asJson();
         //return index current price as String
         return response.getBody().getObject().getJSONObject("Global Quote").getString("05. price");
     }
 
-    public HashMap<String, String> getCrypto() throws JSONException {
+    public HashMap<String, String> getCrypto(String symbol) throws JSONException, UnirestException {
+        HttpResponse<JsonNode> response = Unirest.get("https://alpha-vantage.p.rapidapi.com/query?from_currency=" + symbol + "&function=CURRENCY_EXCHANGE_RATE&to_currency=USD")
+                .header(rapidapiKey, rapidapiKeyValue)
+                .header(rapidapiHost, rapidapiHostValue)
+                .asJson();
         //return crypto information as a HashMap
         HashMap<String, String> info = new HashMap<>();
         info.put("name", response.getBody().getObject().getJSONObject("Realtime Currency Exchange Rate").getString("2. From_Currency Name"));

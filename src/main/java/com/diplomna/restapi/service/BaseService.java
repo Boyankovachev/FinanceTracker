@@ -357,12 +357,10 @@ public class BaseService {
                     try {
                         Index index = new Index();
                         index.setSymbol(jsonObject.getString("symbol"));
-                        alphaVantageAPI.setInitialIndex(jsonObject.getString("symbol"));
-                        HashMap<String, String> info = alphaVantageAPI.getInitialIndex();
+                        HashMap<String, String> info = alphaVantageAPI.getInitialIndex(jsonObject.getString("symbol"));
                         index.setCurrency(info.get("currency"));
                         index.setName(info.get("name"));
-                        alphaVantageAPI.setIndex(jsonObject.getString("symbol"));
-                        index.setCurrentMarketPrice(Double.parseDouble(alphaVantageAPI.getIndexPrice()));
+                        index.setCurrentMarketPrice(Double.parseDouble(alphaVantageAPI.getIndexPrice(jsonObject.getString("symbol"))));
 
                         //information below not provided by available API
                         index.setDescription("description from api");
@@ -382,8 +380,7 @@ public class BaseService {
                     try {
                         Crypto crypto = new Crypto();
                         crypto.setSymbol(jsonObject.getString("symbol"));
-                        alphaVantageAPI.setCrypto(jsonObject.getString("symbol"));
-                        HashMap<String, String> info = alphaVantageAPI.getCrypto();
+                        HashMap<String, String> info = alphaVantageAPI.getCrypto(jsonObject.getString("symbol"));
                         crypto.setName(info.get("name"));
                         crypto.setCurrency(info.get("currency"));
                         crypto.setCurrencySymbol(info.get("currencySymbol"));
@@ -530,9 +527,9 @@ public class BaseService {
         if(jsonObject.getString("newPassword").length() < 4){
             return "New password must be at least 4 characters long!";
         }
-        List<String> newCredentials = user.generateSaltAndHash(jsonObject.getString("newPassword"));
-        user.setPassword(newCredentials.get(0));
-        user.setSalt(newCredentials.get(1));
+        HashMap<String, String> newCredentials = user.generateSaltAndHash(jsonObject.getString("newPassword"));
+        user.setPassword(newCredentials.get("hash"));
+        user.setSalt(newCredentials.get("salt"));
         dbConnection.add().updatePassword(user);
         logger.info("user " + user.getUserName() + " changed his password");
         return "success";
