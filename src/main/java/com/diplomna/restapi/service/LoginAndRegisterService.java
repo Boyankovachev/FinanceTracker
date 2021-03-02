@@ -6,6 +6,7 @@ import com.diplomna.database.read.ReadFromDb;
 import com.diplomna.email.EmailService;
 import com.diplomna.users.UserManager;
 import com.diplomna.users.sub.User;
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,33 +32,27 @@ public class LoginAndRegisterService {
         dbConnection = new DatabaseConnection();
     }
 
-    public String createUser(String inputString){
+    public String createUser(JSONObject jsonObject){
         /*
             Create user and add to database
          */
-        String[] temp = inputString.split("&");
-        String inputUsername = temp[0].substring(9);
-        String inputPassword = temp[1].substring(9);
-        String inputPassword2 = temp[2].substring(10);
-        String inputEmail = temp[3].substring(6);
-
-        if(!inputPassword.equals(inputPassword2)){
+        if(!jsonObject.getString("password").equals(jsonObject.getString("password2"))){
             return "Passwords don't match";
         }
 
         User user = new User();
-        user.setUserName(inputUsername);
-        HashMap<String , String> temp2 = user.generateSaltAndHash(inputPassword);
+        user.setUserName(jsonObject.getString("username"));
+        HashMap<String , String> temp2 = user.generateSaltAndHash(jsonObject.getString("password"));
         user.setPassword(temp2.get("hash"));
         user.setSalt(temp2.get("salt"));
 
-        if(!inputEmail.equals("")){
-            inputEmail = inputEmail.replace("%40", "@");
-            if(isEmailTaken(inputEmail)){
+        if(!jsonObject.getString("email").equals("")){
+            String email = jsonObject.getString("email").replace("%40", "@");
+            if(isEmailTaken(email)){
                 return "Email already taken";
             }
             else {
-                user.setEmail(inputEmail);
+                user.setEmail(email);
             }
         }
         dbConnection.add().insertUser(user);
@@ -73,21 +68,18 @@ public class LoginAndRegisterService {
         return userManager.isEmailPresent(email);
     }
 
-    public String verifyLogin(String inputString){
+    public String verifyLogin(JSONObject jsonObject){
         /*
             Check password and username
             return response
          */
-        String[] temp = inputString.split("&");
-        String inputUsername = temp[0].substring(9);
-        String inputPassword = temp[1].substring(9);
         UserManager userManager = dbConnection.read().readUsers();
-        if(!userManager.isUsernamePresent(inputUsername)){
+        if(!userManager.isUsernamePresent(jsonObject.getString("username"))){
             return "Incorrect username or password!";
         }
-        User user = userManager.getUserByName(inputUsername);
+        User user = userManager.getUserByName(jsonObject.getString("username"));
 
-        if(!user.checkPassword(inputPassword)){
+        if(!user.checkPassword(jsonObject.getString("password"))){
             return "Incorrect username or password!";
         }
         return "Successful login!";
@@ -108,10 +100,12 @@ public class LoginAndRegisterService {
         this.authenticateCode = generateKey();
         emailService.sendAuthenticationKeyEmail(authenticateCode, user.getEmail());
     }
+
     private String generateKey(){
         //generate 6 digit random string
         return String.format("%06d", new Random().nextInt(999999));
     }
+
     public boolean checkAuthentication(String input){
         //check 2fa user input
         if(authenticateCode.equals(input)){

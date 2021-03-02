@@ -44,7 +44,7 @@ public class UpdateService {
     private final Logger logger;
     private final DatabaseConnection dbConnection;
 
-    private CurrentData currentData;
+    private final CurrentData currentData;
 
     public UpdateService(){
         this.logger = LoggerFactory.getLogger(BaseService.class);

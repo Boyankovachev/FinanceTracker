@@ -6,13 +6,8 @@ import com.diplomna.assets.AssetManager;
 import com.diplomna.assets.finished.*;
 import com.diplomna.assets.sub.PurchaseInfo;
 import com.diplomna.database.DatabaseConnection;
-import com.diplomna.database.delete.DeleteFromDb;
-import com.diplomna.database.insert.InsertIntoDb;
-import com.diplomna.database.read.ReadFromDb;
 import com.diplomna.date.DatеManager;
 import com.diplomna.exceptions.AssetNotFoundException;
-import com.diplomna.graph.GraphInfo;
-import com.diplomna.graph.GraphInfoHolder;
 import com.diplomna.singleton.CurrentData;
 import com.diplomna.users.sub.AssetType;
 import com.diplomna.users.sub.Notification;
@@ -32,7 +27,6 @@ import java.util.*;
 public class BaseService {
 
     private final Logger logger;
-    private String databaseName;
     private final CurrentData currentData;
     private final DatabaseConnection dbConnection;
 
@@ -315,13 +309,8 @@ public class BaseService {
             }
         }
 
-
         //Check if resource exists in the program
-        if(currentData.getAssetManager().isAssetInList(jsonObject.getString("assetType"), jsonObject.getString("symbol"))){
-            //If resource exists just add it to user
-            addAssetToUser(jsonObject, user, purchaseInfo);
-        }
-        else{
+        if(!currentData.getAssetManager().isAssetInList(jsonObject.getString("assetType"), jsonObject.getString("symbol"))){
             //If resource doesn't exist
             //Create object from API
             //Add to DB and RAM
@@ -413,8 +402,8 @@ public class BaseService {
                     break;
             }
 
-            addAssetToUser(jsonObject, user, purchaseInfo);
         }
+        addAssetToUser(jsonObject, user, purchaseInfo);
         return "success";
     }
     private void addAssetToUser(JSONObject jsonObject, User user, PurchaseInfo purchaseInfo){

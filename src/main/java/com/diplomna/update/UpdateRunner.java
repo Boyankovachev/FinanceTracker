@@ -29,7 +29,6 @@ public class UpdateRunner implements CommandLineRunner {
         CurrentData currentData = CurrentData.getInstance();
         currentData.setAssetManager(assetManager);
 
-
         /*
             update and notification thread
          */
@@ -40,9 +39,9 @@ public class UpdateRunner implements CommandLineRunner {
             updateService.updateAllAssets();
             //check notification status with the new data
             updateService.sendNotifications();
-            if(i==60){
+            if(i==86400){
                 i=0;
-                //update historical data every 60 seconds
+                //update historical data once every 24hours
                 updateService.updateHistoricalData();
             }
             try {
@@ -56,7 +55,7 @@ public class UpdateRunner implements CommandLineRunner {
             }
             i++;
         }
-         */
 
+         */
     }
 }

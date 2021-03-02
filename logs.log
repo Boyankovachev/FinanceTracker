@@ -1,37 +1,28 @@
-2021-02-22 21:17:22.463  INFO 1504 --- [main] com.diplomna.DiplomnaApplication         : Starting DiplomnaApplication using Java 14.0.2 on DESKTOP-IS3KKB5 with PID 1504 (C:\MY SHIT\Code\Java\DiplomnaRabota\1\diplomna\target\classes started by PC in C:\MY SHIT\Code\Java\DiplomnaRabota\1\diplomna)
-2021-02-22 21:17:22.476 DEBUG 1504 --- [main] com.diplomna.DiplomnaApplication         : Running with Spring Boot v2.4.0, Spring v5.3.1
-2021-02-22 21:17:22.479  INFO 1504 --- [main] com.diplomna.DiplomnaApplication         : No active profile set, falling back to default profiles: default
-2021-02-22 21:17:25.127  INFO 1504 --- [main] com.diplomna.DiplomnaApplication         : Started DiplomnaApplication in 3.466 seconds (JVM running for 4.256)
-2021-02-22 21:18:35.184 ERROR 1504 --- [http-nio-8080-exec-4] c.diplomna.database.insert.InsertIntoDb  : Insert stock failed!
-Column count doesn't match value count at row 1
-2021-02-22 21:18:35.195 ERROR 1504 --- [http-nio-8080-exec-4] c.diplomna.database.insert.InsertIntoDb  : insertStockPurchaseInfo failed
-Cannot add or update a child row: a foreign key constraint fails (`test`.`stock_purchase_info`, CONSTRAINT `stock_purchase_info_ibfk_2` FOREIGN KEY (`stock_symbol`) REFERENCES `stock` (`symbol`))
-2021-02-22 21:22:39.138  INFO 5288 --- [main] com.diplomna.DiplomnaApplication         : Starting DiplomnaApplication using Java 14.0.2 on DESKTOP-IS3KKB5 with PID 5288 (C:\MY SHIT\Code\Java\DiplomnaRabota\1\diplomna\target\classes started by PC in C:\MY SHIT\Code\Java\DiplomnaRabota\1\diplomna)
-2021-02-22 21:22:39.141 DEBUG 5288 --- [main] com.diplomna.DiplomnaApplication         : Running with Spring Boot v2.4.0, Spring v5.3.1
-2021-02-22 21:22:39.141  INFO 5288 --- [main] com.diplomna.DiplomnaApplication         : No active profile set, falling back to default profiles: default
-2021-02-22 21:22:41.446  INFO 5288 --- [main] com.diplomna.DiplomnaApplication         : Started DiplomnaApplication in 2.813 seconds (JVM running for 3.362)
-2021-02-22 21:23:26.330 ERROR 5288 --- [http-nio-8080-exec-3] c.diplomna.database.insert.InsertIntoDb  : Insert stock failed!
-Data truncation: Data too long for column 'stock_name' at row 1
-2021-02-22 21:23:26.338 ERROR 5288 --- [http-nio-8080-exec-3] c.diplomna.database.insert.InsertIntoDb  : insertStockPurchaseInfo failed
-Cannot add or update a child row: a foreign key constraint fails (`test`.`stock_purchase_info`, CONSTRAINT `stock_purchase_info_ibfk_2` FOREIGN KEY (`stock_symbol`) REFERENCES `stock` (`symbol`))
-2021-02-22 21:24:27.075  WARN 5288 --- [http-nio-8080-exec-7] o.a.h.c.protocol.ResponseProcessCookies  : Cookie rejected [__cfduid="d1e074aa2bed727cb0a79d48cb69849a81614021866", version:0, domain:alphavantage.co, path:/, expiry:Wed Mar 24 21:24:26 EET 2021] Illegal 'domain' attribute "alphavantage.co". Domain of origin: "alpha-vantage.p.rapidapi.com"
-2021-02-22 21:27:28.863  INFO 5172 --- [main] com.diplomna.DiplomnaApplication         : Starting DiplomnaApplication using Java 14.0.2 on DESKTOP-IS3KKB5 with PID 5172 (C:\MY SHIT\Code\Java\DiplomnaRabota\1\diplomna\target\classes started by PC in C:\MY SHIT\Code\Java\DiplomnaRabota\1\diplomna)
-2021-02-22 21:27:28.869 DEBUG 5172 --- [main] com.diplomna.DiplomnaApplication         : Running with Spring Boot v2.4.0, Spring v5.3.1
-2021-02-22 21:27:28.871  INFO 5172 --- [main] com.diplomna.DiplomnaApplication         : No active profile set, falling back to default profiles: default
-2021-02-22 21:27:31.739  INFO 5172 --- [main] com.diplomna.DiplomnaApplication         : Started DiplomnaApplication in 3.492 seconds (JVM running for 4.011)
-2021-02-22 21:43:23.254  INFO 11524 --- [main] com.diplomna.DiplomnaApplication         : Starting DiplomnaApplication using Java 14.0.2 on DESKTOP-IS3KKB5 with PID 11524 (C:\MY SHIT\Code\Java\DiplomnaRabota\1\diplomna\target\classes started by PC in C:\MY SHIT\Code\Java\DiplomnaRabota\1\diplomna)
-2021-02-22 21:43:23.275 DEBUG 11524 --- [main] com.diplomna.DiplomnaApplication         : Running with Spring Boot v2.4.0, Spring v5.3.1
-2021-02-22 21:43:23.276  INFO 11524 --- [main] com.diplomna.DiplomnaApplication         : No active profile set, falling back to default profiles: default
-2021-02-22 21:43:26.122  INFO 11524 --- [main] com.diplomna.DiplomnaApplication         : Started DiplomnaApplication in 3.386 seconds (JVM running for 3.931)
-2021-02-22 21:43:48.595  INFO 11524 --- [http-nio-8080-exec-6] c.diplomna.restapi.service.BaseService   : Created account with username test4
-2021-02-22 21:44:25.477 ERROR 11524 --- [http-nio-8080-exec-1] o.a.c.c.C.[.[.[/].[dispatcherServlet]    : Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed; nested exception is org.json.JSONException: JSONObject["price"] not found.] with root cause
+2021-03-02 17:59:17.103  INFO 10776 --- [main] com.diplomna.DiplomnaApplication         : Starting DiplomnaApplication using Java 14.0.2 on DESKTOP-IS3KKB5 with PID 10776 (C:\MY SHIT\Code\Java\DiplomnaRabota\1\diplomna\target\classes started by PC in C:\MY SHIT\Code\Java\DiplomnaRabota\1\diplomna)
+2021-03-02 17:59:17.126 DEBUG 10776 --- [main] com.diplomna.DiplomnaApplication         : Running with Spring Boot v2.4.0, Spring v5.3.1
+2021-03-02 17:59:17.126  INFO 10776 --- [main] com.diplomna.DiplomnaApplication         : No active profile set, falling back to default profiles: default
+2021-03-02 17:59:21.285  INFO 10776 --- [main] com.diplomna.DiplomnaApplication         : Started DiplomnaApplication in 4.848 seconds (JVM running for 5.467)
+2021-03-02 18:01:15.674  INFO 5012 --- [main] com.diplomna.DiplomnaApplication         : Starting DiplomnaApplication using Java 14.0.2 on DESKTOP-IS3KKB5 with PID 5012 (C:\MY SHIT\Code\Java\DiplomnaRabota\1\diplomna\target\classes started by PC in C:\MY SHIT\Code\Java\DiplomnaRabota\1\diplomna)
+2021-03-02 18:01:15.674 DEBUG 5012 --- [main] com.diplomna.DiplomnaApplication         : Running with Spring Boot v2.4.0, Spring v5.3.1
+2021-03-02 18:01:15.674  INFO 5012 --- [main] com.diplomna.DiplomnaApplication         : No active profile set, falling back to default profiles: default
+2021-03-02 18:01:17.750  INFO 5012 --- [main] com.diplomna.DiplomnaApplication         : Started DiplomnaApplication in 2.65 seconds (JVM running for 3.162)
+2021-03-02 18:29:46.754  INFO 6336 --- [main] com.diplomna.DiplomnaApplication         : Starting DiplomnaApplication using Java 14.0.2 on DESKTOP-IS3KKB5 with PID 6336 (C:\MY SHIT\Code\Java\DiplomnaRabota\1\diplomna\target\classes started by PC in C:\MY SHIT\Code\Java\DiplomnaRabota\1\diplomna)
+2021-03-02 18:29:46.757 DEBUG 6336 --- [main] com.diplomna.DiplomnaApplication         : Running with Spring Boot v2.4.0, Spring v5.3.1
+2021-03-02 18:29:46.758  INFO 6336 --- [main] com.diplomna.DiplomnaApplication         : No active profile set, falling back to default profiles: default
+2021-03-02 18:29:50.023  INFO 6336 --- [main] com.diplomna.DiplomnaApplication         : Started DiplomnaApplication in 3.923 seconds (JVM running for 4.553)
+2021-03-02 18:30:11.827  INFO 2372 --- [main] com.diplomna.DiplomnaApplication         : Starting DiplomnaApplication using Java 14.0.2 on DESKTOP-IS3KKB5 with PID 2372 (C:\MY SHIT\Code\Java\DiplomnaRabota\1\diplomna\target\classes started by PC in C:\MY SHIT\Code\Java\DiplomnaRabota\1\diplomna)
+2021-03-02 18:30:11.827 DEBUG 2372 --- [main] com.diplomna.DiplomnaApplication         : Running with Spring Boot v2.4.0, Spring v5.3.1
+2021-03-02 18:30:11.827  INFO 2372 --- [main] com.diplomna.DiplomnaApplication         : No active profile set, falling back to default profiles: default
+2021-03-02 18:30:13.969  INFO 2372 --- [main] com.diplomna.DiplomnaApplication         : Started DiplomnaApplication in 2.612 seconds (JVM running for 3.122)
+2021-03-02 18:31:59.120  INFO 3980 --- [main] com.diplomna.DiplomnaApplication         : Starting DiplomnaApplication using Java 14.0.2 on DESKTOP-IS3KKB5 with PID 3980 (C:\MY SHIT\Code\Java\DiplomnaRabota\1\diplomna\target\classes started by PC in C:\MY SHIT\Code\Java\DiplomnaRabota\1\diplomna)
+2021-03-02 18:31:59.136 DEBUG 3980 --- [main] com.diplomna.DiplomnaApplication         : Running with Spring Boot v2.4.0, Spring v5.3.1
+2021-03-02 18:31:59.136  INFO 3980 --- [main] com.diplomna.DiplomnaApplication         : No active profile set, falling back to default profiles: default
+2021-03-02 18:32:01.376  INFO 3980 --- [main] com.diplomna.DiplomnaApplication         : Started DiplomnaApplication in 2.738 seconds (JVM running for 3.236)
+2021-03-02 18:32:11.621 ERROR 3980 --- [http-nio-8080-exec-1] o.a.c.c.C.[.[.[/].[dispatcherServlet]    : Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed; nested exception is java.lang.ArrayIndexOutOfBoundsException: Index 1 out of bounds for length 1] with root cause
 
-org.json.JSONException: JSONObject["price"] not found.
-	at org.json.JSONObject.get(JSONObject.java:471) ~[json-20160212.jar:na]
-	at org.json.JSONObject.getJSONObject(JSONObject.java:636) ~[json-20160212.jar:na]
-	at com.diplomna.api.stock.YahooFinanceAPI.getName(YahooFinanceAPI.java:87) ~[classes/:na]
-	at com.diplomna.restapi.service.BaseService.addAsset(BaseService.java:335) ~[classes/:na]
-	at com.diplomna.restapi.controller.BaseController.addActiveAsset(BaseController.java:242) ~[classes/:na]
+java.lang.ArrayIndexOutOfBoundsException: Index 1 out of bounds for length 1
+	at com.diplomna.restapi.controller.LoginAndRegisterController.HtmlFromStringToJson(LoginAndRegisterController.java:136) ~[classes/:na]
+	at com.diplomna.restapi.controller.LoginAndRegisterController.getRegister(LoginAndRegisterController.java:90) ~[classes/:na]
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[na:na]
 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
@@ -83,140 +74,32 @@ org.json.JSONException: JSONObject["price"] not found.
 	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
 	at java.base/java.lang.Thread.run(Thread.java:832) ~[na:na]
 
-2021-02-22 21:46:58.208  INFO 7744 --- [main] com.diplomna.DiplomnaApplication         : Starting DiplomnaApplication using Java 14.0.2 on DESKTOP-IS3KKB5 with PID 7744 (C:\MY SHIT\Code\Java\DiplomnaRabota\1\diplomna\target\classes started by PC in C:\MY SHIT\Code\Java\DiplomnaRabota\1\diplomna)
-2021-02-22 21:46:58.220 DEBUG 7744 --- [main] com.diplomna.DiplomnaApplication         : Running with Spring Boot v2.4.0, Spring v5.3.1
-2021-02-22 21:46:58.228  INFO 7744 --- [main] com.diplomna.DiplomnaApplication         : No active profile set, falling back to default profiles: default
-2021-02-22 21:47:00.874  INFO 7744 --- [main] com.diplomna.DiplomnaApplication         : Started DiplomnaApplication in 3.294 seconds (JVM running for 3.885)
-2021-02-22 21:47:51.984 ERROR 7744 --- [http-nio-8080-exec-2] c.diplomna.restapi.service.BaseService   : YahooFinanceAPI fail for symbol edghesg
-2021-02-22 21:48:07.992  WARN 7744 --- [http-nio-8080-exec-9] o.a.h.c.protocol.ResponseProcessCookies  : Cookie rejected [__cfduid="d6c1dd505c7210f4fd85a9e920ec5e8e31614023287", version:0, domain:alphavantage.co, path:/, expiry:Wed Mar 24 21:48:07 EET 2021] Illegal 'domain' attribute "alphavantage.co". Domain of origin: "alpha-vantage.p.rapidapi.com"
-2021-02-22 21:48:08.001 ERROR 7744 --- [http-nio-8080-exec-9] o.a.c.c.C.[.[.[/].[dispatcherServlet]    : Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed; nested exception is org.json.JSONException: JSONArray[0] not found.] with root cause
-
-org.json.JSONException: JSONArray[0] not found.
-	at org.json.JSONArray.get(JSONArray.java:199) ~[json-20160212.jar:na]
-	at org.json.JSONArray.getJSONObject(JSONArray.java:362) ~[json-20160212.jar:na]
-	at com.diplomna.api.alphavantage.AlphaVantageAPI.getInitialIndex(AlphaVantageAPI.java:74) ~[classes/:na]
-	at com.diplomna.restapi.service.BaseService.addAsset(BaseService.java:361) ~[classes/:na]
-	at com.diplomna.restapi.controller.BaseController.addActiveAsset(BaseController.java:242) ~[classes/:na]
-	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
-	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[na:na]
-	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
-	at java.base/java.lang.reflect.Method.invoke(Method.java:564) ~[na:na]
-	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:197) ~[spring-web-5.3.1.jar:5.3.1]
-	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:141) ~[spring-web-5.3.1.jar:5.3.1]
-	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:106) ~[spring-webmvc-5.3.1.jar:5.3.1]
-	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:893) ~[spring-webmvc-5.3.1.jar:5.3.1]
-	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:807) ~[spring-webmvc-5.3.1.jar:5.3.1]
-	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87) ~[spring-webmvc-5.3.1.jar:5.3.1]
-	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1061) ~[spring-webmvc-5.3.1.jar:5.3.1]
-	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:961) ~[spring-webmvc-5.3.1.jar:5.3.1]
-	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006) ~[spring-webmvc-5.3.1.jar:5.3.1]
-	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:909) ~[spring-webmvc-5.3.1.jar:5.3.1]
-	at javax.servlet.http.HttpServlet.service(HttpServlet.java:652) ~[tomcat-embed-core-9.0.39.jar:4.0.FR]
-	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883) ~[spring-webmvc-5.3.1.jar:5.3.1]
-	at javax.servlet.http.HttpServlet.service(HttpServlet.java:733) ~[tomcat-embed-core-9.0.39.jar:4.0.FR]
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:231) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
-	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53) ~[tomcat-embed-websocket-9.0.39.jar:9.0.39]
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
-	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) ~[spring-web-5.3.1.jar:5.3.1]
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119) ~[spring-web-5.3.1.jar:5.3.1]
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
-	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) ~[spring-web-5.3.1.jar:5.3.1]
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119) ~[spring-web-5.3.1.jar:5.3.1]
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
-	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201) ~[spring-web-5.3.1.jar:5.3.1]
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119) ~[spring-web-5.3.1.jar:5.3.1]
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
-	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:202) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
-	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
-	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:542) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
-	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:143) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
-	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
-	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
-	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:343) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
-	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:374) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
-	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
-	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:868) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
-	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1590) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
-	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
-	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1130) ~[na:na]
-	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:630) ~[na:na]
-	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
-	at java.base/java.lang.Thread.run(Thread.java:832) ~[na:na]
-
-2021-02-22 21:49:22.617  INFO 7728 --- [main] com.diplomna.DiplomnaApplication         : Starting DiplomnaApplication using Java 14.0.2 on DESKTOP-IS3KKB5 with PID 7728 (C:\MY SHIT\Code\Java\DiplomnaRabota\1\diplomna\target\classes started by PC in C:\MY SHIT\Code\Java\DiplomnaRabota\1\diplomna)
-2021-02-22 21:49:22.619 DEBUG 7728 --- [main] com.diplomna.DiplomnaApplication         : Running with Spring Boot v2.4.0, Spring v5.3.1
-2021-02-22 21:49:22.620  INFO 7728 --- [main] com.diplomna.DiplomnaApplication         : No active profile set, falling back to default profiles: default
-2021-02-22 21:49:24.861  INFO 7728 --- [main] com.diplomna.DiplomnaApplication         : Started DiplomnaApplication in 2.844 seconds (JVM running for 3.346)
-2021-02-22 21:50:01.844  WARN 7728 --- [http-nio-8080-exec-8] o.a.h.c.protocol.ResponseProcessCookies  : Cookie rejected [__cfduid="d6847a30b2c6106b7315f4f80a0d94cdd1614023401", version:0, domain:alphavantage.co, path:/, expiry:Wed Mar 24 21:50:01 EET 2021] Illegal 'domain' attribute "alphavantage.co". Domain of origin: "alpha-vantage.p.rapidapi.com"
-2021-02-22 21:50:01.849 ERROR 7728 --- [http-nio-8080-exec-8] c.diplomna.restapi.service.BaseService   : AlphaVantageAPI fail for index wegwef
-2021-02-22 21:52:21.623 ERROR 7728 --- [http-nio-8080-exec-10] c.diplomna.restapi.service.BaseService   : YahooFinanceAPI fail for symbol HRFFFFF
-2021-02-22 21:52:32.786  WARN 7728 --- [http-nio-8080-exec-3] o.a.h.c.protocol.ResponseProcessCookies  : Cookie rejected [__cfduid="d14628b6af717d0e5e668767effa2fca01614023552", version:0, domain:alphavantage.co, path:/, expiry:Wed Mar 24 21:52:32 EET 2021] Illegal 'domain' attribute "alphavantage.co". Domain of origin: "alpha-vantage.p.rapidapi.com"
-2021-02-22 21:52:33.329  WARN 7728 --- [http-nio-8080-exec-3] o.a.h.c.protocol.ResponseProcessCookies  : Cookie rejected [__cfduid="d62d5451eafcc1d0727950c83bce21cda1614023552", version:0, domain:alphavantage.co, path:/, expiry:Wed Mar 24 21:52:32 EET 2021] Illegal 'domain' attribute "alphavantage.co". Domain of origin: "alpha-vantage.p.rapidapi.com"
-2021-02-22 21:53:15.678  WARN 7728 --- [http-nio-8080-exec-1] o.a.h.c.protocol.ResponseProcessCookies  : Cookie rejected [__cfduid="dca4440d256c8ed2c0a668ca4c8fc8a881614023594", version:0, domain:alphavantage.co, path:/, expiry:Wed Mar 24 21:53:14 EET 2021] Illegal 'domain' attribute "alphavantage.co". Domain of origin: "alpha-vantage.p.rapidapi.com"
-2021-02-22 21:53:16.337  WARN 7728 --- [http-nio-8080-exec-1] o.a.h.c.protocol.ResponseProcessCookies  : Cookie rejected [__cfduid="d75a679dc47aa1916ed92f134f9f3841c1614023595", version:0, domain:alphavantage.co, path:/, expiry:Wed Mar 24 21:53:15 EET 2021] Illegal 'domain' attribute "alphavantage.co". Domain of origin: "alpha-vantage.p.rapidapi.com"
-2021-02-22 21:53:16.338 ERROR 7728 --- [http-nio-8080-exec-1] c.diplomna.restapi.service.BaseService   : AlphaVantageAPI fail for index kur
-2021-02-22 21:53:25.407  WARN 7728 --- [http-nio-8080-exec-3] o.a.h.c.protocol.ResponseProcessCookies  : Cookie rejected [__cfduid="d3f5bf5d511a8be926e9dcf80d61b64ec1614023604", version:0, domain:alphavantage.co, path:/, expiry:Wed Mar 24 21:53:24 EET 2021] Illegal 'domain' attribute "alphavantage.co". Domain of origin: "alpha-vantage.p.rapidapi.com"
-2021-02-22 21:53:25.413 ERROR 7728 --- [http-nio-8080-exec-3] o.a.c.c.C.[.[.[/].[dispatcherServlet]    : Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed; nested exception is org.json.JSONException: JSONObject["Realtime Currency Exchange Rate"] not found.] with root cause
-
-org.json.JSONException: JSONObject["Realtime Currency Exchange Rate"] not found.
-	at org.json.JSONObject.get(JSONObject.java:471) ~[json-20160212.jar:na]
-	at org.json.JSONObject.getJSONObject(JSONObject.java:636) ~[json-20160212.jar:na]
-	at com.diplomna.api.alphavantage.AlphaVantageAPI.getCrypto(AlphaVantageAPI.java:87) ~[classes/:na]
-	at com.diplomna.restapi.service.BaseService.addAsset(BaseService.java:386) ~[classes/:na]
-	at com.diplomna.restapi.controller.BaseController.addActiveAsset(BaseController.java:242) ~[classes/:na]
-	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
-	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[na:na]
-	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
-	at java.base/java.lang.reflect.Method.invoke(Method.java:564) ~[na:na]
-	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:197) ~[spring-web-5.3.1.jar:5.3.1]
-	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:141) ~[spring-web-5.3.1.jar:5.3.1]
-	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:106) ~[spring-webmvc-5.3.1.jar:5.3.1]
-	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:893) ~[spring-webmvc-5.3.1.jar:5.3.1]
-	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:807) ~[spring-webmvc-5.3.1.jar:5.3.1]
-	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87) ~[spring-webmvc-5.3.1.jar:5.3.1]
-	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1061) ~[spring-webmvc-5.3.1.jar:5.3.1]
-	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:961) ~[spring-webmvc-5.3.1.jar:5.3.1]
-	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006) ~[spring-webmvc-5.3.1.jar:5.3.1]
-	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:909) ~[spring-webmvc-5.3.1.jar:5.3.1]
-	at javax.servlet.http.HttpServlet.service(HttpServlet.java:652) ~[tomcat-embed-core-9.0.39.jar:4.0.FR]
-	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883) ~[spring-webmvc-5.3.1.jar:5.3.1]
-	at javax.servlet.http.HttpServlet.service(HttpServlet.java:733) ~[tomcat-embed-core-9.0.39.jar:4.0.FR]
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:231) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
-	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53) ~[tomcat-embed-websocket-9.0.39.jar:9.0.39]
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
-	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) ~[spring-web-5.3.1.jar:5.3.1]
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119) ~[spring-web-5.3.1.jar:5.3.1]
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
-	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) ~[spring-web-5.3.1.jar:5.3.1]
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119) ~[spring-web-5.3.1.jar:5.3.1]
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
-	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201) ~[spring-web-5.3.1.jar:5.3.1]
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119) ~[spring-web-5.3.1.jar:5.3.1]
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
-	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:202) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
-	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
-	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:542) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
-	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:143) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
-	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
-	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
-	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:343) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
-	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:374) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
-	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
-	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:868) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
-	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1590) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
-	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
-	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1130) ~[na:na]
-	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:630) ~[na:na]
-	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) ~[tomcat-embed-core-9.0.39.jar:9.0.39]
-	at java.base/java.lang.Thread.run(Thread.java:832) ~[na:na]
-
+2021-03-02 18:32:48.989  INFO 7396 --- [main] com.diplomna.DiplomnaApplication         : Starting DiplomnaApplication using Java 14.0.2 on DESKTOP-IS3KKB5 with PID 7396 (C:\MY SHIT\Code\Java\DiplomnaRabota\1\diplomna\target\classes started by PC in C:\MY SHIT\Code\Java\DiplomnaRabota\1\diplomna)
+2021-03-02 18:32:48.989 DEBUG 7396 --- [main] com.diplomna.DiplomnaApplication         : Running with Spring Boot v2.4.0, Spring v5.3.1
+2021-03-02 18:32:48.989  INFO 7396 --- [main] com.diplomna.DiplomnaApplication         : No active profile set, falling back to default profiles: default
+2021-03-02 18:32:51.115  INFO 7396 --- [main] com.diplomna.DiplomnaApplication         : Started DiplomnaApplication in 2.585 seconds (JVM running for 3.055)
+2021-03-02 18:33:38.594  INFO 4372 --- [main] com.diplomna.DiplomnaApplication         : Starting DiplomnaApplication using Java 14.0.2 on DESKTOP-IS3KKB5 with PID 4372 (C:\MY SHIT\Code\Java\DiplomnaRabota\1\diplomna\target\classes started by PC in C:\MY SHIT\Code\Java\DiplomnaRabota\1\diplomna)
+2021-03-02 18:33:38.594 DEBUG 4372 --- [main] com.diplomna.DiplomnaApplication         : Running with Spring Boot v2.4.0, Spring v5.3.1
+2021-03-02 18:33:38.594  INFO 4372 --- [main] com.diplomna.DiplomnaApplication         : No active profile set, falling back to default profiles: default
+2021-03-02 18:33:40.868  INFO 4372 --- [main] com.diplomna.DiplomnaApplication         : Started DiplomnaApplication in 2.853 seconds (JVM running for 3.35)
+2021-03-02 18:34:40.031  INFO 3652 --- [main] com.diplomna.DiplomnaApplication         : Starting DiplomnaApplication using Java 14.0.2 on DESKTOP-IS3KKB5 with PID 3652 (C:\MY SHIT\Code\Java\DiplomnaRabota\1\diplomna\target\classes started by PC in C:\MY SHIT\Code\Java\DiplomnaRabota\1\diplomna)
+2021-03-02 18:34:40.031 DEBUG 3652 --- [main] com.diplomna.DiplomnaApplication         : Running with Spring Boot v2.4.0, Spring v5.3.1
+2021-03-02 18:34:40.031  INFO 3652 --- [main] com.diplomna.DiplomnaApplication         : No active profile set, falling back to default profiles: default
+2021-03-02 18:34:42.195  INFO 3652 --- [main] com.diplomna.DiplomnaApplication         : Started DiplomnaApplication in 2.651 seconds (JVM running for 3.139)
+2021-03-02 18:35:06.544  INFO 6888 --- [main] com.diplomna.DiplomnaApplication         : Starting DiplomnaApplication using Java 14.0.2 on DESKTOP-IS3KKB5 with PID 6888 (C:\MY SHIT\Code\Java\DiplomnaRabota\1\diplomna\target\classes started by PC in C:\MY SHIT\Code\Java\DiplomnaRabota\1\diplomna)
+2021-03-02 18:35:06.553 DEBUG 6888 --- [main] com.diplomna.DiplomnaApplication         : Running with Spring Boot v2.4.0, Spring v5.3.1
+2021-03-02 18:35:06.553  INFO 6888 --- [main] com.diplomna.DiplomnaApplication         : No active profile set, falling back to default profiles: default
+2021-03-02 18:35:08.542  INFO 6888 --- [main] com.diplomna.DiplomnaApplication         : Started DiplomnaApplication in 2.514 seconds (JVM running for 3.042)
+2021-03-02 18:37:22.420  INFO 12440 --- [main] com.diplomna.DiplomnaApplication         : Starting DiplomnaApplication using Java 14.0.2 on DESKTOP-IS3KKB5 with PID 12440 (C:\MY SHIT\Code\Java\DiplomnaRabota\1\diplomna\target\classes started by PC in C:\MY SHIT\Code\Java\DiplomnaRabota\1\diplomna)
+2021-03-02 18:37:22.420 DEBUG 12440 --- [main] com.diplomna.DiplomnaApplication         : Running with Spring Boot v2.4.0, Spring v5.3.1
+2021-03-02 18:37:22.420  INFO 12440 --- [main] com.diplomna.DiplomnaApplication         : No active profile set, falling back to default profiles: default
+2021-03-02 18:37:24.546  INFO 12440 --- [main] com.diplomna.DiplomnaApplication         : Started DiplomnaApplication in 2.576 seconds (JVM running for 3.069)
+2021-03-02 18:43:12.106  INFO 10696 --- [main] com.diplomna.DiplomnaApplication         : Starting DiplomnaApplication using Java 14.0.2 on DESKTOP-IS3KKB5 with PID 10696 (C:\MY SHIT\Code\Java\DiplomnaRabota\1\diplomna\target\classes started by PC in C:\MY SHIT\Code\Java\DiplomnaRabota\1\diplomna)
+2021-03-02 18:43:12.117 DEBUG 10696 --- [main] com.diplomna.DiplomnaApplication         : Running with Spring Boot v2.4.0, Spring v5.3.1
+2021-03-02 18:43:12.117  INFO 10696 --- [main] com.diplomna.DiplomnaApplication         : No active profile set, falling back to default profiles: default
+2021-03-02 18:43:14.297  INFO 10696 --- [main] com.diplomna.DiplomnaApplication         : Started DiplomnaApplication in 2.666 seconds (JVM running for 3.156)
+2021-03-02 18:43:38.141  INFO 10696 --- [http-nio-8080-exec-2] c.diplomna.restapi.service.BaseService   : Created account with username userSusJsonBate
+2021-03-02 18:49:16.207  INFO 6876 --- [main] com.diplomna.DiplomnaApplication         : Starting DiplomnaApplication using Java 14.0.2 on DESKTOP-IS3KKB5 with PID 6876 (C:\MY SHIT\Code\Java\DiplomnaRabota\1\diplomna\target\classes started by PC in C:\MY SHIT\Code\Java\DiplomnaRabota\1\diplomna)
+2021-03-02 18:49:16.207 DEBUG 6876 --- [main] com.diplomna.DiplomnaApplication         : Running with Spring Boot v2.4.0, Spring v5.3.1
+2021-03-02 18:49:16.207  INFO 6876 --- [main] com.diplomna.DiplomnaApplication         : No active profile set, falling back to default profiles: default
+2021-03-02 18:49:18.636  INFO 6876 --- [main] com.diplomna.DiplomnaApplication         : Started DiplomnaApplication in 2.954 seconds (JVM running for 3.465)

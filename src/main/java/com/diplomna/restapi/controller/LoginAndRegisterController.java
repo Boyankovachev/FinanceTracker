@@ -5,6 +5,7 @@ import com.diplomna.singleton.CurrentData;
 import com.diplomna.users.sub.User;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.jackson.JsonObjectDeserializer;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -38,11 +39,12 @@ public class LoginAndRegisterController {
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public RedirectView getLogin(@RequestBody String inputString, RedirectAttributes attributes){
-        String result = loginAndRegisterService.verifyLogin(inputString);
+
+        JSONObject jsonObject = HtmlFromStringToJson(inputString);
+
+        String result = loginAndRegisterService.verifyLogin(jsonObject);
         if(result.equals("Successful login!")){
-            String[] temp = inputString.split("&");
-            String inputUsername = temp[0].substring(9);
-            User user = loginAndRegisterService.getUserByName(inputUsername);
+            User user = loginAndRegisterService.getUserByName(jsonObject.getString("username"));
             attributes.addFlashAttribute("user", user);
             if(user.getIs2FactorAuthenticationRequired()){
                 this.user = user;
@@ -86,15 +88,16 @@ public class LoginAndRegisterController {
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public RedirectView getRegister(@RequestBody String inputString, RedirectAttributes attributes){
-        String result = loginAndRegisterService.createUser(inputString);
+
+        JSONObject jsonObject = HtmlFromStringToJson(inputString);
+        String result = loginAndRegisterService.createUser(jsonObject);
+
         if(result.equals("Passwords don't match") || result.equals("Email already taken")){
             attributes.addFlashAttribute("registerstatus", result);
             return new RedirectView("register");
         }
         else if(result.equals("Account created successfully!")){
-            String[] temp = inputString.split("&");
-            String inputUsername = temp[0].substring(9);
-            User user = loginAndRegisterService.getUserByName(inputUsername);
+            User user = loginAndRegisterService.getUserByName(jsonObject.getString("username"));
             attributes.addFlashAttribute("user", user);
             return new RedirectView("user");
         }
@@ -127,4 +130,14 @@ public class LoginAndRegisterController {
         return "test2";
     }
 
+    private JSONObject HtmlFromStringToJson(String htmlString){
+        JSONObject jsonObject = new JSONObject();
+        for(String string: htmlString.split("&")){
+            String[] temp = string.split("=");
+            if(temp.length>1) {
+                jsonObject.put(temp[0], temp[1]);
+            }
+        }
+        return jsonObject;
+    }
 }

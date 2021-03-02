@@ -106,7 +106,7 @@ public class GraphService {
             case "Index":
                 switch (jsonObject.getString("period")){
                     case "daily":
-                        if(currentData.getGraphInfoManager().isCryptoPresent(symbol)){
+                        if(currentData.getGraphInfoManager().isIndexPresent(symbol)){
                             if(currentData.getGraphInfoManager().getIndexInfo(symbol).isDailyEmpty()){
                                 //if index exists but daily is empty
                                 //fetch from API, Add to RAM and return
