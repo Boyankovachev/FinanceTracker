@@ -152,24 +152,14 @@ public class User {
 
     public boolean removeNotificationByName(String name){
         //remove notification by name
-        int flag = 0;
         for(int i=0; i<notifications.size(); i++){
             if(notifications.get(i).getNotificationName().equals(name)){
                 notifications.remove(i);
-                flag++;
+                return true;
             }
         }
-        return flag != 0;
+        return false;
     }
 
-    public void printUser(){
-        /*
-        Prints user to console.
-        Testing purposes!
-         */
-        System.out.println("user id: " + userId);
-        System.out.println("username: " + userName);
-        assets.printAssets();
-    }
 
 }

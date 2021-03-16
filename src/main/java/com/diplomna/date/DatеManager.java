@@ -65,8 +65,3 @@ public class DatеManager {
         calendar.setTime(myDateFormat.parse(date));
     }
 }
-/*
- Calendar cal = Calendar.getInstance();
-SimpleDateFormat sdf = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy", Locale.ENGLISH);
-cal.setTime(sdf.parse("Mon Mar 14 16:02:37 GMT 2011"));// all done
- */

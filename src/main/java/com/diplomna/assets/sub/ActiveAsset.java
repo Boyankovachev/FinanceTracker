@@ -54,8 +54,8 @@ public class ActiveAsset extends Asset {
         }
         else {
             double temp = 0;
-            for(int i=0; i<purchaseInfo.size(); i++){
-                temp = temp + (purchaseInfo.get(i).getQuantity() * purchaseInfo.get(i).getPrice());
+            for (PurchaseInfo info : purchaseInfo) {
+                temp = temp + (info.getQuantity() * info.getPrice());
             }
             averagePurchasePrice = temp / quantityOwned;
 

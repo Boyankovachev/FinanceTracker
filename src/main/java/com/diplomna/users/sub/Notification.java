@@ -58,17 +58,6 @@ public class Notification {
         return notificationTarget;
     }
 
-    public void printNotification(){
-        /*
-        for testing purposes
-         */
-        System.out.println("Asset type: " + assetType.toString());
-        System.out.println("Asset type settings: " + assetTypeSettings);
-        System.out.println("Notification Target: " + notificationTarget);
-        System.out.println("Notification name: " + notificationName);
-        System.out.println("Notification price: " + notificationPrice);
-        System.out.println("");
-    }
 
     public boolean isNotificationSimilar(Notification newNotification){
         /*

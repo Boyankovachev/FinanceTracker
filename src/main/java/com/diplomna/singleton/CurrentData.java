@@ -42,19 +42,4 @@ public class CurrentData {
         this.graphInfoManager = graphInfoManager;
     }
 
-    //FOR TESTING PURPOSES ONLY!
-    public void printAssetManager(){
-        for(Stock stock: assetManager.getAllStocks()){
-            stock.printStock();
-        }
-        for(Index index: assetManager.getAllIndex()){
-            index.printIndex();
-        }
-        for(Crypto crypto: assetManager.getCrypto()){
-            crypto.printCrypto();
-        }
-        for(Commodities commodities: assetManager.getCommodities()){
-            commodities.printCommodity();
-        }
-    }
 }

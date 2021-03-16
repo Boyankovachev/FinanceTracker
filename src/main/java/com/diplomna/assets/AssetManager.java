@@ -328,25 +328,4 @@ public class AssetManager {
         commodities.addAll(updatedCommodityList);
     }
 
-    public void printAssets(){
-        /*
-        Prints all assets to console.
-        Testing purposes!
-        */
-        for(Stock stock: stocks){
-            stock.printStock();
-        }
-        for(PassiveResource passiveResource: passiveResources){
-            passiveResource.printPassiveResource();
-        }
-        for (Index index: indexFunds){
-            index.printIndex();
-        }
-        for(Commodities commodity: commodities){
-            commodity.printCommodity();
-        }
-        for(Crypto crypto: cryptoCurrencies){
-            crypto.printCrypto();
-        }
-    }
 }

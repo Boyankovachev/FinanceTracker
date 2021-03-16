@@ -384,6 +384,7 @@ public class BaseService {
                         String errorMessage = "AlphaVantageAPI fail for crypto " + jsonObject.getString("symbol");
                         logger.error(errorMessage);
                         e.printStackTrace();
+                        return "Crypto currency not found!";
                     }
                     break;
                 case "commodity":
@@ -401,7 +402,6 @@ public class BaseService {
                     currentData.getAssetManager().addCommodity(commodity);
                     break;
             }
-
         }
         addAssetToUser(jsonObject, user, purchaseInfo);
         return "success";

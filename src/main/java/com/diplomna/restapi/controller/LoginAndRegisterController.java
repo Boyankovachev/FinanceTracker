@@ -109,27 +109,6 @@ public class LoginAndRegisterController {
         return "home";
     }
 
-
-
-    @RequestMapping(value="/test", method = RequestMethod.GET)
-    public String test(){
-        System.out.println("in test 1 get");
-        //currentData.printAssetManager();
-        return "test";
-    }
-    @RequestMapping(value="/test", method = RequestMethod.POST)
-    public ModelAndView testPost(/*@RequestBody String string, */){
-        System.out.println("in test 1 post");
-        //attributes.addFlashAttribute("string", "neshto");
-        return new ModelAndView("forward:/test2");
-    }
-    @RequestMapping(value="/test2", method = RequestMethod.GET)
-    public String test2(/*@ModelAttribute("string") String string, Model model*/){
-        System.out.println("in test 2 get");
-        //model.addAttribute("string", string);
-        return "test2";
-    }
-
     private JSONObject HtmlFromStringToJson(String htmlString){
         JSONObject jsonObject = new JSONObject();
         for(String string: htmlString.split("&")){

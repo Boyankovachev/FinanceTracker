@@ -1,8 +1,6 @@
 $(function (){
-
     var $period = $('#period');
     setupChart($('option:selected', $period).val());
-
 });
 
 function setupChart(period){

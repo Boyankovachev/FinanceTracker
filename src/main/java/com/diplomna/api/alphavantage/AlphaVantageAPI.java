@@ -78,14 +78,3 @@ public class AlphaVantageAPI {
         return info;
     }
 }
-
-
-// https://alpha-vantage.p.rapidapi.com/query?symbol=MSFT&function=TIME_SERIES_MONTHLY&datatype=json - stock time series monthly AND INDEX TOO
-// https://alpha-vantage.p.rapidapi.com/query?symbol=MSFT&function=TIME_SERIES_MONTHLY_ADJUSTED&datatype=json - stock time series monthly ADJUSTED AND INDEX TOO
-// https://alpha-vantage.p.rapidapi.com/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=MSFT&outputsize=compact&datatype=json
-// https://alpha-vantage.p.rapidapi.com/query?function=TIME_SERIES_WEEKLY_ADJUSTED&symbol=MSFT&datatype=json
-
-//crypto -   daily "https://alpha-vantage.p.rapidapi.com/query?market=USD&symbol=BTC&function=DIGITAL_CURRENCY_DAILY"
-//crypto -  weekly "https://alpha-vantage.p.rapidapi.com/query?function=DIGITAL_CURRENCY_WEEKLY&symbol=BTC&market=USD"
-//crypto - monthly "https://alpha-vantage.p.rapidapi.com/query?market=CNY&function=DIGITAL_CURRENCY_MONTHLY&symbol=BTC"
-//Razlikata e DIGITAL_CURRENCY_DAILY/WEEKLY/MONTHLY

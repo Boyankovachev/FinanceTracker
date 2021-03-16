@@ -11,13 +11,3 @@ public class DiplomnaApplication {
 		SpringApplication.run(DiplomnaApplication.class, args);
 	}
 }
-
-		/*
-		//run second thread for notifications
-		NotificationRunner notificationRunner = new NotificationRunner();
-		try {
-			notificationRunner.run();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		 */

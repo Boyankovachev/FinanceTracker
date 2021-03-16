@@ -28,8 +28,6 @@ public class UserManager {
             return user by username
             return null if non existant
          */
-        //ako ima poveche ot edin user sus edno i sushto ime
-        //staa tupo, opravi go
         int i;
         for(i=0; i<users.size(); i++){
             if(users.get(i).getUserName().equals(userName)){
@@ -40,8 +38,6 @@ public class UserManager {
     }
 
     public int getUserIndexByName(String userName){
-        //ako ima poveche ot edin user sus edno i sushto ime
-        //staa tupo, opravi go
         int i;
         for(i=0; i<users.size(); i++){
             if(users.get(i).getUserName().equals(userName)){
