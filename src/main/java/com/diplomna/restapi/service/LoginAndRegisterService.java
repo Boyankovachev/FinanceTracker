@@ -24,6 +24,7 @@ public class LoginAndRegisterService {
     private EmailService emailService;
 
     private String authenticateCode;
+
     private final DatabaseConnection dbConnection;
     private final Logger logger;
 
@@ -86,17 +87,18 @@ public class LoginAndRegisterService {
     }
 
     public User getUserByName(String name){
-        //retuns the first user found with matching name
+        //returns the first user found with matching name
         // (for future) - fix when 2 identical names
         UserManager userManager = dbConnection.read().readUsers();
         return userManager.getUserByName(name);
     }
 
-    public void setAuthentication(User user){
+    public void setAuthentication(String username){
         /*
             generate 2fk random key
             send authentication to user
          */
+        User user = dbConnection.read().readUsers().getUserByName(username);
         this.authenticateCode = generateKey();
         emailService.sendAuthenticationKeyEmail(authenticateCode, user.getEmail());
     }
@@ -116,5 +118,19 @@ public class LoginAndRegisterService {
             authenticateCode = null;
             return false;
         }
+    }
+
+    public JSONObject HtmlFromStringToJson(String htmlString){
+        /*
+        Converts HTML from submitted data to JSONObject
+         */
+        JSONObject jsonObject = new JSONObject();
+        for(String string: htmlString.split("&")){
+            String[] temp = string.split("=");
+            if(temp.length>1) {
+                jsonObject.put(temp[0], temp[1]);
+            }
+        }
+        return jsonObject;
     }
 }

@@ -4,6 +4,7 @@ import com.diplomna.assets.finished.*;
 import com.diplomna.graph.GraphInfo;
 import com.diplomna.graph.GraphService;
 import com.diplomna.restapi.service.BaseService;
+import com.diplomna.restapi.service.LoginAndRegisterService;
 import com.diplomna.users.sub.User;
 import org.json.JSONObject;
 import org.slf4j.Logger;
@@ -11,12 +12,17 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
+import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
 
@@ -36,13 +42,16 @@ public class BaseController {
     }
 
     @RequestMapping(value = "/user", method = RequestMethod.GET)
-    public String getUserHomepage(@ModelAttribute("user") User user, Model model){
-        if(user.getUserName() == null && this.user == null){
-            return "redirect:/";
+    public String getUserHomepage(Principal principal, Model model){ ;
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if(auth.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_VERIFY"))) {
+            return "redirect:/confirm-login";
         }
-        else if(user.getUserName() != null && this.user == null){
-            this.user = baseService.setupUser(user);
-        }
+
+        this.user = null;
+        LoginAndRegisterService service = new LoginAndRegisterService();
+        this.user = baseService.setupUser(service.getUserByName(principal.getName()));
         model.addAttribute("stock", this.user.getAssets().getAllStocks());
         model.addAttribute("passive_resource", this.user.getAssets().getAllPassiveResources());
         model.addAttribute("index", this.user.getAssets().getAllIndex());
@@ -54,18 +63,13 @@ public class BaseController {
 
     @RequestMapping(value = "/notification", method = RequestMethod.GET)
     public String notification(Model model){
-        if(user == null){
-            return "redirect:/";
-        }
-        else {
-            model.addAttribute("notification", user.getNotifications());
-            model.addAttribute("stock", user.getAssets().getAllStocks());
-            model.addAttribute("index", user.getAssets().getAllIndex());
-            model.addAttribute("crypto", user.getAssets().getCrypto());
-            model.addAttribute("commodity", user.getAssets().getCommodities());
-            model.addAttribute("global",  baseService.getGlobalNotifications(user));
-            return "notification";
-        }
+        model.addAttribute("notification", user.getNotifications());
+        model.addAttribute("stock", user.getAssets().getAllStocks());
+        model.addAttribute("index", user.getAssets().getAllIndex());
+        model.addAttribute("crypto", user.getAssets().getCrypto());
+        model.addAttribute("commodity", user.getAssets().getCommodities());
+        model.addAttribute("global",  baseService.getGlobalNotifications(user));
+        return "notification";
     }
     @RequestMapping(value = "/add-notification", method = RequestMethod.POST)
     public @ResponseBody ResponseEntity<Object> addNotification(@RequestBody String jsonString){
@@ -78,16 +82,10 @@ public class BaseController {
         return new ResponseEntity<Object>(responseMap, HttpStatus.OK);
     }
 
-
     @RequestMapping(value = "/settings", method = RequestMethod.GET)
     public String settings(Model model){
-        if(user == null){
-            return "redirect:/";
-        }
-        else {
-            model.addAttribute("user", user);
-            return "settings";
-        }
+        model.addAttribute("user", user);
+        return "settings";
     }
     @RequestMapping(value = "/change-2fa", method = RequestMethod.POST)
     public @ResponseBody ResponseEntity<Object> change2FA(@RequestBody String value){
@@ -131,86 +129,72 @@ public class BaseController {
     }
     @RequestMapping(value = "/asset", method = RequestMethod.GET)
     public String assets(@ModelAttribute("assetName") String assetName, @ModelAttribute("assetType") String assetType, Model model){
-        if(user == null){
-            return "redirect:/";
+        try {
+            Thread.sleep(30);
         }
-        else {
-            try {
-                // Sleep to avoid post from javascript and get from html getting de-synchronised
-                Thread.sleep(30);
-            }
-            catch(InterruptedException ex) {
-                Thread.currentThread().interrupt();
-            }
-            switch (assetType) {
-                case "stock":
-                    if(user.getAssets().getStockByName(assetName) == null){
-                        String errorString = "Requested stock with symbol: "
-                                + assetName + " for user with id: " +
-                                user.getUserId() + " not found!";
-                        logger.error(errorString);
-                        return "";
-                    }
-                    else{
-                        Stock stock = user.getAssets().getStockByName(assetName);
-                        model.addAttribute("stock", stock);
-                        model.addAttribute("purchase", stock.getAllPurchases());
-                        return "assets/stock";
-                    }
-                case "passive-resource":
-                    if(user.getAssets().getPassiveResourceByName(assetName) == null){
-                        //exception i logvane
-                        return "";
-                    }
-                    else{
-                        PassiveResource passiveResource = user.getAssets().getPassiveResourceByName(assetName);
-                        model.addAttribute("passive_resource", passiveResource);
-                        return "assets/passive-resource";
-                    }
-                case "index":
-                    if(user.getAssets().getIndexByName(assetName) == null){
-                        //exception i logvane
-                        return "";
-                    }
-                    else{
-                        Index index = user.getAssets().getIndexByName(assetName);
-                        model.addAttribute("index", index);
-                        model.addAttribute("purchase", index.getAllPurchases());
-                        return "assets/index";
-                    }
-                case "crypto":
-                    if(user.getAssets().getCryptoByName(assetName) == null){
-                        //exception i logvane
-                        return "";
-                    }
-                    else{
-                        Crypto crypto = user.getAssets().getCryptoByName(assetName);
-                        model.addAttribute("crypto", crypto);
-                        model.addAttribute("purchase", crypto.getAllPurchases());
-                        return "assets/crypto";
-                    }
-                case "commodity":
-                    if(user.getAssets().getCommodityByName(assetName) == null){
-                        //exception i logvane
-                        return "";
-                    }
-                    else{
-                        Commodities commodity = user.getAssets().getCommodityByName(assetName);
-                        model.addAttribute("commodity", commodity);
-                        model.addAttribute("purchase", commodity.getAllPurchases());
-                        return "assets/commodity";
-                    }
-                default:
-                    //tuka exception i logvane (ne trqbva da vliza tuka)
-                    model.addAttribute("stock", user.getAssets().getAllStocks());
-                    model.addAttribute("passive_resource", user.getAssets().getAllPassiveResources());
-                    model.addAttribute("index", user.getAssets().getAllIndex());
-                    model.addAttribute("crypto", user.getAssets().getCrypto());
-                    model.addAttribute("commodity", user.getAssets().getCommodities());
-                    model.addAttribute("user", user);
-                    return "user-homepage";
-            }
+        catch(InterruptedException ex) {
+            Thread.currentThread().interrupt();
         }
+        switch (assetType) {
+            case "stock":
+                if(user.getAssets().getStockByName(assetName) == null){
+                    String errorString = "Requested stock with symbol: "
+                            + assetName + " for user with id: " +
+                            user.getUserId() + " not found!";
+                    logger.error(errorString);
+                    return "";
+                }
+                else{
+                    Stock stock = user.getAssets().getStockByName(assetName);
+                    model.addAttribute("stock", stock);
+                    model.addAttribute("purchase", stock.getAllPurchases());
+                    return "assets/stock";
+                }
+            case "passive-resource":
+                if(user.getAssets().getPassiveResourceByName(assetName) == null){
+                    //exception i logvane
+                    return "";
+                }
+                else{
+                    PassiveResource passiveResource = user.getAssets().getPassiveResourceByName(assetName);
+                    model.addAttribute("passive_resource", passiveResource);
+                    return "assets/passive-resource";
+                }
+            case "index":
+                if(user.getAssets().getIndexByName(assetName) == null){
+                    //exception i logvane
+                    return "";
+                }
+                else{
+                    Index index = user.getAssets().getIndexByName(assetName);
+                    model.addAttribute("index", index);
+                    model.addAttribute("purchase", index.getAllPurchases());
+                    return "assets/index";
+                }
+            case "crypto":
+                if(user.getAssets().getCryptoByName(assetName) == null){
+                    //exception i logvane
+                    return "";
+                }
+                else{
+                    Crypto crypto = user.getAssets().getCryptoByName(assetName);
+                    model.addAttribute("crypto", crypto);
+                    model.addAttribute("purchase", crypto.getAllPurchases());
+                    return "assets/crypto";
+                }
+            case "commodity":
+                if(user.getAssets().getCommodityByName(assetName) == null){
+                    //exception i logvane
+                    return "";
+                }
+                else{
+                    Commodities commodity = user.getAssets().getCommodityByName(assetName);
+                    model.addAttribute("commodity", commodity);
+                    model.addAttribute("purchase", commodity.getAllPurchases());
+                    return "assets/commodity";
+                }
+        }
+        return "/";
     }
 
     @RequestMapping(value = "/get-chart-data", method = RequestMethod.POST)
@@ -231,9 +215,6 @@ public class BaseController {
 
     @RequestMapping(value = "/add-asset", method = RequestMethod.GET)
     public String addAsset(){
-        if(user == null){
-            return "redirect:/";
-        }
         return "add-asset";
     }
     @RequestMapping(value = "/add-active-asset", method = RequestMethod.POST)
@@ -253,11 +234,13 @@ public class BaseController {
         return new ResponseEntity<Object>(responseMap, HttpStatus.OK);
     }
 
+    /*
     @RequestMapping(value = "/log-out", method = RequestMethod.GET)
     public String logOut(){
         this.user = null;
         return "redirect:/";
     }
+     */
 
     @RequestMapping(value = "/header", method = RequestMethod.GET)
     public String getHeader(){

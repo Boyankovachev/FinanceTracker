@@ -8,6 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.jackson.JsonObjectDeserializer;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +19,8 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
+import java.security.Principal;
+import java.util.Arrays;
 import java.util.HashMap;
 
 @Controller
@@ -22,8 +28,6 @@ public class LoginAndRegisterController {
 
     @Autowired
     private final LoginAndRegisterService loginAndRegisterService;
-
-    private User user;
 
     public LoginAndRegisterController(){
         loginAndRegisterService = new LoginAndRegisterService();
@@ -37,43 +41,24 @@ public class LoginAndRegisterController {
         return "login";
     }
 
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public RedirectView getLogin(@RequestBody String inputString, RedirectAttributes attributes){
-
-        JSONObject jsonObject = HtmlFromStringToJson(inputString);
-
-        String result = loginAndRegisterService.verifyLogin(jsonObject);
-        if(result.equals("Successful login!")){
-            User user = loginAndRegisterService.getUserByName(jsonObject.getString("username"));
-            attributes.addFlashAttribute("user", user);
-            if(user.getIs2FactorAuthenticationRequired()){
-                this.user = user;
-                return new RedirectView("confirm-login");
-            }
-            return new RedirectView("user");
-        }
-        else {
-            attributes.addFlashAttribute("loginstatus", "Invalid username or password");
-            return new RedirectView("login");
-        }
-    }
-
     @RequestMapping(value = "/confirm-login", method = RequestMethod.GET)
-    public String confirmLogin(){
-        loginAndRegisterService.setAuthentication(this.user);
+    public String confirmLogin(Principal principal){
+        loginAndRegisterService.setAuthentication(principal.getName());
         return "confirm2fa";
     }
     @RequestMapping(value = "/confirm-login", method = RequestMethod.POST)
-    public RedirectView confirmLogin(@RequestBody String input, RedirectAttributes attributes){
+    public RedirectView confirmLogin(@RequestBody String input, RedirectAttributes attributes, Principal principal){
 
         if(loginAndRegisterService.checkAuthentication(input.split("=")[1])){
-            attributes.addFlashAttribute("user", user);
-            this.user = null;
+            Authentication newAuth = new UsernamePasswordAuthenticationToken(principal.getName(),
+                    SecurityContextHolder.getContext().getAuthentication().getCredentials(),
+                    Arrays.asList(new SimpleGrantedAuthority("ROLE_USER")));
+            SecurityContextHolder.getContext().setAuthentication(newAuth);
             return new RedirectView("user");
         }
         else {
-            this.user = null;
             attributes.addFlashAttribute("loginstatus", "Wrong code! Try again.");
+            loginAndRegisterService.setAuthentication(principal.getName());
             return new RedirectView("login");
         }
     }
@@ -89,7 +74,7 @@ public class LoginAndRegisterController {
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public RedirectView getRegister(@RequestBody String inputString, RedirectAttributes attributes){
 
-        JSONObject jsonObject = HtmlFromStringToJson(inputString);
+        JSONObject jsonObject = loginAndRegisterService.HtmlFromStringToJson(inputString);
         String result = loginAndRegisterService.createUser(jsonObject);
 
         if(result.equals("Passwords don't match") || result.equals("Email already taken")){
@@ -109,14 +94,4 @@ public class LoginAndRegisterController {
         return "home";
     }
 
-    private JSONObject HtmlFromStringToJson(String htmlString){
-        JSONObject jsonObject = new JSONObject();
-        for(String string: htmlString.split("&")){
-            String[] temp = string.split("=");
-            if(temp.length>1) {
-                jsonObject.put(temp[0], temp[1]);
-            }
-        }
-        return jsonObject;
-    }
 }
