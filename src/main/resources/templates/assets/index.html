@@ -2,52 +2,140 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Index</title>
     <script type="application/javascript" th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js}"></script>
     <script type="application/javascript" th:src = "@{/js/assets/chart.js}"></script>
     <script type="application/javascript" th:src = "@{/js/assets/asset.js}"></script>
-    <script type="application/javascript" th:src = "@{https://canvasjs.com/assets/script/jquery-1.11.1.min.js}"></script>
     <script type="application/javascript" th:src = "@{https://canvasjs.com/assets/script/jquery.canvasjs.min.js}"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" th:href = "@{/css/navbar.css}">
 </head>
 <body>
 
-    <div id="header"></div>
+<div class="container" id="navbar">
+    <nav class="navbar navbar-expand navbar-dark bg-primary">
+        <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item my-auto">
+                    <h2 class="navbar-brand font-weight-bold">Finance Tracker</h2>
+                </li>
+                <li class="nav-item my-auto">
+                    <form action="/user" method="get">
+                        <button class="btn btn-info rounded-0" type="submit">User Main Page</button>
+                    </form>
+                </li>
+                <li class="nav-item my-auto">
+                    <form action = "/add-asset" method="get">
+                        <button class="btn btn-info rounded-0" type="submit">Add New Asset</button>
+                    </form>
+                </li>
+                <li class="nav-item my-auto">
+                    <form action="/notification" method="get">
+                        <button class="btn btn-info rounded-0" type="submit">Notifications</button>
+                    </form>
+                </li>
+                <li class="nav-item my-auto">
+                    <form action="/settings" method="get">
+                        <button class="btn btn-info rounded-0" type="submit">Settings</button>
+                    </form>
+                </li>
+            </ul>
 
-    <h1 id="head">Index</h1>
-    <p id="asset-name" th:text="${index.name}"></p>
-    <p id="asset-symbol" th:text="${index.symbol}"></p>
-    <p th:text="${index.description}"></p>
-    <p th:text="${index.currentMarketPrice}"></p>
-    <p th:text="${index.averagePurchasePrice}"></p>
-    <p th:text="${index.quantityOwned}"></p>
-    <p th:text="${index.currency}"></p>
-    <p th:text="${index.currencySymbol}"></p>
-    <p th:text="${index.exchangeName}"></p>
-    <p th:text="${index.isMarketOpen}"></p>
-    <p th:text="${index.percentChange}"></p>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item" id="name-list">
+                    <h3 class="font-weight-bold">test</h3>
+                </li>
+                <li class="nav-item my-auto">
+                    <form action="/logout" method="get">
+                        <button class="btn btn-danger" type="submit">Logout</button>
+                    </form>
+                </li>
+            </ul>
 
-    <h2> Purchases</h2>
-    <table id="purchase-table">
-        <tr>
-            <th>Price</th>
-            <th>Quantity</th>
-            <th>Date</th>
-        </tr>
-        <tr th:each="purchase: ${purchase}">
-            <td th:text="${purchase.price}"></td>
-            <td th:text="${purchase.quantity}"></td>
-            <td th:text="${purchase.purchaseDate.myFormatDateString}"></td>
-            <td></td>
-        </tr>
-    </table>
+        </div>
+    </nav>
+</div>
 
-    <p>Add new purchase</p>
-    <input type="number" placeholder="Enter Quantity" id="quantity"><br>
-    <input type="number" placeholder="Enter Price" id="price"><br>
-    <input type="text" placeholder="Enter Date" id="date"><br>
-    <button id="confirm" asset-type="index">Confirm</button>
-    <div id="error-message"></div>
+<div class="container">
+    <div class="row">
 
+        <div class="col-sm-3 mx-auto text-center">
+            <div class="col-sm-12 mx-auto text-center" style="padding-bottom: 15px;">
+                <h2 id="head">Index</h2>
+            </div>
+            <div class="col-sm-12 mx-auto text-center" style="padding-bottom: 15px;">
+                <p th:text="${'Index name: ' + index.name}" class="font-weight-bold" id="asset-name"></p>
+            </div>
+            <div class="col-sm-12 mx-auto text-center" style="padding-bottom: 15px;">
+                <p th:text="${'Index symbol: ' + index.symbol}" class="font-weight-bold" id="asset-symbol" th:symbol="${index.symbol}"></p>
+            </div>
+            <div class="col-sm-12 mx-auto text-center" style="padding-bottom: 15px;">
+                <p th:text="${'Quantity owned: ' + index.quantityOwned}" class="font-weight-bold"></p>
+            </div>
+            <div class="col-sm-12 mx-auto text-center" style="padding-bottom: 15px;">
+                <p th:text="${'Average purchase price: ' + index.averagePurchasePrice}" class="font-weight-bold"></p>
+            </div>
+            <div class="col-sm-12 mx-auto text-center" style="padding-bottom: 15px;">
+                <p th:text="${'Index price: ' + index.currentMarketPrice}" class="font-weight-bold"></p>
+            </div>
+            <div class="col-sm-12 mx-auto text-center" style="padding-bottom: 15px;">
+                <p th:text="${'Percent change: ' + index.percentChange}"></p>
+            </div>
+            <div class="col-sm-12 mx-auto text-center" style="padding-bottom: 15px;">
+                <p th:text="${'Currency: ' + index.currency}">currency: dollar</p>
+            </div>
+            <div class="col-sm-12 mx-auto text-center" style="padding-bottom: 15px;">
+                <p th:text="${'Currency symbol: ' + index.currencySymbol}">currencySymbol: $</p>
+            </div>
+            <div class="col-sm-12 mx-auto text-center" style="padding-bottom: 15px;">
+                <p th:text="${'Exchange name: ' + index.exchangeName}">exchangeName: NASDAQ</p>
+            </div>
+            <div class="col-sm-12 mx-auto text-center" style="padding-bottom: 15px;">
+                <p th:text="${'Is market open: ' + index.isMarketOpen}">isMarketOpen: true</p>
+            </div>
+        </div>
+
+        <div class="col-sm-3 mx-auto text-center">
+            <div class="col-sm-12 mx-auto text-center" style="padding-bottom: 15px;">
+                <h2>Purchases</h2>
+                <table class="table table-striped" id="purchase-table">
+                    <tbody>
+                    <tr>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Date</th>
+                    </tr>
+                    <tr th:each="purchase: ${purchase}">
+                        <td th:text="${purchase.price}"></td>
+                        <td th:text="${purchase.quantity}"></td>
+                        <td th:text="${purchase.purchaseDate.myFormatDateString}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="col-sm-3 mx-auto text-center">
+            <div class="col-sm-12 mx-auto text-center" style="padding-bottom: 15px;">
+                <h2>Add a new purchase</h2>
+                <input class="form-control" type="number" placeholder="Enter Quantity" id="quantity"><br>
+                <input class="form-control" type="number" placeholder="Enter Price" id="price"><br>
+                <input class="form-control" type="text" placeholder="Enter Date" id="date"><br>
+                <button class="btn btn-info" id="confirm" asset-type="index">Confirm</button><br>
+                <div id="error-message"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-12 mx-auto text-center" style="padding-bottom: 15px;">
+        <p th:text="${'Index description: ' + index.description}"></p>
+    </div>
+
+</div>
+
+
+<div class="col-sm-12 mx-auto text-center">
     <form>
         <select onChange=setupChart(this.value) id="period">
             <option value="monthly">Monthly</option>
@@ -55,8 +143,14 @@
             <option value="daily">Daily</option>
         </select>
     </form>
-    <div id="chartContainer" style="height: 370px; width: 100%;"></div>
+</div>
+<div class="container" id="chartContainer" style="height: 370px; width: 100%;"></div>
 
-    <div id="footer"></div>
+<div class="col-sm-12 mx-auto text-center mt-5" id="footer">
+    <footer>
+        <small>© Copyright 2021, FinanceTracker</small>
+    </footer>
+</div>
+
 </body>
 </html>

@@ -1,22 +1,33 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Finance Tracker</title>
-    <script type="application/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script type="application/javascript" src = "/js/home.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" th:href = "@{/css/home.css}">
 </head>
 <body>
-    <h1> Finance Tracker</h1>
-    <form action="/login" method="get">
-        <button type="submit">Login</button>
-    </form>
-    <br><br><br><br>
-    <p>New to Finance Tracker?<br>Create new account for free! </p>
-    <form action="/register" method="get">
-        <button type="submit">Register</button>
-    </form>
-
-    <div id="footer"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 mx-auto text-center">
+                <h1>Finance Tracker</h1>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-12 mx-auto text-center">
+                <form action="/login" method="get">
+                    <button type="submit" class="btn btn-primary">Login</button>
+                </form>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-12 mx-auto text-center">
+                <form action="/register" method="get">
+                    <button type="submit" class="btn btn-primary">Register</button>
+                </form>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

@@ -32,10 +32,8 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
             if(user.checkPassword(inputPassword)) {
                 List<GrantedAuthority> authorities = new ArrayList<>();
                 if (user.getIs2FactorAuthenticationRequired()) {
-                    System.out.println("2FA ON FOR " + user.getUserName());
                     authorities.add(new SimpleGrantedAuthority("ROLE_VERIFY"));
                 } else {
-                    System.out.println("2FA OFF FOR " + user.getUserName());
                     authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
                 }
                 return new UsernamePasswordAuthenticationToken(inputUsername, inputPassword, authorities);

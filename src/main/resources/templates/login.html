@@ -2,27 +2,50 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Login</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" th:href = "@{/css/home.css}">
 </head>
 <body>
 
-    <form name="f" th:action="@{/login}" method="post">
-        <div th:if="${param.error}" class="alert alert-error">
-            Invalid username and password.
+    <div class="container">
+
+        <div class="row">
+            <div class="col-sm-12 mx-auto text-center">
+                <div th:if="${param.error}" class="alert alert-danger">
+                    <p>Invalid username and password.</p>
+                </div>
+                <div th:if="${param.logout}" class="alert alert-success">
+                    <p>You have been logged out.</p>
+                </div>
+            </div>
         </div>
-        <div th:if="${param.logout}" class="alert alert-success">
-            You have been logged out.
+
+        <div class="form-group row">
+            <div class="col-sm-12 mx-auto text-center">
+                <h3>Please input credentials!</h3>
+                <form name="f" th:action="@{/login}" method="post">
+                    <input type="text" placeholder="Enter Username" name="username" class="form-control"><br>
+                    <input type="password" placeholder="Enter Password" name="password" class="form-control"><br>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">Login</button>
+                    </div>
+                </form>
+            </div>
         </div>
-        <input type="text" placeholder="Enter Username" name="username"><br>
-        <input type="password" placeholder="Enter Password" name="password"><br>
-        <div class="form-actions">
-            <button type="submit" class="btn">Log in</button>
+
+
+        <div class="form-group row">
+            <div class="col-sm-12 mx-auto text-center">
+                <h5>New?</h5>
+                <form th:action="@{/register}" method="get">
+                    <button type="submit" class="btn btn-primary">Register</button>
+                </form>
+            </div>
         </div>
-    </form>
-    <form action = "/register" method="get">
-        <br>
-        <button type="submit">Create new account</button>
-    </form>
+
+    </div>
 
 </body>
 </html>

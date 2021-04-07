@@ -78,7 +78,8 @@ public class LoginAndRegisterController {
         String result = loginAndRegisterService.createUser(jsonObject);
 
         if(result.equals("Passwords don't match") || result.equals("Email already taken")){
-            attributes.addFlashAttribute("registerstatus", result);
+            attributes.addFlashAttribute("message", result);
+            attributes.addFlashAttribute("isMessage", true);
             return new RedirectView("register");
         }
         else if(result.equals("Account created successfully!")){

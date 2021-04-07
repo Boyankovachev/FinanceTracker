@@ -8,7 +8,7 @@ function setupChart(period){
     var $type = $('#head');
 
     var input = {
-        symbol: $symbol.html(),
+        symbol: $symbol.attr('symbol'),
         type: $type.html(),
         period: period
     };

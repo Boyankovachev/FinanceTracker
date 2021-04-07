@@ -193,14 +193,16 @@ public class BaseController {
                     model.addAttribute("purchase", commodity.getAllPurchases());
                     return "assets/commodity";
                 }
+            default:
+                    return "redirect:/user";
         }
-        return "/";
     }
 
     @RequestMapping(value = "/get-chart-data", method = RequestMethod.POST)
     public @ResponseBody ResponseEntity<Object> getChartData(@RequestBody String jsonString){
         JSONObject jsonObject = new JSONObject(jsonString);
         GraphService graphService = new GraphService();
+        System.out.println(jsonObject.toString());
         List<GraphInfo> graphInfoList = graphService.getChartData(jsonObject);
         return new ResponseEntity<>(graphInfoList, HttpStatus.OK);
     }

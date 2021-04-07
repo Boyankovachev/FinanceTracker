@@ -2,48 +2,108 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Settings</title>
     <script type="application/javascript" th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js}"></script>
     <script type="application/javascript" th:src = "@{/js/settings.js}"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" th:href = "@{/css/navbar.css}">
 </head>
 <body>
-    <div id="header"></div>
 
+    <div class="container" id="navbar">
+        <nav class="navbar navbar-expand navbar-dark bg-primary">
+            <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item my-auto">
+                        <h2 class="navbar-brand font-weight-bold">Finance Tracker</h2>
+                    </li>
+                    <li class="nav-item my-auto">
+                        <form action="/user" method="get">
+                            <button class="btn btn-info rounded-0" type="submit">User Main Page</button>
+                        </form>
+                    </li>
+                    <li class="nav-item my-auto">
+                        <form action = "/add-asset" method="get">
+                            <button class="btn btn-info rounded-0" type="submit">Add New Asset</button>
+                        </form>
+                    </li>
+                    <li class="nav-item my-auto">
+                        <form action="/notification" method="get">
+                            <button class="btn btn-info rounded-0" type="submit">Notifications</button>
+                        </form>
+                    </li>
+                    <li class="nav-item my-auto">
+                        <form action="/settings" method="get">
+                            <button class="btn btn-secondary rounded-0" type="submit">Settings</button>
+                        </form>
+                    </li>
+                </ul>
 
-    <h1>Settings</h1>
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item" id="name-list">
+                        <h3 class="font-weight-bold">test</h3>
+                    </li>
+                    <li class="nav-item my-auto">
+                        <form action="/logout" method="get">
+                            <button class="btn btn-danger" type="submit">Logout</button>
+                        </form>
+                    </li>
+                </ul>
 
-    <div id="user-details">
-        <p>Name: <span th:text="${user.userName}" id="username"></span></p>
-        <p>Email: <span th:text="${user.email}" id="email"></span></p>
-        <p>Is 2FA required: <span th:text="${user.is2FactorAuthenticationRequired}" id="2fa"></span></p>
+            </div>
+        </nav>
     </div>
-    <div id="change-details">
-        <div>
-            <input type="radio" name="2fa" value="off">off
-            <input type="radio" name="2fa" value="on">on
-            <button id="change2FA">Select</button>
+
+    <div class="container mb-6">
+        <div class="col-sm-12 mx-auto text-center" style="padding-bottom: 15px;">
+            <h2>Settings</h2>
         </div>
-        <br>
-        <div>
+
+        <div class="row">
+            <div class="col-sm-12 mx-auto text-center">
+                <p>Name:  <span th:text="${user.userName}" id="username"></span></p>
+            </div>
+            <div class="col-sm-12 mx-auto text-center">
+                <p>Email: <span th:text="${user.email}" id="email"></span></p>
+            </div>
+            <div class="col-sm-12 mx-auto text-center">
+                <p>Is 2FA on: <span th:text="${user.is2FactorAuthenticationRequired}" id="2fa"></span></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" id="change-details">
+        <div class="col-sm-12 mx-auto text-center mb-4">
             <input type="text" id="change-username" placeholder="change username">
             <button id="change-username-button">Confirm</button>
         </div>
-        <br>
-        <div>
+        <div class="col-sm-12 mx-auto text-center mb-4">
             <input type="email" id="change-email" placeholder="change email">
             <button id="change-email-button">Confirm</button>
         </div>
-        <br>
-        <div>
+        <div class="col-sm-12 mx-auto text-center mb-4">
+            <p>Change password</p>
             <input type="password" id="current-password" placeholder="current password">
             <input type="password" id="new-password" placeholder="new password">
             <input type="password" id="repeat-new-password" placeholder="repeat new password">
             <button id="change-password">Confirm</button>
         </div>
-    </div>
-    <div id="error-message">
+        <div class="col-sm-12 mx-auto text-center mb-4">
+            <p>Turn on/off 2FA</p>
+            <input type="radio" name="2fa" value="off">off
+            <input type="radio" name="2fa" value="on">on
+            <button id="change2FA">Select</button>
+        </div>
     </div>
 
-    <div id="footer"></div>
+    <div class="container" id="error-message">
+    </div>
+
+    <div class="col-sm-12 mx-auto text-center mt-5" id="footer">
+        <footer>
+            <small>© Copyright 2021, FinanceTracker</small>
+        </footer>
+    </div>
 </body>
 </html>

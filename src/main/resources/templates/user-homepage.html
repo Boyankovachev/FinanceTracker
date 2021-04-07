@@ -2,23 +2,67 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Homepage</title>
-    <link th:href = "@{/css/user-homepage.css}" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>User Homepage</title>
     <script type="application/javascript" th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js}"></script>
     <script type="application/javascript" th:src = "@{/js/user-homepage.js}"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link th:href = "@{/css/navbar.css}" rel="stylesheet">
 </head>
 <body>
 
-    <div id="header"></div>
+    <div class="container" id="navbar">
+        <nav class="navbar navbar-expand navbar-dark bg-primary">
+            <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item my-auto">
+                        <h2 class="navbar-brand font-weight-bold">Finance Tracker</h2>
+                    </li>
+                    <li class="nav-item my-auto">
+                        <form action="/user" method="get">
+                            <button class="btn btn-secondary rounded-0" type="submit">User Main Page</button>
+                        </form>
+                    </li>
+                    <li class="nav-item my-auto">
+                        <form action = "/add-asset" method="get">
+                            <button class="btn btn-info rounded-0" type="submit">Add New Asset</button>
+                        </form>
+                    </li>
+                    <li class="nav-item my-auto">
+                        <form action="/notification" method="get">
+                            <button class="btn btn-info rounded-0" type="submit">Notifications</button>
+                        </form>
+                    </li>
+                    <li class="nav-item my-auto">
+                        <form action="/settings" method="get">
+                            <button class="btn btn-info rounded-0" type="submit">Settings</button>
+                        </form>
+                    </li>
+                </ul>
 
-    <h1> USER HOMEPAGE</h1>
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item" id="name-list">
+                        <h3 class="font-weight-bold">test</h3>
+                    </li>
+                    <li class="nav-item my-auto">
+                        <form action="/logout" method="get">
+                            <button class="btn btn-danger" type="submit">Logout</button>
+                        </form>
+                    </li>
+                </ul>
 
-    <p th:text="${user.userName}"></p>
-    <p th:text="${user.email}"></p>
-    <p th:text="${user.is2FactorAuthenticationRequired}"></p>
+            </div>
+        </nav>
+    </div>
 
-    <table>
-        <tr>
+    <div th:if="${stock!=null and !stock.isEmpty()}" class="container" id="stock-container">
+
+        <div class="col-sm-12 mx-auto text-center">
+            <h2>Stocks</h2>
+        </div>
+
+        <table class="table table-bordered table-striped table-responsive">
+            <thead>
             <th>Stock Name</th>
             <th>Symbol</th>
             <th>Price</th>
@@ -28,46 +72,78 @@
             <th>Currency</th>
             <th>Exchange</th>
             <th>Is Open</th>
-        </tr>
-        <tr th:each="stock: ${stock}" th:id="${stock.symbol}">
-            <td>
-                <form action="/asset" method="get">
-                    <button class="open-asset" asset-type="stock" th:asset-name="${stock.name}" th:text="${stock.name}"></button>
-                </form>
-            </td>
-            <td th:text="${stock.symbol}"></td>
-            <td th:text="${stock.currentMarketPrice}"></td>
-            <td th:text="${stock.quantityOwned}"></td>
-            <td th:text="${stock.averagePurchasePrice}"></td>
-            <td th:text="${stock.percentChange}"></td>
-            <td th:text="${stock.currencySymbol}"></td>
-            <td th:text="${stock.exchangeName}"></td>
-            <td th:text="${stock.isMarketOpen}"></td>
-            <td><button class="delete-asset" asset-type="stock" th:asset-name="${stock.symbol}">X</button></td>
-            <td></td>
-        </tr>
+            <th>Remove</th>
+            <thead>
+            <tbody>
+            <tr th:each="stock: ${stock}" th:id="${stock.symbol}">
+                <td>
+                    <form action="/asset" method="get">
+                        <button class="open-asset btn btn-info" asset-type="stock" th:asset-name="${stock.name}" th:text="${stock.name}"></button>
+                    </form>
+                </td>
+                <td th:text="${stock.symbol}"></td>
+                <td th:text="${stock.currentMarketPrice}"></td>
+                <td th:text="${stock.quantityOwned}"></td>
+                <td th:text="${stock.averagePurchasePrice}"></td>
+                <td th:text="${stock.percentChange}"></td>
+                <td th:text="${stock.currencySymbol}"></td>
+                <td th:text="${stock.exchangeName}"></td>
+                <td th:text="${stock.isMarketOpen}"></td>
+                <td><button class="delete-asset btn btn-danger" asset-type="stock" th:asset-name="${stock.symbol}">X</button></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div th:unless="${stock!=null and !stock.isEmpty()}" class="container">
+        <div class="col-sm-12 mx-auto text-center">
+            <h2>You do not own any stocks!</h2>
+        </div>
+    </div>
 
-        <tr>
+    <div th:if="${passive_resource!=null and !passive_resource.isEmpty()}" class="container" id="passive-resource-container">
+        <div class="col-sm-12 mx-auto text-center">
+            <h2>Passive Resources</h2>
+        </div>
+
+        <table class="table table-bordered table-striped table-responsive">
+            <thead>
             <th>Passive Resource Name</th>
             <th>Current Price</th>
             <th>Purchase Price</th>
             <th>Percent Change</th>
             <th>Currency</th>
-        </tr>
-        <tr th:each="passive_resource: ${passive_resource}" th:id="${passive_resource.name}">
-            <td>
-                <form action="/asset" method="get">
-                    <button class="open-asset" asset-type="passive-resource" th:asset-name="${passive_resource.name}" th:text="${passive_resource.name}"></button>
-                </form>
-            </td>
-            <td th:text="${passive_resource.currentMarketPrice}"></td>
-            <td th:text="${passive_resource.purchaseInfo.price}"></td>
-            <td th:text="${passive_resource.percentChange}"></td>
-            <td th:text="${passive_resource.currencySymbol}"></td>
-            <td><button class="delete-asset" asset-type="passive-resource" th:asset-name="${passive_resource.name}">X</button></td>
-        </tr>
+            <th>Remove</th>
+            <thead>
+            <tbody>
+            <tr th:each="passive_resource: ${passive_resource}" th:id="${passive_resource.name}">
+                <td>
+                    <form action="/asset" method="get">
+                        <button class="open-asset btn btn-info" asset-type="passive-resource" th:asset-name="${passive_resource.name}" th:text="${passive_resource.name}"></button>
+                    </form>
+                </td>
+                <td th:text="${passive_resource.currentMarketPrice}"></td>
+                <td th:text="${passive_resource.purchaseInfo.price}"></td>
+                <td th:text="${passive_resource.percentChange}"></td>
+                <td th:text="${passive_resource.currencySymbol}"></td>
+                <td><button class="delete-asset btn btn-danger" asset-type="passive-resource" th:asset-name="${passive_resource.name}">X</button></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div th:unless="${passive_resource!=null and !passive_resource.isEmpty()}" class="container">
+        <div class="col-sm-12 mx-auto text-center">
+            <h2>You do not own any passive assets!</h2>
+        </div>
+    </div>
 
-        <tr>
+
+    <div th:if="${index!=null and !index.isEmpty()}" class="container" id="index-container">
+        <div class="col-sm-12 mx-auto text-center">
+            <h2>Indexes</h2>
+        </div>
+
+        <table class="table table-bordered table-striped table-responsive">
+            <thead>
             <th>Index Name</th>
             <th>Symbol</th>
             <th>Price</th>
@@ -76,24 +152,40 @@
             <th>Percent Change</th>
             <th>Currency</th>
             <th>Exchange</th>
-        </tr>
-        <tr th:each="index: ${index}" th:id="${index.symbol}">
-            <td>
-                <form action="/asset" method="get">
-                    <button class="open-asset" asset-type="index" th:asset-name="${index.name}" th:text="${index.name}"></button>
-                </form>
-            </td>
-            <td th:text="${index.symbol}"></td>
-            <td th:text="${index.currentMarketPrice}"></td>
-            <td th:text="${index.quantityOwned}"></td>
-            <td th:text="${index.averagePurchasePrice}"></td>
-            <td th:text="${index.percentChange}"></td>
-            <td th:text="${index.currencySymbol}"></td>
-            <td th:text="${index.exchangeName}"></td>
-            <td><button class="delete-asset" asset-type="index" th:asset-name="${index.symbol}">X</button></td>
-        </tr>
+            <th>Remove</th>
+            <thead>
+            <tbody>
+            <tr th:each="index: ${index}" th:id="${index.symbol}">
+                <td>
+                    <form action="/asset" method="get">
+                        <button class="open-asset btn btn-info" asset-type="index" th:asset-name="${index.name}" th:text="${index.name}"></button>
+                    </form>
+                </td>
+                <td th:text="${index.symbol}"></td>
+                <td th:text="${index.currentMarketPrice}"></td>
+                <td th:text="${index.quantityOwned}"></td>
+                <td th:text="${index.averagePurchasePrice}"></td>
+                <td th:text="${index.percentChange}"></td>
+                <td th:text="${index.currencySymbol}"></td>
+                <td th:text="${index.exchangeName}"></td>
+                <td><button class="delete-asset btn btn-danger" asset-type="index" th:asset-name="${index.symbol}">X</button></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div th:unless="${index!=null and !index.isEmpty()}" class="container">
+        <div class="col-sm-12 mx-auto text-center">
+            <h2>You do not own any index funds or ETFs!</h2>
+        </div>
+    </div>
 
-        <tr>
+    <div th:if="${crypto!=null and !crypto.isEmpty()}" class="container" id="crypto-container">
+        <div class="col-sm-12 mx-auto text-center">
+            <h2>Crypto Currencies</h2>
+        </div>
+
+        <table class="table table-bordered table-striped table-responsive">
+            <thead>
             <th>Crypto Name</th>
             <th>Symbol</th>
             <th>Price</th>
@@ -101,47 +193,76 @@
             <th>Avg. Purchase Price</th>
             <th>Percent Change</th>
             <th>Currency</th>
-        </tr>
-        <tr th:each="crypto: ${crypto}" th:id="${crypto.name}">
-            <td>
-                <form action="/asset" method="get">
-                    <button class="open-asset" asset-type="crypto" th:asset-name="${crypto.name}" th:text="${crypto.name}"></button>
-                </form>
-            </td>
-            <td th:text="${crypto.symbol}"></td>
-            <td th:text="${crypto.currentMarketPrice}"></td>
-            <td th:text="${crypto.quantityOwned}"></td>
-            <td th:text="${crypto.averagePurchasePrice}"></td>
-            <td th:text="${crypto.percentChange}"></td>
-            <td th:text="${crypto.currencySymbol}"></td>
-            <td><button class="delete-asset" asset-type="crypto" th:asset-name="${crypto.symbol}">X</button></td>
-        </tr>
+            <th>Remove</th>
+            <thead>
+            <tbody>
+            <tr th:each="crypto: ${crypto}" th:id="${crypto.name}">
+                <td>
+                    <form action="/asset" method="get">
+                        <button class="open-asset btn btn-info" asset-type="crypto" th:asset-name="${crypto.name}" th:text="${crypto.name}"></button>
+                    </form>
+                </td>
+                <td th:text="${crypto.symbol}"></td>
+                <td th:text="${crypto.currentMarketPrice}"></td>
+                <td th:text="${crypto.quantityOwned}"></td>
+                <td th:text="${crypto.averagePurchasePrice}"></td>
+                <td th:text="${crypto.percentChange}"></td>
+                <td th:text="${crypto.currencySymbol}"></td>
+                <td><button class="delete-asset btn btn-danger" asset-type="crypto" th:asset-name="${crypto.name}">X</button></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div th:unless="${crypto!=null and !crypto.isEmpty()}" class="container">
+        <div class="col-sm-12 mx-auto text-center">
+            <h2>You do not own any crypto currencies!</h2>
+        </div>
+    </div>
 
-        <tr>
+
+    <div th:if="${commodity!=null and !commodity.isEmpty()}" class="container" id="commodity-container">
+        <div class="col-sm-12 mx-auto text-center">
+            <h2>Commodities</h2>
+        </div>
+
+        <table class="table table-bordered table-striped table-responsive">
+            <thead>
             <th>Commodity</th>
             <th>Price</th>
             <th>Quantity Owned</th>
             <th>Avg. Purchase Price</th>
             <th>Percent Change</th>
             <th>Currency</th>
-        </tr>
-        <tr th:each="commodity: ${commodity}" th:id="${commodity.name}">
-            <td>
-                <form action="/asset" method="get">
-                    <button class="open-asset" asset-type="commodity" th:asset-name="${commodity.name}" th:text="${commodity.name}"></button>
-                </form>
-            </td>
-            <td th:text="${commodity.currentMarketPrice}"></td>
-            <td th:text="${commodity.quantityOwned}"></td>
-            <td th:text="${commodity.averagePurchasePrice}"></td>
-            <td th:text="${commodity.percentChange}"></td>
-            <td th:text="${commodity.currencySymbol}"></td>
-            <td><button class="delete-asset" asset-type="commodity" th:asset-name="${commodity.name}">X</button></td>
-        </tr>
-    </table>
+            <th>Remove</th>
+            <thead>
+            <tbody>
+            <tr th:each="commodity: ${commodity}" th:id="${commodity.name}">
+                <td>
+                    <form action="/asset" method="get">
+                        <button class="open-asset btn btn-info" asset-type="commodity" th:asset-name="${commodity.name}" th:text="${commodity.name}"></button>
+                    </form>
+                </td>
+                <td th:text="${commodity.currentMarketPrice}"></td>
+                <td th:text="${commodity.quantityOwned}"></td>
+                <td th:text="${commodity.averagePurchasePrice}"></td>
+                <td th:text="${commodity.percentChange}"></td>
+                <td th:text="${commodity.currencySymbol}"></td>
+                <td><button class="delete-asset btn btn-danger" asset-type="commodity" th:asset-name="${commodity.name}">X</button></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div th:unless="${commodity!=null and !commodity.isEmpty()}" class="container">
+        <div class="col-sm-12 mx-auto text-center">
+            <h2>You do not own any commodities!</h2>
+        </div>
+    </div>
 
-    <div id="error-message"></div>
+    <div class="col-sm-12 mx-auto text-center mt-5" id="footer">
+        <footer>
+            <small>© Copyright 2021, FinanceTracker</small>
+        </footer>
+    </div>
 
-    <div id="footer"></div>
 </body>
 </html>

@@ -2,77 +2,137 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Add Asset</title>
     <script type="application/javascript" th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js}"></script>
     <script type="application/javascript" th:src = "@{/js/add-asset.js}"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link th:href = "@{/css/navbar.css}" rel="stylesheet">
 </head>
 <body>
 
-    <div id="header"></div>
+    <div class="container" id="navbar">
+        <nav class="navbar navbar-expand navbar-dark bg-primary">
+            <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item my-auto">
+                        <h2 class="navbar-brand font-weight-bold">Finance Tracker</h2>
+                    </li>
+                    <li class="nav-item my-auto">
+                        <form action="/user" method="get">
+                            <button class="btn btn-info rounded-0" type="submit">User Main Page</button>
+                        </form>
+                    </li>
+                    <li class="nav-item my-auto">
+                        <form action = "/add-asset" method="get">
+                            <button class="btn btn-secondary rounded-0" type="submit">Add New Asset</button>
+                        </form>
+                    </li>
+                    <li class="nav-item my-auto">
+                        <form action="/notification" method="get">
+                            <button class="btn btn-info rounded-0" type="submit">Notifications</button>
+                        </form>
+                    </li>
+                    <li class="nav-item my-auto">
+                        <form action="/settings" method="get">
+                            <button class="btn btn-info rounded-0" type="submit">Settings</button>
+                        </form>
+                    </li>
+                </ul>
 
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item" id="name-list">
+                        <h3 class="font-weight-bold">test</h3>
+                    </li>
+                    <li class="nav-item my-auto">
+                        <form action="/logout" method="get">
+                            <button class="btn btn-danger" type="submit">Logout</button>
+                        </form>
+                    </li>
+                </ul>
 
-    <h1>Add New Asset</h1>
+            </div>
+        </nav>
+    </div>
 
-    <form>
-        <select onChange=onChange(this.value)>
-            <option value="stock">Stock</option>
-            <option value="passive-resource">Passive-resource</option>
-            <option value="index">Index</option>
-            <option value="crypto">Crypto</option>
-            <option value="commodity">Commodity</option>
-        </select>
-    </form>
+    <div class="container">
+        <div class="col-sm-12 mx-auto text-center" style="padding-bottom: 15px;">
+            <h2>Add new asset</h2>
+        </div>
+        <div class="row">
 
-    <div id="add"></div>
+            <div class="col text-right">
+                <form>
+                    <select class="form-select" onchange="onChange(this.value)">
+                        <option value="stock">Stock</option>
+                        <option value="passive-resource">Passive-resource</option>
+                        <option value="index">Index</option>
+                        <option value="crypto">Crypto</option>
+                        <option value="commodity">Commodity</option>
+                    </select>
+                </form>
 
-    <div id="purchase"></div>
+                <div id="add">
+                </div>
+            </div>
 
-    <div id="response"></div>
+            <div class="col">
+                <div id="purchase">
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 mx-auto text-center" id="response"></div>
+    </div>
+
+    <div class="col-sm-12 mx-auto text-center mt-5" id="footer">
+        <footer>
+            <small>© Copyright 2021, FinanceTracker</small>
+        </footer>
+    </div>
 
     <template id="stock">
-        <p>Enter Stock Ticker</p>
-        <input type="text" placeholder="Ticker" class="value" required><br>
-        <button class="add-button" asset-type="stock">Add Stock</button>
+        <h5>Enter Stock Ticker</h5>
+        <input class="value form-control w-25 ml-auto" type="text" placeholder="Ticker" required><br>
+        <button class="add-button btn btn-success" asset-type="stock">Add Stock</button>
     </template>
     <template id="index">
-        <p>Enter Index Ticker</p>
-        <input type="text" placeholder="Ticker" class="value" required><br>
-        <button class="add-button" asset-type="index">Add Index</button>
+        <h5>Enter Index Ticker</h5>
+        <input class="value form-control w-25 ml-auto" type="text" placeholder="Ticker" required><br>
+        <button class="add-button btn btn-success" asset-type="index">Add Index</button>
     </template>
     <template id="crypto">
-        <p>Enter Crypto Ticker</p>
-        <input type="text" placeholder="Ticker" class="value" required><br>
-        <button class="add-button" asset-type="crypto">Add Crypto</button>
+        <h5>Enter Crypto Ticker</h5>
+        <input class="value form-control w-25 ml-auto" type="text" placeholder="Ticker" required><br>
+        <button class="add-button btn btn-success" asset-type="crypto">Add Crypto</button>
     </template>
     <template id="commodity">
-        <p>Enter Commodity Name</p>
-        <input type="text" placeholder="Name" class="value" required><br>
-        <button class="add-button" asset-type="commodity">Add Commodity</button>
+        <h5>Enter Commodity Name</h5>
+        <input class="value form-control w-25 ml-auto" type="text" placeholder="Name" required><br>
+        <button class="add-button btn btn-success" asset-type="commodity">Add Commodity</button>
     </template>
     <template id="passive-resource">
-        <p>Enter Passive Purchase Name</p>
-        <input type="text" placeholder="Name" class="value" required><br>
-        <p>Enter Purchase Price</p>
-        <input type="text" placeholder="Price" id="passive-price" required><br>
-        <p>Enter Purchase Date</p>
-        <input type="text" placeholder="Date format - 4.25.2020" id="passive-date"><br>
-        <p>Enter Purchase Description</p>
-        <input type="text" placeholder="Description" id="description"><br>
-        <p>Enter Purchase Currency</p>
-        <input type="text" placeholder="Currency" id="currency"><br>
-        <p>Enter Purchase Currency Symbol</p>
-        <input type="text" placeholder="Currency Symbol" id="currency-symbol"><br>
-        <button class="add-button" asset-type="passive-resource">Add Passive Purchase</button>
+        <h6>Enter Passive Purchase Name</h6>
+        <input class="value form-control w-50 ml-auto" type="text" placeholder="Name" required>
+        <h6>Enter Purchase Price</h6>
+        <input class="form-control w-25 ml-auto" type="text" placeholder="Price" id="passive-price" required>
+        <h6>Enter Purchase Date</h6>
+        <input class="form-control w-50 ml-auto" type="text" placeholder="Date format - 4.25.2020" id="passive-date">
+        <h6>Enter Purchase Description</h6>
+        <input class="form-control w-50 ml-auto" type="text" placeholder="Description" id="description">
+        <h6>Enter Purchase Currency</h6>
+        <input class="form-control w-25 ml-auto" type="text" placeholder="Currency" id="currency">
+        <h6>Enter Purchase Currency Symbol</h6>
+        <input class="form-control w-25 ml-auto" type="text" placeholder="Currency Symbol" id="currency-symbol"><br>
+        <button class="add-button btn btn-success" asset-type="passive-resource">Add Passive Purchase</button>
     </template>
 
     <template id="purchase-info">
-        <p>Add Initial Purchase</p>
-        <input type="number" placeholder="Enter Quantity" id="quantity"><br>
-        <input type="number" placeholder="Enter Price" id="price"><br>
-        <input type="text" placeholder="Enter Date" id="date"><br>
-        <div id="error-message"></div>
+        <h4>Add Initial Purchase</h4>
+        <input class="form-control" type="number" placeholder="Enter Quantity" id="quantity">
+        <input class="form-control" type="number" placeholder="Enter Price" id="price">
+        <input class="form-control" type="text" placeholder="Enter Date" id="date">
     </template>
 
-    <div id="footer"></div>
+
 </body>
 </html>
