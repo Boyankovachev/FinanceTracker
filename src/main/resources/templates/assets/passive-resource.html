@@ -2,33 +2,114 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Passive Resource</title>
     <script type="application/javascript" th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js}"></script>
     <script type="application/javascript" th:src = "@{/js/assets/asset.js}"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" th:href = "@{/css/navbar.css}">
 </head>
 <body>
 
-    <div id="header"></div>
+    <div class="container" id="navbar">
+        <nav class="navbar navbar-expand navbar-dark bg-primary">
+            <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item my-auto">
+                        <h2 class="navbar-brand font-weight-bold">Finance Tracker</h2>
+                    </li>
+                    <li class="nav-item my-auto">
+                        <form action="http://localhost:8080/user" method="get">
+                            <button class="btn btn-info rounded-0" type="submit">User Main Page</button>
+                        </form>
+                    </li>
+                    <li class="nav-item my-auto">
+                        <form action = "/add-asset" method="get">
+                            <button class="btn btn-info rounded-0" type="submit">Add New Asset</button>
+                        </form>
+                    </li>
+                    <li class="nav-item my-auto">
+                        <form action="http://localhost:8080/notification" method="get">
+                            <button class="btn btn-info rounded-0" type="submit">Notifications</button>
+                        </form>
+                    </li>
+                    <li class="nav-item my-auto">
+                        <form action="http://localhost:8080/settings" method="get">
+                            <button class="btn btn-info rounded-0" type="submit">Settings</button>
+                        </form>
+                    </li>
+                </ul>
 
-    <div id="passive-resource-info">
-        <h1>Passive Resource</h1>
-        <p th:text="${passive_resource.name}" id="name"></p>
-        <p th:text="${passive_resource.description}"></p>
-        <p th:text="${passive_resource.purchaseInfo.price}"></p>
-        <p th:text="${passive_resource.currentMarketPrice}" id="price-text"></p>
-        <p th:text="${passive_resource.currency}"></p>
-        <p th:text="${passive_resource.currencySymbol}"></p>
-        <p th:text="${passive_resource.purchaseInfo.purchaseDate.myFormatDateString}"></p>
-        <p th:text="${passive_resource.percentChange}"></p>
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item" id="name-list">
+                        <h3 th:text="${username}" class="font-weight-bold"></h3>
+                    </li>
+                    <li class="nav-item my-auto">
+                        <form action="http://localhost:8080/logout" method="get">
+                            <button class="btn btn-danger" type="submit">Logout</button>
+                        </form>
+                    </li>
+                </ul>
+
+            </div>
+        </nav>
     </div>
-    <div id="edit-passive-resource">
-        <h2>Set Current Price</h2>
-        <input type="number" placeholder="Enter Current Price" id="price"><br>
-        <button id="change-current-price">Confirm</button><br>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6 mx-auto text-center">
+                <div class="col-sm-12 mx-auto text-center" style="padding-bottom: 15px;">
+                    <h2>Passive Resource</h2>
+                </div>
+                <div class="col-sm-12 mx-auto text-center" style="padding-bottom: 15px;">
+                    <p th:text="${'Name: ' + passive_resource.name}" class="font-weight-bold" id="name" th:name="${passive_resource.name}"></p>
+                </div>
+                <div class="col-sm-12 mx-auto text-center" style="padding-bottom: 15px;">
+                    <p th:text="${'Buy Price: ' + passive_resource.purchaseInfo.price}" class="font-weight-bold"></p>
+
+                </div>
+                <div class="col-sm-12 mx-auto text-center" style="padding-bottom: 15px;">
+                    <p th:text="${'Current Price: ' + passive_resource.currentMarketPrice}" class="font-weight-bold"></p>
+                </div>
+                <div class="col-sm-12 mx-auto text-center" style="padding-bottom: 15px;">
+                    <p th:text="${'Purchase Date: ' + passive_resource.purchaseInfo.purchaseDate.myFormatDateString}" class="font-weight-bold"></p>
+
+                </div>
+                <div class="col-sm-12 mx-auto text-center" style="padding-bottom: 15px;">
+                    <p th:text="${'Percent Change: ' + passive_resource.percentChange}"></p>
+                </div>
+                <div class="col-sm-12 mx-auto text-center" style="padding-bottom: 15px;">
+                    <p th:text="${'Currency: ' + passive_resource.currency}">currency: dollar</p>
+                </div>
+                <div class="col-sm-12 mx-auto text-center" style="padding-bottom: 15px;">
+                    <p th:text="${'Currency: ' + passive_resource.currencySymbol}">currency: dollar</p>
+                </div>
+            </div>
+
+            <div class="col-sm-6 mx-auto text-center">
+                <div class="col-sm-12 mx-auto text-center">
+                    <h2>Edit current price</h2>
+                    <input class="form-control" type="number" placeholder="Enter Current Price" id="price">
+                    <button class="btn btn-info" id="change-current-price">Confirm</button>
+                </div>
+            </div>
+
+            <div class="col-sm-9 mx-auto text-left">
+                <p th:text="${'Passive resource description: ' + passive_resource.description}" style="padding-left: 90px;"></p>
+            </div>
+        </div>
+
     </div>
 
-    <div id="error-message"></div>
 
-    <div id="footer"></div>
+    <div id="chartContainer" style="height: 370px; width: 100%;"></div>
+
+
+    <div class="col-sm-12 mx-auto text-center mt-5" id="footer">
+        <footer>
+            <small>© Copyright 2021, FinanceTracker</small>
+        </footer>
+    </div>
+
 </body>
 </html>

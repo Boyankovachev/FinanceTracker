@@ -11,7 +11,7 @@ import com.diplomna.graph.GraphInfoManager;
 public class CurrentData {
     /*
         Singleton class.
-        Holds data for current prices in RAM;
+        Holds data in RAM;
      */
     private AssetManager assetManager;
 

@@ -25,8 +25,10 @@ public class SecSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(final HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/*").hasAnyRole("USER", "VERIFY")
-                .antMatchers("/", "/register").permitAll()
+                .antMatchers("/notification", "/settings", "/asset", "/add-asset").hasAuthority("ROLE_USER")
+                .antMatchers("/user").hasAnyAuthority("ROLE_VERIFY", "ROLE_USER")
+                .antMatchers("/confirm-login").hasAuthority("ROLE_VERIFY")
+                .antMatchers("/", "/register", "/logout").permitAll()
                 .and()
                 .formLogin()
                 .loginPage("/login")

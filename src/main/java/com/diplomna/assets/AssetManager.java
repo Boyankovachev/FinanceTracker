@@ -328,4 +328,27 @@ public class AssetManager {
         commodities.addAll(updatedCommodityList);
     }
 
+    public void print(){
+        System.out.println();
+        for(Stock stock: stocks){
+            stock.printStock();
+        }
+        System.out.println();
+
+        for(Index index: indexFunds){
+            index.printIndex();
+        }
+        System.out.println();
+        for(Crypto crypto: cryptoCurrencies){
+            crypto.printCrypto();
+        }
+        System.out.println();
+        for(Commodities commodities: commodities){
+            commodities.printCommodity();
+        }
+        System.out.println(".\n.\n.\n.\n");
+        System.out.println();
+
+    }
+
 }

@@ -42,7 +42,7 @@
 
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item" id="name-list">
-                        <h3 class="font-weight-bold">test</h3>
+                        <h3 th:text="${user.userName}" class="font-weight-bold"></h3>
                     </li>
                     <li class="nav-item my-auto">
                         <form action="/logout" method="get">
@@ -77,8 +77,10 @@
             <tbody>
             <tr th:each="stock: ${stock}" th:id="${stock.symbol}">
                 <td>
-                    <form action="/asset" method="get">
-                        <button class="open-asset btn btn-info" asset-type="stock" th:asset-name="${stock.name}" th:text="${stock.name}"></button>
+                    <form action="/asset" method="post">
+                        <input type="hidden" name="assetType" value="stock">
+                        <input type="hidden" name="assetName" th:value="${stock.symbol}">
+                        <button type="submit" class="btn btn-primary" th:text="${stock.name}"></button>
                     </form>
                 </td>
                 <td th:text="${stock.symbol}"></td>
@@ -117,8 +119,10 @@
             <tbody>
             <tr th:each="passive_resource: ${passive_resource}" th:id="${passive_resource.name}">
                 <td>
-                    <form action="/asset" method="get">
-                        <button class="open-asset btn btn-info" asset-type="passive-resource" th:asset-name="${passive_resource.name}" th:text="${passive_resource.name}"></button>
+                    <form action="/asset" method="post">
+                        <input type="hidden" name="assetType" value="passive-resource">
+                        <input type="hidden" name="assetName" th:value="${passive_resource.name}">
+                        <button type="submit" class="btn btn-primary" th:text="${passive_resource.name}"></button>
                     </form>
                 </td>
                 <td th:text="${passive_resource.currentMarketPrice}"></td>
@@ -157,8 +161,10 @@
             <tbody>
             <tr th:each="index: ${index}" th:id="${index.symbol}">
                 <td>
-                    <form action="/asset" method="get">
-                        <button class="open-asset btn btn-info" asset-type="index" th:asset-name="${index.name}" th:text="${index.name}"></button>
+                    <form action="/asset" method="post">
+                        <input type="hidden" name="assetType" value="index">
+                        <input type="hidden" name="assetName" th:value="${index.symbol}">
+                        <button type="submit" class="btn btn-primary" th:text="${index.name}"></button>
                     </form>
                 </td>
                 <td th:text="${index.symbol}"></td>
@@ -196,10 +202,12 @@
             <th>Remove</th>
             <thead>
             <tbody>
-            <tr th:each="crypto: ${crypto}" th:id="${crypto.name}">
+            <tr th:each="crypto: ${crypto}" th:id="${crypto.symbol}">
                 <td>
-                    <form action="/asset" method="get">
-                        <button class="open-asset btn btn-info" asset-type="crypto" th:asset-name="${crypto.name}" th:text="${crypto.name}"></button>
+                    <form action="/asset" method="post">
+                        <input type="hidden" name="assetType" value="crypto">
+                        <input type="hidden" name="assetName" th:value="${crypto.symbol}">
+                        <button type="submit" class="btn btn-primary" th:text="${crypto.name}"></button>
                     </form>
                 </td>
                 <td th:text="${crypto.symbol}"></td>
@@ -208,7 +216,7 @@
                 <td th:text="${crypto.averagePurchasePrice}"></td>
                 <td th:text="${crypto.percentChange}"></td>
                 <td th:text="${crypto.currencySymbol}"></td>
-                <td><button class="delete-asset btn btn-danger" asset-type="crypto" th:asset-name="${crypto.name}">X</button></td>
+                <td><button class="delete-asset btn btn-danger" asset-type="crypto" th:asset-name="${crypto.symbol}">X</button></td>
             </tr>
             </tbody>
         </table>
@@ -238,8 +246,10 @@
             <tbody>
             <tr th:each="commodity: ${commodity}" th:id="${commodity.name}">
                 <td>
-                    <form action="/asset" method="get">
-                        <button class="open-asset btn btn-info" asset-type="commodity" th:asset-name="${commodity.name}" th:text="${commodity.name}"></button>
+                    <form action="/asset" method="post">
+                        <input type="hidden" name="assetType" value="commodity">
+                        <input type="hidden" name="assetName" th:value="${commodity.name}">
+                        <button type="submit" class="btn btn-primary" th:text="${commodity.name}"></button>
                     </form>
                 </td>
                 <td th:text="${commodity.currentMarketPrice}"></td>

@@ -33,6 +33,24 @@ public class Stock extends StockBasedActiveAsset {
         this.description = description;
     }
 
+    //Copy constructor
+    public Stock(Stock stock){
+        this.name = stock.getName();
+        this.currency = stock.getCurrency();
+        this.currencySymbol = stock.getCurrencySymbol();
+        this.description = stock.getDescription();
+        this.currentMarketPrice = stock.getCurrentMarketPrice();
+        this.symbol = stock.getSymbol();
+        this.exchangeName = stock.getExchangeName();
+        this.isMarketOpen = stock.isMarketOpen();
+        this.recommendationKey = stock.getRecommendationKey();
+    }
+
+    //Copy factory
+    public static Stock newInstance(Stock stock){
+        return new Stock(stock);
+    }
+
     public void setExchangeName(String exchangeName) {
         this.exchangeName = exchangeName;
     }
@@ -55,5 +73,12 @@ public class Stock extends StockBasedActiveAsset {
         return recommendationKey;
     }
 
+    public void printStock(){
+        System.out.println(name);
+        System.out.println(symbol);
+        for(PurchaseInfo purchaseInfo: purchaseInfo){
+            System.out.println("Purchase: price: " + purchaseInfo.getPrice() + "  quantity: " + purchaseInfo.getQuantity() );
+        }
+    }
 
 }

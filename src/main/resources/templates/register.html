@@ -16,9 +16,9 @@
                 <form action="/register" method="post">
                     <h3>Register</h3>
                     <input type="text" placeholder="Enter Username" name="username" class="form-control">
+                    <input type="email" placeholder="Enter Email" name="email" class="form-control">
                     <input type="password" placeholder="Enter Password" name="password" class="form-control">
                     <input type="password" placeholder="Enter Password Again" name="password2" class="form-control">
-                    <input type="email" placeholder="Enter Email (not required)" name="email" class="form-control">
                     <div th:if="${isMessage}">
                         <p th:text="${message}" class="alert alert-warning"></p>
                     </div>

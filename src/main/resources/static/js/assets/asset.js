@@ -22,7 +22,7 @@ $(function (){
         };
 
         var $purchase_table = $('#purchase-table');
-        var $error_message = $('#error-message');
+        var $error_message = $('#message');
 
         $.ajax({
             type: 'POST',
@@ -45,6 +45,7 @@ $(function (){
 
     $("#change-current-price").on("click", function(){
         //on click to change current price of passive asset
+        //alert('cukna go');
         var $price = $('#price');
         var $name = $('#name');
         var $priceText = $('#price-text');
@@ -54,7 +55,7 @@ $(function (){
         var price = $price.val();
         var input = {
             price: price,
-            name: $name.html()
+            name: $name.attr("name")
         };
 
         $.ajax({

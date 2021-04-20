@@ -21,4 +21,27 @@ public class Crypto extends StockBasedActiveAsset {
         super(name,currentMarketPrice,quantityOwned,symbol);
     }
 
+    //Copy constructor
+    public Crypto(Crypto crypto){
+        this.name = crypto.getName();
+        this.currency = crypto.getCurrency();
+        this.currencySymbol = crypto.getCurrencySymbol();
+        this.description = crypto.getDescription();
+        this.currentMarketPrice = crypto.getCurrentMarketPrice();
+        this.symbol = crypto.getSymbol();
+    }
+
+    //Copy factory
+    public static Crypto newInstance(Crypto crypto){
+        return new Crypto(crypto);
+    }
+
+    public void printCrypto(){
+        System.out.println(name);
+        System.out.println(symbol);
+        for(PurchaseInfo purchaseInfo: purchaseInfo){
+            System.out.println("Purchase: price: " + purchaseInfo.getPrice() + "  quantity: " + purchaseInfo.getQuantity() );
+        }
+    }
+
 }

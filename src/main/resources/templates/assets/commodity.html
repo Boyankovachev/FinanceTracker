@@ -5,9 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Commodity</title>
     <script type="application/javascript" th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js}"></script>
-    <script type="application/javascript" th:src = "@{/js/assets/chart.js}"></script>
     <script type="application/javascript" th:src = "@{/js/assets/asset.js}"></script>
-    <script type="application/javascript" th:src = "@{https://canvasjs.com/assets/script/jquery.canvasjs.min.js}"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" th:href = "@{/css/navbar.css}">
 </head>
@@ -44,7 +42,7 @@
 
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item" id="name-list">
-                        <h3 class="font-weight-bold">test</h3>
+                        <h3 th:text="${username}" class="font-weight-bold"></h3>
                     </li>
                     <li class="nav-item my-auto">
                         <form action="/logout" method="get">
@@ -80,13 +78,13 @@
                     <p th:text="${'Percent change: ' + commodity.percentChange}"></p>
                 </div>
                 <div class="col-sm-12 mx-auto text-center" style="padding-bottom: 15px;">
-                    <p th:text="${'Exchange name: ' + commodity.exchangeName}">exchangeName: NASDAQ</p>
+                    <p th:text="${'Exchange name: ' + commodity.exchangeName}"></p>
                 </div>
                 <div class="col-sm-12 mx-auto text-center" style="padding-bottom: 15px;">
-                    <p th:text="${'Currency: ' + commodity.currency}">currency: dollar</p>
+                    <p th:text="${'Currency: ' + commodity.currency}"></p>
                 </div>
                 <div class="col-sm-12 mx-auto text-center" style="padding-bottom: 15px;">
-                    <p th:text="${'Currency symbol: ' + commodity.currencySymbol}">currencySymbol: $</p>
+                    <p th:text="${'Currency symbol: ' + commodity.currencySymbol}"></p>
                 </div>
             </div>
 

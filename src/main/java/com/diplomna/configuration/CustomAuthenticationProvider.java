@@ -19,11 +19,11 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-        String inputUsername = authentication.getName();
+        String inputEmail = authentication.getName();
         String inputPassword = authentication.getCredentials().toString();
 
         DatabaseConnection databaseConnection = new DatabaseConnection();
-        User user = databaseConnection.read().readUsers().getUserByName(inputUsername);
+        User user = databaseConnection.read().readUsers().getUserByEmail(inputEmail);
 
         if(user==null){
             return null;
@@ -36,7 +36,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
                 } else {
                     authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
                 }
-                return new UsernamePasswordAuthenticationToken(inputUsername, inputPassword, authorities);
+                return new UsernamePasswordAuthenticationToken(inputEmail, inputPassword, authorities);
             }
             else {
                 return null;

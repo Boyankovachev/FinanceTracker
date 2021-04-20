@@ -1,6 +1,10 @@
 package com.diplomna.users.sub;
 
 import com.diplomna.assets.AssetManager;
+import com.diplomna.assets.finished.Commodities;
+import com.diplomna.assets.finished.Crypto;
+import com.diplomna.assets.finished.Index;
+import com.diplomna.assets.finished.Stock;
 import com.google.common.hash.Hashing;
 
 import java.nio.charset.StandardCharsets;
@@ -159,6 +163,29 @@ public class User {
             }
         }
         return false;
+    }
+
+    public void printUser(){
+        System.out.println("Username: " + userName);
+        System.out.println("Id: " + userId);
+        System.out.println();
+        for(Stock stock: assets.getAllStocks()){
+            stock.printStock();
+        }
+        System.out.println();
+        for(Index index: assets.getAllIndex()){
+            index.printIndex();
+        }
+        System.out.println();
+        for(Crypto crypto: assets.getCrypto()){
+            crypto.printCrypto();
+        }
+        System.out.println();
+        for(Commodities commodities: assets.getCommodities()){
+            commodities.printCommodity();
+        }
+        System.out.println(".\n.\n.\n.\n");
+        System.out.println();
     }
 
 

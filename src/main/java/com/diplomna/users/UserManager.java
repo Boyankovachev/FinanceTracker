@@ -26,11 +26,25 @@ public class UserManager {
     public User getUserByName(String userName){
         /*
             return user by username
-            return null if non existant
+            return null if non found
          */
         int i;
         for(i=0; i<users.size(); i++){
             if(users.get(i).getUserName().equals(userName)){
+                return users.get(i);
+            }
+        }
+        return null;
+    }
+
+    public User getUserByEmail(String email){
+        /*
+            return user by email
+            return null if non found
+         */
+        int i;
+        for(i=0; i<users.size(); i++){
+            if(users.get(i).getEmail().equals(email)){
                 return users.get(i);
             }
         }

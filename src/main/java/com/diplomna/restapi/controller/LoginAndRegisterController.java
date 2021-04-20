@@ -77,17 +77,22 @@ public class LoginAndRegisterController {
         JSONObject jsonObject = loginAndRegisterService.HtmlFromStringToJson(inputString);
         String result = loginAndRegisterService.createUser(jsonObject);
 
-        if(result.equals("Passwords don't match") || result.equals("Email already taken")){
+        if(!result.equals("Account created successfully!")){
             attributes.addFlashAttribute("message", result);
             attributes.addFlashAttribute("isMessage", true);
             return new RedirectView("register");
         }
-        else if(result.equals("Account created successfully!")){
-            User user = loginAndRegisterService.getUserByName(jsonObject.getString("username"));
+        else {
+            User user = loginAndRegisterService.getUserByEmail(jsonObject.getString("email").replace("%40", "@"));
+
+            Authentication newAuth = new UsernamePasswordAuthenticationToken(user.getEmail(),
+                    user.getPasswordHash(),
+                    Arrays.asList(new SimpleGrantedAuthority("ROLE_USER")));
+            SecurityContextHolder.getContext().setAuthentication(newAuth);
+
             attributes.addFlashAttribute("user", user);
             return new RedirectView("user");
         }
-        return null;
     }
 
     @RequestMapping(value = "/", method = RequestMethod.GET)

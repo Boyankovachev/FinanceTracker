@@ -41,7 +41,7 @@
 
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item" id="name-list">
-                        <h3 class="font-weight-bold">test</h3>
+                        <h3 th:text="${username}" class="font-weight-bold"></h3>
                     </li>
                     <li class="nav-item my-auto">
                         <form action="http://localhost:8080/logout" method="get">
@@ -83,7 +83,7 @@
                 </div>
             </div>
 
-            <div class="col-sm-6 mx-auto text-center">
+            <div class="col-sm-6 mx-auto text-center" id="notifications-container">
                 <h3>Your notifications</h3>
                 <table class="table table-striped" id="notification-table">
                     <tbody>
@@ -105,7 +105,7 @@
     </div>
 
 
-    <div class="container" id="error-message">
+    <div class="col-sm-4 mx-auto text-center" id="error-message">
     </div>
 
     <div class="col-sm-12 mx-auto text-center mt-5" id="footer">

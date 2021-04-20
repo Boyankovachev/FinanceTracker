@@ -1,8 +1,5 @@
 $(function (){
 
-    $("#header").load("/header");
-    $("#footer").load("/footer");
-
     $("#add").on("click", function(){
         var $select = $('#select-notification');
         var $priceTarget = $('#price');
@@ -30,16 +27,16 @@ $(function (){
                 if(response.success.localeCompare('success') == 0){
                     $notificationTable.append("<tr id=" + response.name +"><td>" + response.name + "</td>" +
                     "<td>" + response.price + "</td>" +
-                    "<td><button class=remove-notification notification-name=" + response.name + "> X </button></td></tr>");
+                    "<td><button class='remove-notification btn btn-danger'  notification-name=" + response.name + "> X </button></td></tr>");
                 }
                 else{
-                    $errorMessage.append("<p>" + response.success + "</p>");
+                    $errorMessage.append("<p class='alert alert-danger'>" + response.success + "</p>");
                 }
             }
         });
     });
 
-    $(".remove-notification").on("click", function(){
+    $("#notifications-container").on("click", ".remove-notification", function(){
         var notificationName = $(this).attr('notification-name');
 
         var input = {
@@ -62,7 +59,7 @@ $(function (){
                     $notificationRow.remove();
                 }
                 else{
-                    $errorMessage.append("<p>" + response.response + "</p>");
+                    $errorMessage.append("<p class='alert alert-danger'>" + response.response + "</p>");
                 }
             }
         });

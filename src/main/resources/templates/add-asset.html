@@ -42,7 +42,7 @@
 
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item" id="name-list">
-                        <h3 class="font-weight-bold">test</h3>
+                        <h3 th:text="${username}" class="font-weight-bold"></h3>
                     </li>
                     <li class="nav-item my-auto">
                         <form action="/logout" method="get">
@@ -81,7 +81,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm-12 mx-auto text-center" id="response"></div>
+        <div class="col-sm-4 mx-auto text-center" id="response" role="alert"></div>
     </div>
 
     <div class="col-sm-12 mx-auto text-center mt-5" id="footer">

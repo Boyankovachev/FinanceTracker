@@ -23,6 +23,23 @@ public class Index extends StockBasedActiveAsset {
         super(name,currentMarketPrice,quantityOwned,symbol);
     }
 
+    //Copy constructor
+    public Index(Index index){
+        this.name = index.getName();
+        this.currency = index.getCurrency();
+        this.currencySymbol = index.getCurrencySymbol();
+        this.description = index.getDescription();
+        this.currentMarketPrice = index.getCurrentMarketPrice();
+        this.symbol = index.getSymbol();
+        this.exchangeName = index.getExchangeName();
+        this.isMarketOpen = index.isMarketOpen();
+    }
+
+    //Copy factory
+    public static Index newInstance(Index index){
+        return new Index(index);
+    }
+
     public void setExchangeName(String exchangeName) {
         this.exchangeName = exchangeName;
     }
@@ -39,5 +56,12 @@ public class Index extends StockBasedActiveAsset {
         return exchangeName;
     }
 
+    public void printIndex(){
+        System.out.println(name);
+        System.out.println(symbol);
+        for(PurchaseInfo purchaseInfo: purchaseInfo){
+            System.out.println("Purchase: price: " + purchaseInfo.getPrice() + "  quantity: " + purchaseInfo.getQuantity() );
+        }
+    }
 
 }

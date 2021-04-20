@@ -32,6 +32,9 @@ public class BaseController {
     @Autowired
     private BaseService baseService;
 
+    @Autowired
+    private LoginAndRegisterService loginAndRegisterService;
+
     private User user;
 
     private final Logger logger;
@@ -48,10 +51,9 @@ public class BaseController {
         if(auth.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_VERIFY"))) {
             return "redirect:/confirm-login";
         }
-
         this.user = null;
-        LoginAndRegisterService service = new LoginAndRegisterService();
-        this.user = baseService.setupUser(service.getUserByName(principal.getName()));
+        this.user = baseService.setupUser(loginAndRegisterService.getUserByEmail(principal.getName()));
+        //user.printUser();
         model.addAttribute("stock", this.user.getAssets().getAllStocks());
         model.addAttribute("passive_resource", this.user.getAssets().getAllPassiveResources());
         model.addAttribute("index", this.user.getAssets().getAllIndex());
@@ -69,6 +71,7 @@ public class BaseController {
         model.addAttribute("crypto", user.getAssets().getCrypto());
         model.addAttribute("commodity", user.getAssets().getCommodities());
         model.addAttribute("global",  baseService.getGlobalNotifications(user));
+        model.addAttribute("username", user.getUserName());
         return "notification";
     }
     @RequestMapping(value = "/add-notification", method = RequestMethod.POST)
@@ -120,80 +123,90 @@ public class BaseController {
         return new ResponseEntity<Object>(responseMap, HttpStatus.OK);
     }
 
-
     @RequestMapping(value = "/asset", method = RequestMethod.POST)
-    public RedirectView assets(@RequestParam("asset_type") String assetType, @RequestParam("asset_name") String assetName, RedirectAttributes attributes){
-        attributes.addFlashAttribute("assetName", assetName);
-        attributes.addFlashAttribute("assetType", assetType);
-        return new RedirectView("asset");
-    }
-    @RequestMapping(value = "/asset", method = RequestMethod.GET)
-    public String assets(@ModelAttribute("assetName") String assetName, @ModelAttribute("assetType") String assetType, Model model){
-        try {
-            Thread.sleep(30);
-        }
-        catch(InterruptedException ex) {
-            Thread.currentThread().interrupt();
-        }
-        switch (assetType) {
+    public String assets(@RequestBody String dataString, Model model){
+        System.out.println(dataString);
+        dataString = loginAndRegisterService.removeCharFromHtmlFormData(dataString);
+        JSONObject dataJson = loginAndRegisterService.HtmlFromStringToJson(dataString);
+        System.out.println(dataJson.toString());
+
+        switch (dataJson.getString("assetType")) {
             case "stock":
-                if(user.getAssets().getStockByName(assetName) == null){
+                if(user.getAssets().getStockBySymbol(dataJson.getString("assetName")) == null){
                     String errorString = "Requested stock with symbol: "
-                            + assetName + " for user with id: " +
+                            + dataJson.getString("assetName") + " for user with id: " +
                             user.getUserId() + " not found!";
                     logger.error(errorString);
-                    return "";
+                    return "redirect:/user";
                 }
                 else{
-                    Stock stock = user.getAssets().getStockByName(assetName);
+                    model.addAttribute("username", user.getUserName());
+                    Stock stock = user.getAssets().getStockBySymbol(dataJson.getString("assetName"));
                     model.addAttribute("stock", stock);
                     model.addAttribute("purchase", stock.getAllPurchases());
                     return "assets/stock";
                 }
             case "passive-resource":
-                if(user.getAssets().getPassiveResourceByName(assetName) == null){
-                    //exception i logvane
-                    return "";
+                if(user.getAssets().getPassiveResourceByName(dataJson.getString("assetName")) == null){
+                    String errorString = "Requested passive resource with name: "
+                            + dataJson.getString("assetName") + " for user with id: " +
+                            user.getUserId() + " not found!";
+                    logger.error(errorString);
+                    return "redirect:/user";
                 }
                 else{
-                    PassiveResource passiveResource = user.getAssets().getPassiveResourceByName(assetName);
+                    model.addAttribute("username", user.getUserName());
+                    PassiveResource passiveResource = user.getAssets().getPassiveResourceByName(dataJson.getString("assetName"));
                     model.addAttribute("passive_resource", passiveResource);
                     return "assets/passive-resource";
                 }
             case "index":
-                if(user.getAssets().getIndexByName(assetName) == null){
-                    //exception i logvane
-                    return "";
+                if(user.getAssets().getIndexBySymbol(dataJson.getString("assetName")) == null){
+                    String errorString = "Requested index with symbol: "
+                            + dataJson.getString("assetName") + " for user with id: " +
+                            user.getUserId() + " not found!";
+                    logger.error(errorString);
+                    return "redirect:/user";
                 }
                 else{
-                    Index index = user.getAssets().getIndexByName(assetName);
+                    model.addAttribute("username", user.getUserName());
+                    Index index = user.getAssets().getIndexBySymbol(dataJson.getString("assetName"));
                     model.addAttribute("index", index);
                     model.addAttribute("purchase", index.getAllPurchases());
                     return "assets/index";
                 }
             case "crypto":
-                if(user.getAssets().getCryptoByName(assetName) == null){
-                    //exception i logvane
-                    return "";
+                if(user.getAssets().getCryptoBySymbol(dataJson.getString("assetName")) == null){
+                    String errorString = "Requested crypto with symbol: "
+                            + dataJson.getString("assetName") + " for user with id: " +
+                            user.getUserId() + " not found!";
+                    logger.error(errorString);
+                    return "redirect:/user";
                 }
                 else{
-                    Crypto crypto = user.getAssets().getCryptoByName(assetName);
+                    model.addAttribute("username", user.getUserName());
+                    Crypto crypto = user.getAssets().getCryptoBySymbol(dataJson.getString("assetName"));
                     model.addAttribute("crypto", crypto);
                     model.addAttribute("purchase", crypto.getAllPurchases());
                     return "assets/crypto";
                 }
             case "commodity":
-                if(user.getAssets().getCommodityByName(assetName) == null){
-                    //exception i logvane
-                    return "";
+                if(user.getAssets().getCommodityByName(dataJson.getString("assetName")) == null){
+                    String errorString = "Requested commodity with name: "
+                            + dataJson.getString("assetName") + " for user with id: " +
+                            user.getUserId() + " not found!";
+                    logger.error(errorString);
+                    return "redirect:/user";
                 }
                 else{
-                    Commodities commodity = user.getAssets().getCommodityByName(assetName);
+                    model.addAttribute("username", user.getUserName());
+                    Commodities commodity = user.getAssets().getCommodityByName(dataJson.getString("assetName"));
                     model.addAttribute("commodity", commodity);
                     model.addAttribute("purchase", commodity.getAllPurchases());
                     return "assets/commodity";
                 }
             default:
+                    logger.error("Default in switch /asset post.");
                     return "redirect:/user";
         }
     }
@@ -202,7 +215,6 @@ public class BaseController {
     public @ResponseBody ResponseEntity<Object> getChartData(@RequestBody String jsonString){
         JSONObject jsonObject = new JSONObject(jsonString);
         GraphService graphService = new GraphService();
-        System.out.println(jsonObject.toString());
         List<GraphInfo> graphInfoList = graphService.getChartData(jsonObject);
         return new ResponseEntity<>(graphInfoList, HttpStatus.OK);
     }
@@ -216,7 +228,8 @@ public class BaseController {
     }
 
     @RequestMapping(value = "/add-asset", method = RequestMethod.GET)
-    public String addAsset(){
+    public String addAsset(Model model){
+        model.addAttribute("username", user.getUserName());
         return "add-asset";
     }
     @RequestMapping(value = "/add-active-asset", method = RequestMethod.POST)
@@ -243,15 +256,6 @@ public class BaseController {
         return "redirect:/";
     }
      */
-
-    @RequestMapping(value = "/header", method = RequestMethod.GET)
-    public String getHeader(){
-        return "parts/header";
-    }
-    @RequestMapping(value = "/footer", method = RequestMethod.GET)
-    public String getFooter(){
-        return "parts/footer";
-    }
 
 
     @RequestMapping(value = "/remove-asset", method = RequestMethod.DELETE)

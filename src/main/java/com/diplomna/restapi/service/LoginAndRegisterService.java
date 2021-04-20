@@ -6,6 +6,7 @@ import com.diplomna.database.read.ReadFromDb;
 import com.diplomna.email.EmailService;
 import com.diplomna.users.UserManager;
 import com.diplomna.users.sub.User;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,28 +38,33 @@ public class LoginAndRegisterService {
         /*
             Create user and add to database
          */
-        if(!jsonObject.getString("password").equals(jsonObject.getString("password2"))){
-            return "Passwords don't match";
-        }
-
-        User user = new User();
-        user.setUserName(jsonObject.getString("username"));
-        HashMap<String , String> temp2 = user.generateSaltAndHash(jsonObject.getString("password"));
-        user.setPassword(temp2.get("hash"));
-        user.setSalt(temp2.get("salt"));
-
-        if(!jsonObject.getString("email").equals("")){
-            String email = jsonObject.getString("email").replace("%40", "@");
-            if(isEmailTaken(email)){
-                return "Email already taken";
+        try {
+            if (!jsonObject.getString("password").equals(jsonObject.getString("password2"))) {
+                return "Passwords don't match";
             }
-            else {
+
+            User user = new User();
+
+            user.setUserName(jsonObject.getString("username"));
+
+            HashMap<String, String> temp2 = user.generateSaltAndHash(jsonObject.getString("password"));
+            user.setPassword(temp2.get("hash"));
+            user.setSalt(temp2.get("salt"));
+
+            String email = jsonObject.getString("email").replace("%40", "@");
+            if (isEmailTaken(email)) {
+                return "Email already taken";
+            } else {
                 user.setEmail(email);
             }
+
+            dbConnection.add().insertUser(user);
+            logger.info("Created account with email " + user.getEmail());
+            return "Account created successfully!";
+
+        }catch (JSONException jsonException){
+            return "Missing input data!";
         }
-        dbConnection.add().insertUser(user);
-        logger.info("Created account with username " + user.getUserName());
-        return "Account created successfully!";
     }
 
     private boolean isEmailTaken(String email){
@@ -69,36 +75,25 @@ public class LoginAndRegisterService {
         return userManager.isEmailPresent(email);
     }
 
-    public String verifyLogin(JSONObject jsonObject){
-        /*
-            Check password and username
-            return response
-         */
-        UserManager userManager = dbConnection.read().readUsers();
-        if(!userManager.isUsernamePresent(jsonObject.getString("username"))){
-            return "Incorrect username or password!";
-        }
-        User user = userManager.getUserByName(jsonObject.getString("username"));
-
-        if(!user.checkPassword(jsonObject.getString("password"))){
-            return "Incorrect username or password!";
-        }
-        return "Successful login!";
-    }
-
     public User getUserByName(String name){
         //returns the first user found with matching name
-        // (for future) - fix when 2 identical names
         UserManager userManager = dbConnection.read().readUsers();
         return userManager.getUserByName(name);
     }
 
-    public void setAuthentication(String username){
+    public User getUserByEmail(String email){
+        //returns the first user found with matching name
+        // (for future) - fix when 2 identical names
+        UserManager userManager = dbConnection.read().readUsers();
+        return userManager.getUserByEmail(email);
+    }
+
+    public void setAuthentication(String email){
         /*
             generate 2fk random key
             send authentication to user
          */
-        User user = dbConnection.read().readUsers().getUserByName(username);
+        User user = dbConnection.read().readUsers().getUserByEmail(email);
         this.authenticateCode = generateKey();
         emailService.sendAuthenticationKeyEmail(authenticateCode, user.getEmail());
     }
@@ -133,4 +128,11 @@ public class LoginAndRegisterService {
         }
         return jsonObject;
     }
+
+    public String removeCharFromHtmlFormData(String string){
+        string = string.replace("+", " ");
+        return string;
+    }
+
 }
+

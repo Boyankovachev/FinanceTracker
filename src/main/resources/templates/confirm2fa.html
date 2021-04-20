@@ -2,17 +2,34 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Authenticate</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 <body>
-    <form action = "/" method="get">
-        <button type="submit">Back</button>
-    </form>
-    <p>Enter the 6 digit code from the email you received</p><br>
-    <form action = "/confirm-login" method="post">
-        <input type="text" placeholder="6 digit code" name="code">
-        <button type="submit">Confirm</button>
-    </form>
-    <div id="error-div"></div>
+
+    <div class="container">
+
+        <h3 class="col-sm-12 mx-auto text-center w-50" style="margin-top: 50px;">Enter the 6 digit code from the email you received</h3>
+
+        <form action = "/confirm-login" method="post">
+            <div class="col-sm-12 mx-auto text-center">
+                <input class="text-center w-25" type="text" placeholder="6 digit code" name="code">
+            </div>
+            <div class="col-sm-12 mx-auto text-center">
+                <button class="text-center btn btn-info" type="submit">Confirm</button>
+            </div>
+        </form>
+
+        <div class="col-sm-12 mx-auto text-center" id="error-div"></div>
+
+        <div class="col-sm-12 mx-auto text-center">
+            <form action = "/" method="get">
+                <button class="col-sm-2 mx-auto text-center btn btn-info" style="margin-top: 50px;" type="submit">Back</button>
+            </form>
+        </div>
+
+    </div>
+
 </body>
 </html>

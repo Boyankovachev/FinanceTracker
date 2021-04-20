@@ -38,7 +38,7 @@ $(function (){
                 data: JSON.stringify(input),
                 success:function(response){
                     $('#response').empty();
-                    $('#response').append('<p>' + response.response + '</p>');
+                    $('#response').append('<p class="alert alert-success">' + response.response + '</p>');
                 },
                 error: function(response) {
                     alert("something went wrong");
@@ -71,7 +71,7 @@ $(function (){
                 data: JSON.stringify(input),
                 success: function(response){
                     $('#response').empty();
-                    $('#response').append('<p>' + response.response + '</p>');
+                    $('#response').append('<p class="alert alert-success">' + response.response + '</p>');
                 },
                 error: function(response) {
                     alert("something went wrong");
