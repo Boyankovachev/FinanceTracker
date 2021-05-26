@@ -32,7 +32,7 @@ public class UpdateRunner implements CommandLineRunner {
         /*
             update and notification thread
          */
-        /*
+
         int i=0; //counter
         while (true) {
             //update all data from API
@@ -55,6 +55,6 @@ public class UpdateRunner implements CommandLineRunner {
             }
             i++;
         }
-         */
+
     }
 }

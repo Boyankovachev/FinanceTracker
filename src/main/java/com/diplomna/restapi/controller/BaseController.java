@@ -53,7 +53,7 @@ public class BaseController {
         }
         this.user = null;
         this.user = baseService.setupUser(loginAndRegisterService.getUserByEmail(principal.getName()));
-        //user.printUser();
+
         model.addAttribute("stock", this.user.getAssets().getAllStocks());
         model.addAttribute("passive_resource", this.user.getAssets().getAllPassiveResources());
         model.addAttribute("index", this.user.getAssets().getAllIndex());
@@ -125,10 +125,8 @@ public class BaseController {
 
     @RequestMapping(value = "/asset", method = RequestMethod.POST)
     public String assets(@RequestBody String dataString, Model model){
-        System.out.println(dataString);
         dataString = loginAndRegisterService.removeCharFromHtmlFormData(dataString);
         JSONObject dataJson = loginAndRegisterService.HtmlFromStringToJson(dataString);
-        System.out.println(dataJson.toString());
 
         switch (dataJson.getString("assetType")) {
             case "stock":
@@ -248,15 +246,6 @@ public class BaseController {
         responseMap.put("response", response);
         return new ResponseEntity<Object>(responseMap, HttpStatus.OK);
     }
-
-    /*
-    @RequestMapping(value = "/log-out", method = RequestMethod.GET)
-    public String logOut(){
-        this.user = null;
-        return "redirect:/";
-    }
-     */
-
 
     @RequestMapping(value = "/remove-asset", method = RequestMethod.DELETE)
     public @ResponseBody ResponseEntity<Object> removeAsset(@RequestBody String jsonString){

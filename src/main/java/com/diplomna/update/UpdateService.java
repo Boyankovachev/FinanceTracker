@@ -27,6 +27,7 @@ import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
@@ -40,6 +41,9 @@ public class UpdateService {
 
     @Autowired
     private EmailService emailService;
+
+    @Autowired
+    private Environment env;
 
     private final Logger logger;
     private final DatabaseConnection dbConnection;
@@ -102,23 +106,28 @@ public class UpdateService {
             updates all stock data
          */
         List<Stock> stocks = currentData.getAssetManager().getAllStocks();
-
         YahooFinanceAPI yahooFinanceAPI = new YahooFinanceAPI();
         int i;
         for(i=0; i<stocks.size(); i++){
-            try {
-                yahooFinanceAPI.setStockBySymbol(stocks.get(i).getSymbol());
-                stocks.get(i).setCurrentMarketPrice(yahooFinanceAPI.getRawCurrentPrice());
-                stocks.get(i).setMarketOpen(yahooFinanceAPI.isMarketOpen());
-                stocks.get(i).setRecommendationKey(yahooFinanceAPI.getRecommendationKey());
-            } catch (UnirestException e) {
-                String errorMessage = "YahooFinanceAPI fail for symbol "
-                        + stocks.get(i).getSymbol();
-                logger.error(errorMessage);
-                e.printStackTrace();
+
+            if(Objects.equals(env.getProperty("api.update"), "on")) {
+                try {
+                    yahooFinanceAPI.setStockBySymbol(stocks.get(i).getSymbol());
+                    stocks.get(i).setCurrentMarketPrice(yahooFinanceAPI.getRawCurrentPrice());
+                    stocks.get(i).setMarketOpen(yahooFinanceAPI.isMarketOpen());
+                    stocks.get(i).setRecommendationKey(yahooFinanceAPI.getRecommendationKey());
+                } catch (UnirestException e) {
+                    String errorMessage = "YahooFinanceAPI fail for symbol "
+                            + stocks.get(i).getSymbol();
+                    logger.error(errorMessage);
+                    e.printStackTrace();
+                }
             }
+            else if(Objects.equals(env.getProperty("api.update"), "off")){
+                stocks.get(i).setCurrentMarketPrice(generateRandom(stocks.get(i).getCurrentMarketPrice()));
+            }
+
         }
-        currentData.getAssetManager().updateStocks(stocks);
         for(Stock stock: stocks){
             try {
                 dbConnection.add().updateStockApiData(stock);
@@ -140,27 +149,34 @@ public class UpdateService {
         AlphaVantageAPI alphaVantageAPI = new AlphaVantageAPI();
         int i;
         for(i=0; i<indexList.size(); i++){
-            try {
+
+            if(Objects.equals(env.getProperty("api.update"), "on")){
                 try {
-                    double indexCurrentPrice = Double.parseDouble(alphaVantageAPI.getIndexPrice(indexList.get(i).getSymbol()));
-                    indexList.get(i).setCurrentMarketPrice(indexCurrentPrice);
-                }catch (JSONException e){
-                    indexList.get(i).setCurrentMarketPrice(0);
-                    String errorMessage = "AlphaVantageAPI JSON index fail for symbol " + indexList.get(i).getSymbol() +
-                            "\nPrice not found";
+                    try {
+                        double indexCurrentPrice = Double.parseDouble(alphaVantageAPI.getIndexPrice(indexList.get(i).getSymbol()));
+                        indexList.get(i).setCurrentMarketPrice(indexCurrentPrice);
+                    }catch (JSONException e){
+                        indexList.get(i).setCurrentMarketPrice(0);
+                        String errorMessage = "AlphaVantageAPI JSON index fail for symbol " + indexList.get(i).getSymbol() +
+                                "\nPrice not found";
+                        logger.error(errorMessage);
+                        e.printStackTrace();
+                    }
+
+                    //information below not provided by available API
+                    indexList.get(i).setMarketOpen(true);
+                } catch (UnirestException e) {
+                    String errorMessage = "AlphaVantageAPI Index fail for symbol " + indexList.get(i).getSymbol();
                     logger.error(errorMessage);
                     e.printStackTrace();
                 }
-
-                //information below not provided by available API
-                indexList.get(i).setMarketOpen(true);
-            } catch (UnirestException e) {
-                String errorMessage = "AlphaVantageAPI Index fail for symbol " + indexList.get(i).getSymbol();
-                logger.error(errorMessage);
-                e.printStackTrace();
             }
+            else if(Objects.equals(env.getProperty("api.update"), "off")){
+                indexList.get(i).setCurrentMarketPrice(generateRandom(indexList.get(i).getCurrentMarketPrice()));
+            }
+
         }
-        currentData.getAssetManager().updateIndex(indexList);
+
         for(Index index: indexList){
             try {
                 dbConnection.add().updateIndexApiData(index);
@@ -180,25 +196,32 @@ public class UpdateService {
 
         int i;
         for(i=0; i<cryptos.size(); i++){
-            try {
-                AlphaVantageAPI alphaVantageAPI = new AlphaVantageAPI();
+
+            if(Objects.equals(env.getProperty("api.update"), "on")) {
                 try {
-                    double cryptoCurrentPrice = Double.parseDouble(alphaVantageAPI.getCrypto(cryptos.get(i).getSymbol()).get("price"));
-                    cryptos.get(i).setCurrentMarketPrice(cryptoCurrentPrice);
-                }catch (JSONException e){
-                    cryptos.get(i).setCurrentMarketPrice(0);
-                    String errorMessage = "AlphaVantageAPI JSON crypto fail for symbol " + cryptos.get(i).getSymbol() +
-                            "\nPrice not found";
+                    AlphaVantageAPI alphaVantageAPI = new AlphaVantageAPI();
+                    try {
+                        double cryptoCurrentPrice = Double.parseDouble(alphaVantageAPI.getCrypto(cryptos.get(i).getSymbol()).get("price"));
+                        cryptos.get(i).setCurrentMarketPrice(cryptoCurrentPrice);
+                    } catch (JSONException e) {
+                        cryptos.get(i).setCurrentMarketPrice(0);
+                        String errorMessage = "AlphaVantageAPI JSON crypto fail for symbol " + cryptos.get(i).getSymbol() +
+                                "\nPrice not found";
+                        logger.error(errorMessage);
+                        e.printStackTrace();
+                    }
+                } catch (UnirestException e) {
+                    String errorMessage = "AlphaVantageAPI fail for crypto " + cryptos.get(i).getSymbol();
                     logger.error(errorMessage);
                     e.printStackTrace();
                 }
-            } catch (UnirestException e) {
-                String errorMessage = "AlphaVantageAPI fail for crypto " + cryptos.get(i).getSymbol();
-                logger.error(errorMessage);
-                e.printStackTrace();
             }
+            else if(Objects.equals(env.getProperty("api.update"), "off")){
+                cryptos.get(i).setCurrentMarketPrice(generateRandom(cryptos.get(i).getCurrentMarketPrice()));
+            }
+
         }
-        currentData.getAssetManager().updateCrypto(cryptos);
+
         for(Crypto crypto: cryptos){
             try {
                 dbConnection.add().updateCryptoApiData(crypto);
@@ -221,12 +244,9 @@ public class UpdateService {
         for(i=0; i<commodities.size(); i++){
             //Public API for commodities (aka Petrol, Wheat etc) not found
 
-            //simulate some values
-            double currentPrice = commodities.get(i).getCurrentMarketPrice();
-            commodities.get(i).setCurrentMarketPrice(Math.random() * ((currentPrice+10) -
-                    (currentPrice-10) + 1) + (currentPrice - 10));
+            commodities.get(i).setCurrentMarketPrice(generateRandom(commodities.get(i).getCurrentMarketPrice()));
         }
-        currentData.getAssetManager().updateCommodities(commodities);
+
         for(Commodities commodity: commodities){
             try {
                 dbConnection.add().updateCommodityApiData(commodity);
@@ -433,6 +453,13 @@ public class UpdateService {
             }
         }
 
+    }
+
+    private double generateRandom(double input){
+        /*
+            Returns a random number +- 10% of the input number
+         */
+        return (Math.random() * ((input+10) - (input-10) + 1) + (input - 10));
     }
 
 }

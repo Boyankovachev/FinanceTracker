@@ -43,19 +43,17 @@ public class BaseService {
             get notifications and add to user
             return user
          */
-        //user.printUser();
+
         AssetManager assetManager = new AssetManager();
 
         assetManager.addStocks(getStocksByUserId(user.getUserId()));
-        // for(Stock stock: assetManager.getAllStocks()){
-        //     stock.printStock();
-        // }
+
         assetManager.addPassiveResources(getPassiveResourcesByUserId(user.getUserId()));
         assetManager.addIndexList(getIndexByUserId(user.getUserId()));
         assetManager.addCryptoList(getCryptoByUserId(user.getUserId()));
         assetManager.addCommodities(getCommodityByUserId(user.getUserId()));
         user.setAssets(assetManager);
-        //user.printUser();
+
         user.setNotifications(getNotificationsByUserId(user.getUserId()));
         return user;
     }
@@ -73,12 +71,9 @@ public class BaseService {
             returns list of fully initialized stock objects,
             by user id with the purchase info list
          */
-        //currentData.getAssetManager().print();
+
         List<Stock> stockPurchases = dbConnection.read().readStockPurchasesByUserId(userId);
-        //System.out.println("\n--------------------\nStock purchases:");
-        //for(Stock stock: stockPurchases){
-        //    stock.printStock();
-        //}
+
         List<Stock> stockBase = new ArrayList<>();
         List<String> ownedStocksSymbols = new ArrayList<>();
 
@@ -89,14 +84,14 @@ public class BaseService {
                 ownedStocksSymbols.add(stock.getSymbol());
             }
         }
-        //System.out.println("\nStock base:");
+
         for(String symbol: ownedStocksSymbols){
             // iterate through the collection of strings
             // and add each stock to another collection
             stockBase.add(Stock.newInstance(currentData.getAssetManager().getStockBySymbol(symbol)));
-            //currentData.getAssetManager().getStockBySymbol(symbol).printStock();
+
         }
-        //currentData.getAssetManager().print();
+
         int i,j;
         for(i=0; i<stockBase.size(); i++){
             for(j=0; j<stockPurchases.size(); j++){
@@ -108,7 +103,7 @@ public class BaseService {
             stockBase.get(i).calculateAveragePurchasePrice();
             stockBase.get(i).calculatePercentChange();
         }
-        //currentData.getAssetManager().print();
+
         return stockBase;
     }
 
