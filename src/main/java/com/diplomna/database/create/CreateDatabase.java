@@ -1,12 +1,17 @@
 package com.diplomna.database.create;
 
 
+import com.diplomna.DiplomnaApplication;
+import org.springframework.boot.SpringApplication;
+
 import java.sql.*;
 
 public class CreateDatabase {
+
     private String connString;
     private Connection con;
     public String databaseName;
+
     public CreateDatabase(String databaseName){
         this.connString = "jdbc:mysql://localhost:3306/?user=root&password=1234";
         this.databaseName = databaseName;
@@ -33,7 +38,7 @@ public class CreateDatabase {
         createCommodityPurchaseInfoTable();
     }
 
-    public void createDb(){
+    private void createDb(){
         //create database
         try{
             Statement st = con.createStatement();
@@ -44,7 +49,7 @@ public class CreateDatabase {
         }
     }
 
-    public void createUserTable(){
+    private void createUserTable(){
         //create user table
         try {
             Statement DbStatement = con.createStatement();
@@ -61,7 +66,7 @@ public class CreateDatabase {
             e.printStackTrace();
         }
     }
-    public void createStockTable(){
+    private void createStockTable(){
         //create stock table
         try {
             Statement DbStatement = con.createStatement();
@@ -80,7 +85,7 @@ public class CreateDatabase {
             e.printStackTrace();
         }
     }
-    public void createNotificationTable(){
+    private void createNotificationTable(){
         //create notification table
         // 24.12.2020 - vij zapiskite
         try {
@@ -98,7 +103,7 @@ public class CreateDatabase {
             e.printStackTrace();
         }
     }
-    public void createStockPurchaseInfoTable(){
+    private void createStockPurchaseInfoTable(){
         //create stock purchase info table
         try {
             Statement DbStatement = con.createStatement();
@@ -115,7 +120,7 @@ public class CreateDatabase {
             e.printStackTrace();
         }
     }
-    public void createPassiveResourceInfoTable(){
+    private void createPassiveResourceInfoTable(){
         //create passive resource table
         try {
             Statement DbStatement = con.createStatement();
@@ -134,7 +139,7 @@ public class CreateDatabase {
             e.printStackTrace();
         }
     }
-    public void createIndexTable(){
+    private void createIndexTable(){
         //create index table
         try {
             Statement DbStatement = con.createStatement();
@@ -152,7 +157,7 @@ public class CreateDatabase {
             e.printStackTrace();
         }
     }
-    public void createIndexPurchaseInfoTable(){
+    private void createIndexPurchaseInfoTable(){
         //create index purchase info table
         try {
             Statement DbStatement = con.createStatement();
@@ -169,7 +174,7 @@ public class CreateDatabase {
             e.printStackTrace();
         }
     }
-    public void createCryptoTable(){
+    private void createCryptoTable(){
         //create crypto table
         try {
             Statement DbStatement = con.createStatement();
@@ -185,7 +190,7 @@ public class CreateDatabase {
             e.printStackTrace();
         }
     }
-    public void createCryptoPurchaseInfoTable(){
+    private void createCryptoPurchaseInfoTable(){
         //create crypto purchase info table
         try {
             Statement DbStatement = con.createStatement();
@@ -202,7 +207,7 @@ public class CreateDatabase {
             e.printStackTrace();
         }
     }
-    public void createCommodityTable(){
+    private void createCommodityTable(){
         //create commodity table
         try {
             Statement DbStatement = con.createStatement();
@@ -218,7 +223,7 @@ public class CreateDatabase {
             e.printStackTrace();
         }
     }
-    public void createCommodityPurchaseInfoTable(){
+    private void createCommodityPurchaseInfoTable(){
         //create commodity purchase info table
         try {
             Statement DbStatement = con.createStatement();
