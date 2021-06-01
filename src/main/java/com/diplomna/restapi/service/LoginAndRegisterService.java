@@ -26,12 +26,13 @@ public class LoginAndRegisterService {
 
     private String authenticateCode;
 
-    private final DatabaseConnection dbConnection;
+    @Autowired
+    private DatabaseConnection dbConnection;
+
     private final Logger logger;
 
     public LoginAndRegisterService(){
         this.logger = LoggerFactory.getLogger(BaseService.class);
-        dbConnection = new DatabaseConnection();
     }
 
     public String createUser(JSONObject jsonObject){

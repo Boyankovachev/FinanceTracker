@@ -45,15 +45,16 @@ public class UpdateService {
     @Autowired
     private Environment env;
 
+    @Autowired
+    private DatabaseConnection dbConnection;
+
     private final Logger logger;
-    private final DatabaseConnection dbConnection;
 
     private final CurrentData currentData;
 
     public UpdateService(){
         this.logger = LoggerFactory.getLogger(BaseService.class);
         this.baseService = new BaseService();
-        dbConnection = new DatabaseConnection();
         currentData = CurrentData.getInstance();
     }
 

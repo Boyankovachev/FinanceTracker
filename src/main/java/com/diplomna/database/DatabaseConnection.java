@@ -7,26 +7,32 @@ import com.diplomna.restapi.service.BaseService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.Environment;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-
+@Service
 public class DatabaseConnection {
+
+    @Autowired
+    private final DatabaseConfig databaseConfig;
 
     private ReadFromDb read;
     private InsertIntoDb add;
     private DeleteFromDb delete;
 
-    public DatabaseConnection(){
+    public DatabaseConnection(DatabaseConfig databaseConfig){
+        this.databaseConfig = databaseConfig;
 
         Logger logger = LoggerFactory.getLogger(DatabaseConnection.class);
 
-        String user = "root";
-        String password = "1234";
+        String user = databaseConfig.getUser();
+        String password = databaseConfig.getPassword();
         String connString = "jdbc:mysql://localhost:3306/?user=" + user + "&password=" + password;
         try {
 
