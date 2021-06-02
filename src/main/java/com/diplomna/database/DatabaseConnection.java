@@ -51,9 +51,6 @@ public class DatabaseConnection {
             this.add = new InsertIntoDb(con, databaseName);
             this.delete = new DeleteFromDb(con, databaseName);
 
-            if(read == null) {
-                System.out.println("Read is null");
-            }
 
         } catch (SQLException throwables) {
             logger.error("Couldn't create DB connection");
