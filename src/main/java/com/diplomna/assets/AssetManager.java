@@ -25,7 +25,9 @@ public class AssetManager {
         stocks.add(stock);
     }
     public void addStocks(List<Stock> newStocks){
-        stocks.addAll(newStocks);
+        if(newStocks != null) {
+            stocks.addAll(newStocks);
+        }
     }
 
     public List<PassiveResource> getAllPassiveResources(){
@@ -35,7 +37,9 @@ public class AssetManager {
         passiveResources.add(passiveResource);
     }
     public void addPassiveResources(List<PassiveResource> newPassiveResources){
-        passiveResources.addAll(newPassiveResources);
+        if(newPassiveResources != null) {
+            passiveResources.addAll(newPassiveResources);
+        }
     }
 
     public List<Index> getAllIndex(){
@@ -45,7 +49,9 @@ public class AssetManager {
         indexFunds.add(index);
     }
     public void addIndexList(List<Index> newIndexFunds){
-        indexFunds.addAll(newIndexFunds);
+        if(newIndexFunds != null) {
+            indexFunds.addAll(newIndexFunds);
+        }
     }
 
     public List<Commodities> getCommodities(){
@@ -55,7 +61,9 @@ public class AssetManager {
         commodities.add(commodity);
     }
     public void addCommodities(List<Commodities> newCommodities){
-        commodities.addAll(newCommodities);
+        if(newCommodities != null) {
+            commodities.addAll(newCommodities);
+        }
     }
 
     public List<Crypto> getCrypto(){
@@ -65,7 +73,9 @@ public class AssetManager {
         cryptoCurrencies.add(crypto);
     }
     public void addCryptoList(List<Crypto> newCrypto){
-        cryptoCurrencies.addAll(newCrypto);
+        if(newCrypto != null) {
+            cryptoCurrencies.addAll(newCrypto);
+        }
     }
 
 

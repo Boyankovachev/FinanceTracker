@@ -39,7 +39,7 @@ public class DatabaseConnection {
                 String user = databaseConfig.getUser();
                 String password = databaseConfig.getPassword();
                 connString = "jdbc:mysql://localhost:3306/?user=" + user + "&password=" + password;
-                databaseName = "test";
+                databaseName = databaseConfig.getDatabaseName();
 
             }else {
                 //if heroku db
