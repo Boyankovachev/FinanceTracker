@@ -43,7 +43,7 @@ public class DatabaseConnection {
 
             }else {
                 //if heroku db
-                connString = "mysql://b361c5f743004c:b180e428@us-cdbr-east-04.cleardb.com/heroku_e44f5a628f2c41c?reconnect=true";
+                connString = "jdbc:mysql://b361c5f743004c:b180e428@us-cdbr-east-04.cleardb.com/heroku_e44f5a628f2c41c?reconnect=true";
                 databaseName = "heroku_e44f5a628f2c41c";
             }
             Connection con = DriverManager.getConnection(connString);
