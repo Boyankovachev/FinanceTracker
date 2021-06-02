@@ -42,7 +42,6 @@ public class DatabaseConnection {
                 databaseName = databaseConfig.getDatabaseName();
 
             }else {
-                //if heroku db
                 connString = "jdbc:mysql://b361c5f743004c:b180e428@us-cdbr-east-04.cleardb.com/heroku_e44f5a628f2c41c?reconnect=true";
                 databaseName = "heroku_e44f5a628f2c41c";
             }
@@ -51,6 +50,10 @@ public class DatabaseConnection {
             this.read = new ReadFromDb(con, databaseName);
             this.add = new InsertIntoDb(con, databaseName);
             this.delete = new DeleteFromDb(con, databaseName);
+
+            if(read == null) {
+                System.out.println("Read is null");
+            }
 
         } catch (SQLException throwables) {
             logger.error("Couldn't create DB connection");
