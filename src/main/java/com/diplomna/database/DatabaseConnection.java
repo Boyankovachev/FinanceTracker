@@ -31,13 +31,21 @@ public class DatabaseConnection {
 
         Logger logger = LoggerFactory.getLogger(DatabaseConnection.class);
 
-        String user = databaseConfig.getUser();
-        String password = databaseConfig.getPassword();
-        String connString = "jdbc:mysql://localhost:3306/?user=" + user + "&password=" + password;
+        String connString;
+        String databaseName;
         try {
+            if(databaseConfig.getDbHost().equals("local")) {
+                //If my local db
+                String user = databaseConfig.getUser();
+                String password = databaseConfig.getPassword();
+                connString = "jdbc:mysql://localhost:3306/?user=" + user + "&password=" + password;
+                databaseName = "test";
 
-            String databaseName = "test";
-
+            }else {
+                //if heroku db
+                connString = "mysql://b361c5f743004c:b180e428@us-cdbr-east-04.cleardb.com/heroku_e44f5a628f2c41c?reconnect=true";
+                databaseName = "heroku_e44f5a628f2c41c";
+            }
             Connection con = DriverManager.getConnection(connString);
 
             this.read = new ReadFromDb(con, databaseName);

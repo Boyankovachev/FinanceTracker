@@ -14,6 +14,9 @@ public class DatabaseConfig {
     @Value("${spring.database.password}")
     private String password;
 
+    @Value("${db.host.settings}")
+    private String dbHost;
+
     public String getPassword() {
         return password;
     }
@@ -28,5 +31,13 @@ public class DatabaseConfig {
 
     public void setUser(String user) {
         this.user = user;
+    }
+
+    public String getDbHost() {
+        return dbHost;
+    }
+
+    public void setDbHost(String dbHost) {
+        this.dbHost = dbHost;
     }
 }
