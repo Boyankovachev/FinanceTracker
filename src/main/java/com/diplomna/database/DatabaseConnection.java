@@ -42,14 +42,15 @@ public class DatabaseConnection {
                 databaseName = databaseConfig.getDatabaseName();
 
             }else {
-                connString = "jdbc:mysql://b361c5f743004c:b180e428@us-cdbr-east-04.cleardb.com/heroku_e44f5a628f2c41c?reconnect=true";
+                //connString = "jdbc:mysql://b361c5f743004c:b180e428@us-cdbr-east-04.cleardb.com/heroku_e44f5a628f2c41c?reconnect=true";
                 databaseName = "heroku_e44f5a628f2c41c";
+                connString = "jdbc:mysql://b361c5f743004c:b180e428@us-cdbr-east-04.cleardb.com/heroku_e44f5a628f2c41c";
             }
             System.out.println("---------------------------------------");
             System.out.println(connString);
             System.out.println("---------------------------------------");
             Connection con = DriverManager.getConnection(connString);
-            System.out.println(con.getSchema());
+            System.out.println(!con.isClosed());
             System.out.println("---------------------------------------");
 
             this.read = new ReadFromDb(con, databaseName);
