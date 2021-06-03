@@ -42,9 +42,13 @@ public class DatabaseConnection {
                 databaseName = databaseConfig.getDatabaseName();
 
             }else {
-                //connString = "jdbc:mysql://b361c5f743004c:b180e428@us-cdbr-east-04.cleardb.com/heroku_e44f5a628f2c41c?reconnect=true";
+                /*
+                ClearDb cloud hosted database.
+                When run on my machine it works.
+                When i run it in Heroku hosted server ConnectionException...
+                 */
+                connString = "jdbc:mysql://b361c5f743004c:b180e428@us-cdbr-east-04.cleardb.com/heroku_e44f5a628f2c41c?reconnect=true";
                 databaseName = "heroku_e44f5a628f2c41c";
-                connString = "jdbc:mysql://b361c5f743004c:b180e428@us-cdbr-east-04.cleardb.com/heroku_e44f5a628f2c41c";
             }
             System.out.println("---------------------------------------");
             System.out.println(connString);
