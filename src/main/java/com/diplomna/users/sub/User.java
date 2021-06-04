@@ -21,7 +21,7 @@ public class User {
     private List<Notification> notifications = new ArrayList<>();
     private int userId;
     private boolean isEmailVerified;
-    private final String pepper = "";
+    private final String pepper = "QtuSl0Z3RE";
 
     public User(){}
     public User(String userName, String passwordHash,String salt){
