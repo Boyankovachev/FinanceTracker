@@ -57,6 +57,7 @@ public class Index extends StockBasedActiveAsset {
     }
 
     public void printIndex(){
+        //Debugging purposes
         System.out.println(name);
         System.out.println(symbol);
         for(PurchaseInfo purchaseInfo: purchaseInfo){

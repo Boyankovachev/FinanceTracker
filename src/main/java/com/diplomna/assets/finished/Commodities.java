@@ -43,6 +43,7 @@ public class Commodities extends ActiveAsset {
     }
 
     public void printCommodity(){
+        //Debugging purposes
         System.out.println(name);
         for(PurchaseInfo purchaseInfo: purchaseInfo){
             System.out.println("Purchase: price: " + purchaseInfo.getPrice() + "  quantity: " + purchaseInfo.getQuantity() );

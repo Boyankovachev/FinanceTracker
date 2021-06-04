@@ -74,6 +74,7 @@ public class Stock extends StockBasedActiveAsset {
     }
 
     public void printStock(){
+        //Debugging purposes
         System.out.println(name);
         System.out.println(symbol);
         for(PurchaseInfo purchaseInfo: purchaseInfo){

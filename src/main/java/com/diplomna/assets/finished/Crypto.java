@@ -37,6 +37,7 @@ public class Crypto extends StockBasedActiveAsset {
     }
 
     public void printCrypto(){
+        //Debugging purposes
         System.out.println(name);
         System.out.println(symbol);
         for(PurchaseInfo purchaseInfo: purchaseInfo){
