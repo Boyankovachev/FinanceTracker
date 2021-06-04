@@ -65,7 +65,7 @@
                     <h2 id="head">Index</h2>
                 </div>
                 <div class="col-sm-12 mx-auto text-center" style="padding-bottom: 15px;">
-                    <p th:text="${'Index name: ' + index.name}" class="font-weight-bold" id="asset-name"></p>
+                    <p th:text="${'Index name: ' + index.name}" class="font-weight-bold" id="asset-name" th:name="${index.name}"></p>
                 </div>
                 <div class="col-sm-12 mx-auto text-center" style="padding-bottom: 15px;">
                     <p th:text="${'Index symbol: ' + index.symbol}" class="font-weight-bold" id="asset-symbol" th:symbol="${index.symbol}"></p>

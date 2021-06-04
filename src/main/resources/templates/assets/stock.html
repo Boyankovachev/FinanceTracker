@@ -65,7 +65,7 @@
                     <h2 id="head">Stock</h2>
                 </div>
                 <div class="col-sm-12 mx-auto text-center" style="padding-bottom: 15px;">
-                    <p th:text="${'Stock name: ' + stock.name}" class="font-weight-bold" id="asset-name"></p>
+                    <p th:text="${'Stock name: ' + stock.name}" class="font-weight-bold" id="asset-name" th:name="${stock.name}"></p>
                 </div>
                 <div class="col-sm-12 mx-auto text-center" style="padding-bottom: 15px;">
                     <p th:text="${'Stock symbol: ' + stock.symbol}" class="font-weight-bold" id="asset-symbol" th:symbol="${stock.symbol}"></p>

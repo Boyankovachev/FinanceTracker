@@ -63,7 +63,7 @@
                     <h2 id="head">Crypto</h2>
                 </div>
                 <div class="col-sm-12 mx-auto text-center" style="padding-bottom: 15px;">
-                    <p th:text="${'Commodity name: ' + commodity.name}" class="font-weight-bold" id="asset-name"></p>
+                    <p th:text="${'Commodity name: ' + commodity.name}" class="font-weight-bold" id="asset-name" th:name="${commodity.name}"></p>
                 </div>
                 <div class="col-sm-12 mx-auto text-center" style="padding-bottom: 15px;">
                     <p th:text="${'Quantity owned: ' + commodity.quantityOwned}" class="font-weight-bold"></p>

@@ -9,16 +9,16 @@ $(function (){
         var $price = $('#price');
         var $date = $('#date');
         var $asset_type = $(this).attr("asset-type")
-        var $asset_name = $("#asset-name");
-        var $asset_symbol = $("#asset-symbol");
+        var asset_name = $("#asset-name").attr("name");
+        var asset_symbol = $("#asset-symbol").attr("symbol");
 
         var input = {
             quantity: $quantity.val(),
             price: $price.val(),
             date: $date.val(),
             assetType: $asset_type,
-            assetName: unEntity($asset_name.html()),
-            assetSymbol: unEntity($asset_symbol.html())
+            assetName: unEntity(asset_name),
+            assetSymbol: unEntity(asset_symbol)
         };
 
         var $purchase_table = $('#purchase-table');
