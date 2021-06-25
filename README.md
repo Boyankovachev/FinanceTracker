@@ -1,2 +1,2 @@
 # FinanceTracker
-Дипломна Работа ТУЕС
+Web application for assisting investors. 
